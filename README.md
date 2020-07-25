@@ -1,5 +1,5 @@
 # CodingCalendar
-An App for keeping track of future Coding Contests and adding them to your Calender (**yet to be implemented**)
+An App for keeping track of future Coding Contests and adding them to your Calender (_yet to be implemented_)
 
 ## Download
 For whole Project `git clone https://github.com/yk1ax/CodingCalendar.git`\
