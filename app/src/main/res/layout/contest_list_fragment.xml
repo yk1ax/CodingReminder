@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.yogig.android.codingcalendar.contestList.ContestListViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".contestList.ContestListFragment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/contestRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:contestList="@{viewModel.networkContestList}"
+            tools:listitem="@layout/recycler_view_item"/>
+
+        <com.google.android.material.progressindicator.ProgressIndicator
+            android:id="@+id/progressIndicator"
+            style="@style/Widget.MaterialComponents.ProgressIndicator.Circular.Indeterminate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:indicatorType="circular"/>
+<!--        <androidx.core.widget.ContentLoadingProgressBar-->
+<!--            android:id="@+id/progressBar"-->
+<!--            style="@style/Widget.AppCompat.ProgressBar"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            android:indeterminate="true"/>-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
