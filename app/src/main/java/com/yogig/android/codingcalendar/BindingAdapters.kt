@@ -1,10 +1,13 @@
 package com.yogig.android.codingcalendar
 
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.yogig.android.codingcalendar.contestList.CODEFORCES_SITE
+import com.yogig.android.codingcalendar.contestList.SITE_TYPE
 import com.yogig.android.codingcalendar.network.NetworkContest
 import java.text.DateFormat
 import java.util.*
@@ -21,14 +24,32 @@ fun TextView.setContestTime(contest: NetworkContest) {
     // converts text to the like of 20:05 - 22:05
     val builder = StringBuilder()
     val dateObj = Date(contest.startTimeSeconds
-        .times( if(contest.site == CODEFORCES_SITE) 1000 else 1 )
+        .times( if(contest.site == SITE_TYPE.CODEFORCES_SITE) 1000 else 1 )
     )
 
     val dateFormatter = DateFormat.getDateTimeInstance(DateFormat.DEFAULT,DateFormat.SHORT,Locale.UK)
     builder.append(dateFormatter.format(dateObj))
     builder.append(" - ")
-    dateObj.time += contest.durationSeconds.times( if(contest.site == CODEFORCES_SITE) 1000 else 1 )
+    dateObj.time += contest.durationSeconds.times( if(contest.site == SITE_TYPE.CODEFORCES_SITE) 1000 else 1 )
     builder.append(dateFormatter.format(dateObj))
 
     text = builder.toString()
+}
+
+@BindingAdapter("websiteImage")
+fun ImageView.setWebsiteImage(type: SITE_TYPE) {
+    setImageResource(when(type) {
+        SITE_TYPE.CODEFORCES_SITE -> R.drawable.ic_codeforces_svg
+        else -> R.drawable.ic_codechef_svg
+    })
+}
+
+@BindingAdapter("bindBackground")
+fun CardView.setColor(type: SITE_TYPE){
+    setCardBackgroundColor(ContextCompat.getColor( context,
+        when(type) {
+            SITE_TYPE.CODECHEF_SITE -> R.color.codechefColor
+            else -> R.color.codeforcesColor
+        }
+    ))
 }

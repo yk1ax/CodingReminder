@@ -1,6 +1,7 @@
 package com.yogig.android.codingcalendar.network
 
 import android.util.Log
+import com.yogig.android.codingcalendar.contestList.SITE_TYPE
 import org.jsoup.Jsoup
 import java.text.SimpleDateFormat
 import java.util.*
@@ -10,7 +11,7 @@ private const val CODECHEF_URL = "https://www.codechef.com/contests"
 private fun jsoupFetch(): List<NetworkContest> {
 
     val list = mutableListOf<NetworkContest>()
-    val document = Jsoup.connect(CODECHEF_URL).timeout(10000).get()
+    val document = Jsoup.connect(CODECHEF_URL).timeout(15000).get()
     val tables = document.getElementsByClass("dataTable")
     for (i in 0..1) {
         val table = tables[i].getElementsByTag("tbody").first()
@@ -38,7 +39,7 @@ private fun jsoupFetch(): List<NetworkContest> {
             }
 
 
-            val contest = NetworkContest(code, name, phase, (end - start), start)
+            val contest = NetworkContest(code, name, phase, (end - start), start, SITE_TYPE.CODECHEF_SITE)
             list.add(contest)
         }
     }

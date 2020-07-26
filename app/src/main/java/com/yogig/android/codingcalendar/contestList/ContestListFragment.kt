@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import com.yogig.android.codingcalendar.ContestListAdapter
 import com.yogig.android.codingcalendar.databinding.ContestListFragmentBinding
 
@@ -34,10 +35,17 @@ class ContestListFragment : Fragment() {
 
         viewModel.progressBarVisible.observe(viewLifecycleOwner, Observer {
             if(it) {
-                binding.progressIndicator.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.VISIBLE
             }
             else {
-                binding.progressIndicator.visibility = View.GONE
+                binding.progressBar.visibility = View.GONE
+            }
+        })
+
+        viewModel.snackBarText.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                Snackbar.make(binding.root, it, Snackbar.LENGTH_INDEFINITE).show()
+                viewModel.onCompleteSnackBarEvent()
             }
         })
 

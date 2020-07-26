@@ -1,5 +1,5 @@
 # CodingCalendar
-An App for keeping track of future Coding Contests and adding them to your Calender (**yet to be implemented**)
+An App for keeping track of future Coding Contests and adding them to your Calender (_yet to be implemented_)
 
 ## Download
 For whole Project `git clone https://github.com/yk1ax/CodingCalendar.git`\
@@ -17,6 +17,7 @@ For APK `TODO:- add a drive link`
 - [ ] Final UI polishing (_with support for both light and dark theme_)
 
 ## Relevant learning Resources
-- [Udacity's Android Basics Free Course](https://www.udacity.com/course/android-basics-nanodegree-by-google--nd803)
-- [Udacity's Developing Android Apps with Kotlin](https://www.udacity.com/course/developing-android-apps-with-kotlin--ud9012)
-- [Udacity's Writing READMEs](https://www.udacity.com/course/writing-readmes--ud777) 😅
+- [Udacity's Android Basics Free Course](https://www.udacity.com/course/android-basics-nanodegree-by-google--nd803) (Free Course)
+- [Udacity's Kotlin Bootcamp for Programmers](https://www.udacity.com/course/kotlin-bootcamp-for-programmers--ud9011) (Free Course) (_I still have to finish this one_)
+- [Udacity's Developing Android Apps with Kotlin](https://www.udacity.com/course/developing-android-apps-with-kotlin--ud9012) (Free Course as well)
+- [Udacity's Writing READMEs](https://www.udacity.com/course/writing-readmes--ud777) (...)😅

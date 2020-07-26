@@ -15,7 +15,8 @@
         android:background="?colorPrimary"
         app:title="@string/app_name"
         app:titleTextColor="?colorOnPrimary"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="16dp"/>
 
     <fragment
         android:id="@+id/contestListFragment"
