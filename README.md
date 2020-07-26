@@ -7,7 +7,7 @@ For APK `TODO:- add a drive link`
 
 ## Roadmap
 - [x] Basic fetching of contests from Codeforces and Codechef
-- [ ] Improve UI after designing in Adobe XD
+- [x] Improve UI after designing in Adobe XD
 - [ ] Adding Database
 - [ ] Adding Repository layer to interact with network and database
 - [ ] Adding Contest Fragment for details of single contest
