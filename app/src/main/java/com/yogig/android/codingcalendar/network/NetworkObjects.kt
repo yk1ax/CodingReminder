@@ -1,6 +1,7 @@
 package com.yogig.android.codingcalendar.network
 
 import com.google.gson.annotations.SerializedName
+import com.yogig.android.codingcalendar.contestList.SITE_TYPE
 
 data class CodeforcesContestList(
     @SerializedName("result")
@@ -15,5 +16,5 @@ data class NetworkContest(
     val phase: String = "",
     val durationSeconds: Long,
     val startTimeSeconds: Long,
-    var site: Int = 0,
+    var site: SITE_TYPE,
     val websiteUrl: String = "")

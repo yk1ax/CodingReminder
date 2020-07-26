@@ -30,7 +30,9 @@ class ContestListAdapter:
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContestViewHolder {
-        return ContestViewHolder(RecyclerViewItemBinding.inflate(LayoutInflater.from(parent.context)))
+        return ContestViewHolder(RecyclerViewItemBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: ContestViewHolder, position: Int) {

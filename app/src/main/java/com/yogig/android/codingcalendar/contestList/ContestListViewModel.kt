@@ -1,27 +1,30 @@
 package com.yogig.android.codingcalendar.contestList
 
+import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.yogig.android.codingcalendar.network.CodeforcesApi
-import com.yogig.android.codingcalendar.network.CodeforcesFetching
+import com.yogig.android.codingcalendar.R
 import com.yogig.android.codingcalendar.network.NetworkContest
+import com.yogig.android.codingcalendar.network.NetworkRequests
 import kotlinx.coroutines.*
-import org.jsoup.Jsoup
-import retrofit2.HttpException
 import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.*
 
-const val CODEFORCES_SITE = 1
-const val CODECHEF_SITE = 2
+enum class SITE_TYPE(val type: Int) {
+    CODEFORCES_SITE(1),
+    CODECHEF_SITE(2)
+}
 
-class ContestListViewModel : ViewModel() {
+class ContestListViewModel(app: Application) : AndroidViewModel(app) {
 
     private val viewModelJob = Job()
 
-    val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     override fun onCleared() {
         super.onCleared()
@@ -36,66 +39,66 @@ class ContestListViewModel : ViewModel() {
     val progressBarVisible: LiveData<Boolean>
         get() = _progressBarVisible
 
+    private val _snackBarText = MutableLiveData<String?>()
+    val snackBarText: LiveData<String?>
+        get() = _snackBarText
+
     init {
-        fetchContests()
+
+        if (checkConnection()) {
+            fetchContests()
+        } else {
+            _snackBarText.value = app.getString(R.string.no_internet)
+            _progressBarVisible.value = false
+        }
     }
 
     private fun fetchContests() {
-        _progressBarVisible.value = true
         coroutineScope.launch {
             val contests = mutableListOf<NetworkContest>()
-            try {
-                contests.addAll(fetchCFContests())
-                Log.i(
-                    "ContestListViewModel",
-                    "Fetched ${contests.size} codeforces contests."
-                )
-            } catch (e: HttpException) {
-                Log.e("ContestListViewModel", "Failed to fetch Codeforces Contests.")
-            }
 
             try {
-                contests.addAll(fetchCCContests())
-                Log.i(
-                    "ContestListViewModel",
-                    "Fetched ${contests.size} codechef contests."
-                )
-            } catch (e: HttpException) {
-                Log.e("ContestListViewModel", "Failed to fetch codechef Contests.")
+                withContext(Dispatchers.IO) {
+                    contests.addAll(NetworkRequests.contestsFromNetwork())
+                }
+                _snackBarText.value =
+                    getApplication<Application>().getString(R.string.success_fetch_contests)
+            } catch (e: IOException) {
+                Log.e("ContestListViewModel", "Failed to fetch contests. $e")
+                _snackBarText.value =
+                    getApplication<Application>().getString(R.string.failed_fetch_contests)
             }
+
 
             _networkContestList.value = contests
             _progressBarVisible.value = false
         }
     }
 
-    private suspend fun fetchCFContests(): List<NetworkContest> {
-        return withContext(Dispatchers.IO) {
-            val list = CodeforcesApi.retrofitService.getContests().contestList
-            val contests = mutableListOf<NetworkContest>()
-            if (list.isNotEmpty()) {
-                loop@ for (contest in list) {
-                    contest.site = CODEFORCES_SITE
-                    when (contest.phase) {
-                        "BEFORE", "CODING" -> contests.add(contest)
-                        else -> break@loop
-                    }
-                }
-            }
-            return@withContext contests
-        }
+    fun onCompleteSnackBarEvent() {
+        _snackBarText.value = null
     }
 
-    private suspend fun fetchCCContests(): List<NetworkContest> {
-        return withContext(Dispatchers.IO) {
-            val list = mutableListOf<NetworkContest>()
-            try {
-                list.addAll(CodeforcesFetching.contestList)
-            } catch (e: IOException) {
-                Log.e("ContestListViewModel", "Failed to fetch Codechef contests.")
-            }
+    // Check Internet Connection
+    private fun checkConnection(): Boolean {
+        val cm = getApplication<Application>().applicationContext
+            .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-            return@withContext list
+        return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            val netInfo = cm.activeNetworkInfo
+            netInfo?.isConnectedOrConnecting == true
+        } else {
+            val activeNetwork = cm.activeNetwork
+            val capabilities = cm.getNetworkCapabilities(activeNetwork)
+
+            when {
+                capabilities == null -> false
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                        or capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+                        or capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+                -> true
+                else -> false
+            }
         }
     }
 }

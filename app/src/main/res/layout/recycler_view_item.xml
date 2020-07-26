@@ -9,27 +9,57 @@
             type="com.yogig.android.codingcalendar.network.NetworkContest" />
     </data>
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
+        style="@style/Widget.MaterialComponents.CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-        <TextView
-            android:id="@+id/contestName"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:focusable="true"
+        android:clickable="true"
+        app:cardElevation="8dp"
+        app:cardCornerRadius="16dp"
+        bindBackground="@{contestProperty.site}"
+        tools:cardBackgroundColor="@color/codeforcesColor">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="?colorOnSecondary"
-            android:textSize="18sp"
-            android:text="@{contestProperty.name}"
-            tools:text="Contest Name" />
+            android:orientation="vertical"
+            android:padding="16dp">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/siteLogo"
+                android:adjustViewBounds="true"
+                android:maxHeight="64dp"
+                android:maxWidth="320dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                websiteImage="@{contestProperty.site}"
+                tools:srcCompat="@drawable/ic_codechef_svg" />
+            <TextView
+                android:id="@+id/contestName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/titleColor"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:text="@{contestProperty.name}"
+                tools:text="Contest Name" />
 
-        <TextView
-            android:id="@+id/startTime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="?colorOnSecondary"
-            android:textSize="14sp"
-            app:contestTime="@{contestProperty}"
-            tools:text="Contest Time" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/startTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/subtitleColor"
+                android:textSize="14sp"
+                app:contestTime="@{contestProperty}"
+                tools:text="Contest Time" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

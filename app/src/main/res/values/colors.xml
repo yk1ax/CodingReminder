@@ -8,4 +8,8 @@
   <color name="secondaryDarkColor">#a94a1d</color>
   <color name="primaryTextColor">#ffffff</color>
   <color name="secondaryTextColor">#000000</color>
+  <color name="codeforcesColor">#B1DFFC</color>
+  <color name="codechefColor">#EDE2D3</color>
+  <color name="titleColor">#000000</color>
+  <color name="subtitleColor">#80000000</color>
 </resources>
