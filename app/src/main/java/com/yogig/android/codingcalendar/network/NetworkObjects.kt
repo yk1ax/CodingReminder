@@ -14,7 +14,7 @@ data class NetworkContest(
     val id: String,
     val name: String,
     val phase: String = "",
-    val durationSeconds: Long,
+    val durationSeconds: Long,      // codeforces in seconds, codechef in milliseconds
     val startTimeSeconds: Long,
     var site: SITE_TYPE,
     val websiteUrl: String = "")
