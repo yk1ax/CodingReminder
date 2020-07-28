@@ -2,33 +2,39 @@ package com.yogig.android.codingcalendar.network
 
 import android.util.Log
 import com.yogig.android.codingcalendar.contestList.SITE_TYPE
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.IOException
+import java.lang.Exception
 
 object NetworkRequests {
 
     @Throws(IOException::class)
-    suspend fun contestsFromNetwork(): MutableList<NetworkContest> {
+    suspend fun contestsFromNetwork(): List<NetworkContest> {
         val contests = mutableListOf<NetworkContest>()
 
         var exceptions = 0
-        val exceptionInfo = IOException()
-        try {
-            contests.addAll(fetchCFContests())
-        } catch (e: IOException) {
-            Log.i("NetworkRequests", "Failed $e")
-            exceptions++
-            exceptionInfo.addSuppressed(e)
-        }
+        val exceptionInfo = Exception()
 
-        try {
-            contests.addAll(CodeforcesFetching.contestList)
-        } catch (e: IOException) {
-            Log.i("NetworkRequests", "Failed $e")
-            exceptions++
-            exceptionInfo.addSuppressed(e)
-        }
+        withContext(Dispatchers.IO) {
+            try {
+                contests.addAll(fetchCFContests())
+            } catch (e: IOException) {
+                Log.i("NetworkRequests", "Failed $e")
+                exceptions++
+                exceptionInfo.addSuppressed(e)
+            }
 
-        contests.sortBy { it.startTimeSeconds + it.durationSeconds }
+            try {
+                contests.addAll(CodechefFetching.contestList)
+            } catch (e: IOException) {
+                Log.i("NetworkRequests", "Failed $e")
+                exceptions++
+                exceptionInfo.addSuppressed(e)
+            }
+
+            contests.sortBy { it.startTimeSeconds + it.durationSeconds }
+        }
 
         if(exceptions == 2) {
             throw exceptionInfo

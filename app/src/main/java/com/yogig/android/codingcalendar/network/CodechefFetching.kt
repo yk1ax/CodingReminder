@@ -46,6 +46,6 @@ private fun jsoupFetch(): List<NetworkContest> {
     return list
 }
 
-object CodeforcesFetching {
+object CodechefFetching {
     val contestList: List<NetworkContest> by lazy { jsoupFetch() }
 }

@@ -9,6 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.yogig.android.codingcalendar.ContestListAdapter
+import com.yogig.android.codingcalendar.R
+import com.yogig.android.codingcalendar.database.ContestDatabase
 import com.yogig.android.codingcalendar.databinding.ContestListFragmentBinding
 
 class ContestListFragment : Fragment() {
@@ -28,23 +30,35 @@ class ContestListFragment : Fragment() {
         binding = ContestListFragmentBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
-        viewModel = ViewModelProvider(this).get(ContestListViewModel::class.java)
+        val application = requireNotNull(activity).application
+
+        val database = ContestDatabase.getInstance(application)
+
+        val viewModelFactory = ContestListViewModelFactory(database,application)
+
+        viewModel = ViewModelProvider(this, viewModelFactory).get(ContestListViewModel::class.java)
         binding.viewModel = viewModel
 
         binding.contestRecyclerView.adapter = ContestListAdapter()
 
         viewModel.progressBarVisible.observe(viewLifecycleOwner, Observer {
             if(it) {
-                binding.progressBar.visibility = View.VISIBLE
+                binding.progressIndicator.visibility = View.VISIBLE
             }
             else {
-                binding.progressBar.visibility = View.GONE
+                binding.progressIndicator.visibility = View.GONE
             }
         })
 
         viewModel.snackBarText.observe(viewLifecycleOwner, Observer {
             it?.let {
-                Snackbar.make(binding.root, it, Snackbar.LENGTH_INDEFINITE).show()
+                if(it.substring(0..6) == "Fetched") {
+                    Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
+                } else if(it == getString(R.string.no_internet)){
+                    Snackbar.make(binding.root, it, Snackbar.LENGTH_INDEFINITE)
+                        .setAction("RETRY", View.OnClickListener { viewModel.retryFetching() })
+                        .show()
+                }
                 viewModel.onCompleteSnackBarEvent()
             }
         })
