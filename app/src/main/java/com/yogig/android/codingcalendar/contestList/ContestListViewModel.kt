@@ -10,8 +10,11 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.yogig.android.codingcalendar.R
+import com.yogig.android.codingcalendar.database.ContestDatabase
 import com.yogig.android.codingcalendar.network.NetworkContest
 import com.yogig.android.codingcalendar.network.NetworkRequests
+import com.yogig.android.codingcalendar.repository.Contest
+import com.yogig.android.codingcalendar.repository.ContestRepository
 import kotlinx.coroutines.*
 import java.io.IOException
 
@@ -20,7 +23,7 @@ enum class SITE_TYPE(val type: Int) {
     CODECHEF_SITE(2)
 }
 
-class ContestListViewModel(app: Application) : AndroidViewModel(app) {
+class ContestListViewModel(database: ContestDatabase, app: Application) : AndroidViewModel(app) {
 
     private val viewModelJob = Job()
 
@@ -31,9 +34,7 @@ class ContestListViewModel(app: Application) : AndroidViewModel(app) {
         viewModelJob.cancel()
     }
 
-    private val _networkContestList = MutableLiveData<List<NetworkContest>>()
-    val networkContestList: LiveData<List<NetworkContest>>
-        get() = _networkContestList
+
 
     private val _progressBarVisible = MutableLiveData<Boolean>(true)
     val progressBarVisible: LiveData<Boolean>
@@ -43,7 +44,11 @@ class ContestListViewModel(app: Application) : AndroidViewModel(app) {
     val snackBarText: LiveData<String?>
         get() = _snackBarText
 
+    val repository: ContestRepository = ContestRepository(database)
+    val currentContestList: LiveData<List<Contest>>
+
     init {
+        currentContestList = repository.contests
 
         if (checkConnection()) {
             fetchContests()
@@ -53,13 +58,21 @@ class ContestListViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
+    fun retryFetching() {
+        if (checkConnection()) {
+            fetchContests()
+        } else {
+            _snackBarText.value = getApplication<Application>().getString(R.string.no_internet)
+            _progressBarVisible.value = false
+        }
+    }
+
     private fun fetchContests() {
         coroutineScope.launch {
-            val contests = mutableListOf<NetworkContest>()
 
             try {
                 withContext(Dispatchers.IO) {
-                    contests.addAll(NetworkRequests.contestsFromNetwork())
+                    repository.refreshContests()
                 }
                 _snackBarText.value =
                     getApplication<Application>().getString(R.string.success_fetch_contests)
@@ -69,8 +82,6 @@ class ContestListViewModel(app: Application) : AndroidViewModel(app) {
                     getApplication<Application>().getString(R.string.failed_fetch_contests)
             }
 
-
-            _networkContestList.value = contests
             _progressBarVisible.value = false
         }
     }
@@ -84,7 +95,7 @@ class ContestListViewModel(app: Application) : AndroidViewModel(app) {
         val cm = getApplication<Application>().applicationContext
             .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-        return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+        return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             val netInfo = cm.activeNetworkInfo
             netInfo?.isConnectedOrConnecting == true
         } else {

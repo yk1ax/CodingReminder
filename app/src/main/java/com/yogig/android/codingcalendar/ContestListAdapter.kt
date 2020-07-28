@@ -7,24 +7,25 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.yogig.android.codingcalendar.databinding.RecyclerViewItemBinding
 import com.yogig.android.codingcalendar.network.NetworkContest
+import com.yogig.android.codingcalendar.repository.Contest
 
 class ContestListAdapter:
-    ListAdapter<NetworkContest, ContestListAdapter.ContestViewHolder>(DiffCallback) {
+    ListAdapter<Contest, ContestListAdapter.ContestViewHolder>(DiffCallback) {
 
     class ContestViewHolder(private var binding: RecyclerViewItemBinding):
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(contest: NetworkContest) {
+        fun bind(contest: Contest) {
             binding.contestProperty = contest
             binding.executePendingBindings()
         }
     }
 
-    companion object DiffCallback : DiffUtil.ItemCallback<NetworkContest>() {
-        override fun areItemsTheSame(oldItem: NetworkContest, newItem: NetworkContest): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<Contest>() {
+        override fun areItemsTheSame(oldItem: Contest, newItem: Contest): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: NetworkContest, newItem: NetworkContest): Boolean {
+        override fun areContentsTheSame(oldItem: Contest, newItem: Contest): Boolean {
             return oldItem == newItem
         }
     }

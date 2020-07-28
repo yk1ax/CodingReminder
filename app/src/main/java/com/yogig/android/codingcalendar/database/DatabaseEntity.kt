@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.yogig.android.codingcalendar.contestList.SITE_TYPE
+import com.yogig.android.codingcalendar.repository.Contest
 
 @Entity(tableName = "contest_table")
 data class DatabaseContest(
@@ -21,3 +22,18 @@ data class DatabaseContest(
     @ColumnInfo(name = "website_url")
     val websiteUrl: String
 )
+
+fun List<DatabaseContest>.asDomainModel(): List<Contest> {
+    return map {
+        Contest(
+            it.id,
+            it.name,
+            it.phase,
+            it.startTimeMilliseconds,
+            it.durationMilliseconds,
+            it.endTimeSeconds,
+            it.site,
+            it.websiteUrl
+        )
+    }
+}

@@ -9,28 +9,28 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.yogig.android.codingcalendar.contestList.SITE_TYPE
 import com.yogig.android.codingcalendar.network.NetworkContest
+import com.yogig.android.codingcalendar.repository.Contest
 import java.text.DateFormat
 import java.util.*
 
 @BindingAdapter("contestList")
-fun setContestList(view: RecyclerView, contestList: List<NetworkContest>?) {
+fun setContestList(view: RecyclerView, contestList: List<Contest>?) {
     val adapter = view.adapter as ContestListAdapter
     adapter.submitList(contestList)
     Log.i("BindingAdapters", "Here the list has ${contestList?.size?:-1} elements.")
 }
 
 @BindingAdapter("contestTime")
-fun TextView.setContestTime(contest: NetworkContest) {
+fun TextView.setContestTime(contest: Contest) {
     // converts text to the like of 20:05 - 22:05
     val builder = StringBuilder()
-    val dateObj = Date(contest.startTimeSeconds
-        .times( if(contest.site == SITE_TYPE.CODEFORCES_SITE) 1000 else 1 )
-    )
+    val dateObj = Date(contest.startTimeMilliseconds)
 
     val dateFormatter = DateFormat.getDateTimeInstance(DateFormat.DEFAULT,DateFormat.SHORT,Locale.UK)
     builder.append(dateFormatter.format(dateObj))
     builder.append(" - ")
-    dateObj.time += contest.durationSeconds.times( if(contest.site == SITE_TYPE.CODEFORCES_SITE) 1000 else 1 )
+    dateObj.time += contest.durationMilliseconds
+
     builder.append(dateFormatter.format(dateObj))
 
     text = builder.toString()
