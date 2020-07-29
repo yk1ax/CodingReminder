@@ -11,7 +11,10 @@ import com.yogig.android.codingcalendar.contestList.SITE_TYPE
 import com.yogig.android.codingcalendar.network.NetworkContest
 import com.yogig.android.codingcalendar.repository.Contest
 import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.ZoneId
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 @BindingAdapter("contestList")
 fun setContestList(view: RecyclerView, contestList: List<Contest>?) {
@@ -52,4 +55,32 @@ fun CardView.setColor(type: SITE_TYPE){
             else -> R.color.codeforcesColor
         }
     ))
+}
+
+@BindingAdapter("timeLeftFormatted")
+fun TextView.setTimeFormatted(contest: Contest) {
+    val curTime = System.currentTimeMillis()
+    text = when {
+        contest.startTimeMilliseconds > curTime -> "Starts in "
+            .plus(timeLeftFormatted(contest.startTimeMilliseconds - curTime))
+        contest.endTimeSeconds > curTime -> "Ends in "
+            .plus(timeLeftFormatted(contest.endTimeSeconds - curTime))
+        else -> ""
+    }
+}
+
+private fun timeLeftFormatted(time: Long): String {
+    val calendar = Calendar.getInstance()
+    calendar.timeInMillis = time - TimeZone.getDefault().rawOffset
+
+    var period = calendar.get(Calendar.YEAR)-1970
+    if(period !=0) return "$period year".plus(if(period>1) "s" else "")
+    period = calendar.get(Calendar.MONTH)
+    if(period != 0) return "$period month".plus(if(period>1) "s" else "")
+    period = calendar.get(Calendar.DAY_OF_MONTH)-1
+    if(period != 0) return "$period day".plus(if(period>1) "s" else "")
+    period = calendar.get(Calendar.HOUR_OF_DAY)
+    if(period != 0) return "$period hour".plus(if(period>1) "s" else "")
+    period = calendar.get(Calendar.MINUTE)
+    return "$period minute".plus(if(period>1) "s" else "")
 }

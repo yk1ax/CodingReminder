@@ -9,7 +9,7 @@ import com.yogig.android.codingcalendar.databinding.RecyclerViewItemBinding
 import com.yogig.android.codingcalendar.network.NetworkContest
 import com.yogig.android.codingcalendar.repository.Contest
 
-class ContestListAdapter:
+class ContestListAdapter(val onClickListener: OnClickListener):
     ListAdapter<Contest, ContestListAdapter.ContestViewHolder>(DiffCallback) {
 
     class ContestViewHolder(private var binding: RecyclerViewItemBinding):
@@ -38,7 +38,14 @@ class ContestListAdapter:
 
     override fun onBindViewHolder(holder: ContestViewHolder, position: Int) {
         val conetestProperty = getItem(position)
+        holder.itemView.setOnClickListener {
+            onClickListener.onClick(conetestProperty)
+        }
 
         holder.bind(conetestProperty)
+    }
+
+    class OnClickListener(private val clickListener: (contest: Contest) -> Unit) {
+        fun onClick(contest: Contest) = clickListener(contest)
     }
 }

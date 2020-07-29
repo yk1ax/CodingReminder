@@ -23,43 +23,82 @@
         app:cardCornerRadius="16dp"
         bindBackground="@{contestProperty.site}"
         tools:cardBackgroundColor="@color/codeforcesColor">
-        <LinearLayout
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
+
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
                 android:id="@+id/siteLogo"
-                android:adjustViewBounds="true"
-                android:maxHeight="64dp"
-                android:maxWidth="320dp"
+                websiteImage="@{contestProperty.site}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                websiteImage="@{contestProperty.site}"
+                android:adjustViewBounds="true"
+                android:maxWidth="320dp"
+                android:maxHeight="64dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@drawable/ic_codechef_svg" />
+
             <TextView
                 android:id="@+id/contestName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/titleColor"
-                android:textSize="18sp"
+                android:layout_marginTop="16dp"
                 android:gravity="center"
                 android:text="@{contestProperty.name}"
+                android:textColor="@color/titleColor"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/siteLogo"
+                tools:layout_editor_absoluteX="16dp"
                 tools:text="Contest Name" />
 
             <TextView
-                android:id="@+id/startTime"
+                android:id="@+id/contestTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_marginTop="8dp"
+                android:gravity="center"
                 android:textColor="@color/subtitleColor"
                 android:textSize="14sp"
                 app:contestTime="@{contestProperty}"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintTop_toBottomOf="@id/contestName"
                 tools:text="Contest Time" />
-        </LinearLayout>
+
+            <TextView
+                android:id="@+id/timeLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/subtitleColor"
+                android:textSize="14sp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:timeLeftFormatted="@{contestProperty}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/contestTime"
+                tools:text="Starts in a day" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:contentDescription="Time left icon"
+                app:layout_constraintBottom_toBottomOf="@+id/timeLeft"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/timeLeft"
+                app:layout_constraintTop_toTopOf="@+id/timeLeft"
+                app:srcCompat="@drawable/ic_time_left" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>
