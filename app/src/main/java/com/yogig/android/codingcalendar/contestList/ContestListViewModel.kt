@@ -59,6 +59,7 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
     }
 
     fun retryFetching() {
+        _progressBarVisible.value = true
         if (checkConnection()) {
             fetchContests()
         } else {
@@ -71,11 +72,18 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
         coroutineScope.launch {
 
             try {
+                var new = 0
                 withContext(Dispatchers.IO) {
-                    repository.refreshContests()
+                    new = repository.refreshContests()
                 }
-                _snackBarText.value =
-                    getApplication<Application>().getString(R.string.success_fetch_contests)
+                if(new == 0) {
+                    _snackBarText.value =
+                        getApplication<Application>().getString(R.string.no_new_contest)
+                } else {
+                    _snackBarText.value =
+                        getApplication<Application>().getString(R.string.success_fetch_contests, new)
+                }
+
             } catch (e: IOException) {
                 Log.e("ContestListViewModel", "Failed to fetch contests. $e")
                 _snackBarText.value =

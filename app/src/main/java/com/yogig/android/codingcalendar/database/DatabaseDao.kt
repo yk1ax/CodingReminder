@@ -11,12 +11,20 @@ interface ContestDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg list: DatabaseContest)
 
+    @Insert
+    fun insertContest(contest: DatabaseContest)
+
+    @Update
+    fun updateContest(contest: DatabaseContest)
+
     @Query("SELECT * from contest_table ORDER BY end_time_milliseconds ASC")
     fun getContests(): LiveData<List<DatabaseContest>>
 
     @Delete
     fun deleteContest(contest: DatabaseContest)
 
+    @Query("SELECT * from contest_table WHERE id = :id")
+    fun getContest(id: String): DatabaseContest?
 
     @Query("DELETE FROM contest_table WHERE end_time_milliseconds <= :curTime")
     fun validateContests(curTime: Long)
@@ -37,7 +45,7 @@ class Converters{
     }
 }
 
-@Database(entities = [DatabaseContest::class], version = 1)
+@Database(entities = [DatabaseContest::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class ContestDatabase: RoomDatabase() {
     abstract val contestDao: ContestDao

@@ -50,18 +50,12 @@ class ContestListFragment : Fragment() {
             }
         })
 
+        // Work on it for different types of snackBars depending upon the type of result
         viewModel.snackBarText.observe(viewLifecycleOwner, Observer {
             it?.let {
-                Snackbar.make(binding.root, it, Snackbar.LENGTH_INDEFINITE).show()
-                viewModel.onCompleteSnackBarEvent()
-            }
-        })
-
-        viewModel.snackBarText.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                if(it.startsWith("Fetched")) {
+                if(it.startsWith("Fetched") || it == getString(R.string.no_new_contest)) {
                     Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
-                } else if(it == getString(R.string.no_internet)){
+                } else {
                     Snackbar.make(binding.root, it, Snackbar.LENGTH_INDEFINITE)
                         .setAction("RETRY") { viewModel.retryFetching() }
                         .show()

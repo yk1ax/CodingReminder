@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Coding Calendar</string>
-    <string name="success_fetch_contests">Fetched new Contests.</string>
+    <string name="no_new_contest">No new contest.</string>
+    <string name="success_fetch_contests">Fetched %1$d new Contests.</string>
     <string name="failed_fetch_contests">Failed to fetch contests.</string>
     <string name="no_internet">No Internet Connection.</string>
 </resources>
