@@ -12,4 +12,5 @@
   <color name="codechefColor">#CAB9A2</color>
   <color name="titleColor">#000000</color>
   <color name="subtitleColor">#80000000</color>
+  <color name="trackColor">@color/primaryLightColor</color>
 </resources>

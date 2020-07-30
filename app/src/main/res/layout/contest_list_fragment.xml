@@ -19,6 +19,7 @@
             style="@style/Widget.MaterialComponents.ProgressIndicator.Linear.Indeterminate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:elevation="12dp"
             app:indicatorType="linear"
             app:layout_constraintTop_toTopOf="parent"/>
 <!--        <androidx.core.widget.ContentLoadingProgressBar-->

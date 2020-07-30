@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.yogig.android.codingcalendar.databinding.RecyclerViewItemBinding
-import com.yogig.android.codingcalendar.network.NetworkContest
 import com.yogig.android.codingcalendar.repository.Contest
 
 class ContestListAdapter(val onClickListener: OnClickListener):

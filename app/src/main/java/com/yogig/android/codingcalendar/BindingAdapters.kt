@@ -74,13 +74,27 @@ private fun timeLeftFormatted(time: Long): String {
     calendar.timeInMillis = time - TimeZone.getDefault().rawOffset
 
     var period = calendar.get(Calendar.YEAR)-1970
-    if(period !=0) return "$period year".plus(if(period>1) "s" else "")
+    if(period !=0) {
+        if(calendar.get(Calendar.MONTH) >= 6) period++
+        return "$period year".plus(if(period>1) "s" else "")
+    }
+
     period = calendar.get(Calendar.MONTH)
-    if(period != 0) return "$period month".plus(if(period>1) "s" else "")
+    if(period != 0) {
+        if(calendar.get(Calendar.DAY_OF_MONTH)-1 > 15) period++
+        return "$period month".plus(if(period>1) "s" else "")
+    }
+
     period = calendar.get(Calendar.DAY_OF_MONTH)-1
-    if(period != 0) return "$period day".plus(if(period>1) "s" else "")
+    if(period != 0) {
+        if(calendar.get(Calendar.HOUR_OF_DAY) > 12) period++
+        return "$period day".plus(if(period>1) "s" else "")
+    }
     period = calendar.get(Calendar.HOUR_OF_DAY)
-    if(period != 0) return "$period hour".plus(if(period>1) "s" else "")
+    if(period != 0) {
+        if(calendar.get(Calendar.MINUTE) > 30) period++
+        return "$period hour".plus(if(period>1) "s" else "")
+    }
     period = calendar.get(Calendar.MINUTE)
     return "$period minute".plus(if(period>1) "s" else "")
 }

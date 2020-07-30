@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
@@ -10,10 +10,14 @@
         <item name="colorSecondary">@color/secondaryColor</item>
         <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>
         <item name="colorOnSecondary">@color/secondaryTextColor</item>
+        <item name="progressIndicatorStyle">@style/progressIndicator</item>
     </style>
 
     <style name="ActionBarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
         <item name="colorControlNormal">@color/primaryTextColor</item>
     </style>
 
+    <style name="progressIndicator" parent="Widget.MaterialComponents.ProgressIndicator.Linear.Indeterminate">
+        <item name="trackColor">@color/trackColor</item>
+    </style>
 </resources>

@@ -54,7 +54,7 @@
                 android:gravity="center"
                 android:text="@{contestProperty.name}"
                 android:textColor="@color/titleColor"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 app:layout_constraintTop_toBottomOf="@id/siteLogo"
                 android:transitionName="contest_name"
                 tools:layout_editor_absoluteX="16dp"

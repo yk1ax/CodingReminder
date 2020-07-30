@@ -2,20 +2,13 @@ package com.yogig.android.codingcalendar
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import com.google.gson.Gson
 import com.yogig.android.codingcalendar.databinding.ActivityMainBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import retrofit2.HttpException
-import retrofit2.await
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,12 +20,11 @@ class MainActivity : AppCompatActivity() {
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         this.setSupportActionBar(binding.toolbar)
 
-        navController = this.findNavController(R.id.navHostFragment)
+        navController = this.findNavController(R.id.nav_host_fragment)
+
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
 
         NavigationUI.setupWithNavController(binding.toolbar, navController)
-
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-
-
     }
 }

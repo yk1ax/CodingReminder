@@ -21,14 +21,14 @@
             android:elevation="16dp"/>
 
         <fragment
-            android:id="@+id/navHostFragment"
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:defaultNavHost="true"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            app:navGraph="@navigation/nav_graph"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_graph"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

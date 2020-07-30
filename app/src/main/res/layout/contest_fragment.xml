@@ -41,7 +41,7 @@
             android:gravity="center"
             android:text="@{contestProperty.name}"
             android:textColor="@color/titleColor"
-            android:textSize="22sp"
+            android:textSize="24sp"
             app:layout_constraintTop_toBottomOf="@id/siteLogo"
             tools:layout_editor_absoluteX="16dp"
             tools:text="Contest Name" />
@@ -90,9 +90,10 @@
             android:id="@+id/calendarButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="64dp"
             android:onClick="@{() -> viewModel.onClickCalendarEvent()}"
             android:text="@string/add_to_calendar"
+            app:icon="@drawable/ic_calendar_event"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/timeLeft" />
@@ -104,6 +105,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/go_to_website"
             android:onClick="@{() -> viewModel.onclickWebsiteEvent()}"
+            app:icon="@drawable/ic_open_in_browser"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/calendarButton" />

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primaryColor">#4e0000</color>
+    <color name="primaryLightColor">#7f302b</color>
+    <color name="primaryDarkColor">#300000</color>
+    <color name="secondaryColor">#a94a1d</color>
+    <color name="secondaryLightColor">#e07848</color>
+    <color name="secondaryDarkColor">#741d00</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#ffffff</color>
+    <color name="codeforcesColor">#003f64</color>
+    <color name="codechefColor">#583118</color>
+    <color name="titleColor">#ffffff</color>
+    <color name="subtitleColor">#80ffffff</color>
+    <color name="trackColor">#7f302b</color>
+</resources>
