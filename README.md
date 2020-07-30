@@ -10,8 +10,8 @@ For APK `TODO:- add a drive link`
 - [x] Improve UI after designing in Adobe XD
 - [x] Adding Database
 - [x] Adding Repository layer to interact with network and database
-- [ ] Adding Contest Fragment for details of single contest
-- [ ] Feature to add it in Calendar
+- [x] Adding Contest Fragment for details of single contest
+- [x] Feature to add it in Calendar
 - [ ] Filtering contests with chips
 - [ ] Filtering contests with SharedPreferences (_think of more options to put in it_)
 - [ ] Swipe refresh functionality
