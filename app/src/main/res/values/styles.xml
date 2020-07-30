@@ -12,4 +12,8 @@
         <item name="colorOnSecondary">@color/secondaryTextColor</item>
     </style>
 
+    <style name="ActionBarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">@color/primaryTextColor</item>
+    </style>
+
 </resources>

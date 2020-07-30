@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/contestListFragment"
         android:name="com.yogig.android.codingcalendar.contestList.ContestListFragment"
-        android:label="contest_list_fragment"
+        android:label="@string/app_name"
         tools:layout="@layout/contest_list_fragment" >
         <action
             android:id="@+id/action_contestListFragment_to_contestFragment"
@@ -17,7 +17,7 @@
     <fragment
         android:id="@+id/contestFragment"
         android:name="com.yogig.android.codingcalendar.contestFragment.ContestFragment"
-        android:label="contest_fragment"
+        android:label="@string/app_name"
         tools:layout="@layout/contest_fragment" >
         <argument
             android:name="contest"

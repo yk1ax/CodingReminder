@@ -5,4 +5,5 @@
     <string name="failed_fetch_contests">Failed to fetch contests.</string>
     <string name="no_internet">No Internet Connection.</string>
     <string name="add_to_calendar">Add to Calendar</string>
+    <string name="go_to_website">Go to website</string>
 </resources>

@@ -43,6 +43,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:transitionName="site_logo"
                 tools:srcCompat="@drawable/ic_codechef_svg" />
 
             <TextView
@@ -55,6 +56,7 @@
                 android:textColor="@color/titleColor"
                 android:textSize="18sp"
                 app:layout_constraintTop_toBottomOf="@id/siteLogo"
+                android:transitionName="contest_name"
                 tools:layout_editor_absoluteX="16dp"
                 tools:text="Contest Name" />
 
@@ -69,6 +71,7 @@
                 app:contestTime="@{contestProperty}"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintTop_toBottomOf="@id/contestName"
+                android:transitionName="contest_time"
                 tools:text="Contest Time" />
 
             <TextView
@@ -84,6 +87,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/contestTime"
+                android:transitionName="time_left"
                 tools:text="Starts in a day" />
 
             <ImageView
@@ -96,7 +100,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/timeLeft"
                 app:layout_constraintTop_toTopOf="@+id/timeLeft"
-                app:srcCompat="@drawable/ic_time_left" />
+                app:srcCompat="@drawable/ic_time_left"
+                android:transitionName="clock_icon"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

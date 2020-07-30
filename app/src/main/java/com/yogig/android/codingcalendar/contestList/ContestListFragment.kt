@@ -32,11 +32,9 @@ class ContestListFragment : Fragment() {
         binding.lifecycleOwner = this
 
         val application = requireNotNull(activity).application
-
         val database = ContestDatabase.getInstance(application)
 
         val viewModelFactory = ContestListViewModelFactory(database,application)
-
         viewModel = ViewModelProvider(this, viewModelFactory).get(ContestListViewModel::class.java)
         binding.viewModel = viewModel
 

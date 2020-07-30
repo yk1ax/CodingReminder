@@ -87,13 +87,26 @@
             app:srcCompat="@drawable/ic_time_left" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/calendarButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="40dp"
+            android:onClick="@{() -> viewModel.onClickCalendarEvent()}"
             android:text="@string/add_to_calendar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/timeLeft" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/websiteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/go_to_website"
+            android:onClick="@{() -> viewModel.onclickWebsiteEvent()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/calendarButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
