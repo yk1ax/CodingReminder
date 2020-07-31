@@ -17,7 +17,7 @@ interface ContestDao {
     @Update
     fun updateContest(contest: DatabaseContest)
 
-    @Query("SELECT * from contest_table ORDER BY end_time_milliseconds ASC")
+    @Query("SELECT * from contest_table")
     fun getContests(): LiveData<List<DatabaseContest>>
 
     @Delete

@@ -16,6 +16,9 @@ import java.time.ZoneId
 import java.util.*
 import java.util.concurrent.TimeUnit
 
+/**
+ * Using data binding for submitting list for the recycler view adapter
+ */
 @BindingAdapter("contestList")
 fun setContestList(view: RecyclerView, contestList: List<Contest>?) {
     val adapter = view.adapter as ContestListAdapter
@@ -23,6 +26,10 @@ fun setContestList(view: RecyclerView, contestList: List<Contest>?) {
     Log.i("BindingAdapters", "Here the list has ${contestList?.size?:-1} elements.")
 }
 
+/**
+ * Passing @param[contest] to return the period of contest as string in the form
+ * DD MMM YYYY HH:mm - DD MMM YYYY HH:mm
+ */
 @BindingAdapter("contestTime")
 fun TextView.setContestTime(contest: Contest) {
     // converts text to the like of 20:05 - 22:05
@@ -39,6 +46,9 @@ fun TextView.setContestTime(contest: Contest) {
     text = builder.toString()
 }
 
+/**
+ * Sets vector drawable of the logo of the Website depending upon the contest site
+ */
 @BindingAdapter("websiteImage")
 fun ImageView.setWebsiteImage(type: SITE_TYPE) {
     setImageResource(when(type) {
@@ -47,6 +57,9 @@ fun ImageView.setWebsiteImage(type: SITE_TYPE) {
     })
 }
 
+/**
+ * Sets the background color for the card view depending upon the contest site
+ */
 @BindingAdapter("bindBackground")
 fun CardView.setColor(type: SITE_TYPE){
     setCardBackgroundColor(ContextCompat.getColor( context,
@@ -57,6 +70,10 @@ fun CardView.setColor(type: SITE_TYPE){
     ))
 }
 
+/**
+ * Sets the formatted text for a contest showing time left before start / end
+ * "Starts in @return[timeLeftFormatted]" or "Ends in @return[timeLeftFormatted]"
+ */
 @BindingAdapter("timeLeftFormatted")
 fun TextView.setTimeFormatted(contest: Contest) {
     val curTime = System.currentTimeMillis()
@@ -69,6 +86,14 @@ fun TextView.setTimeFormatted(contest: Contest) {
     }
 }
 
+/**
+ * @
+ * Formats the text for showing time left
+ * @param[time] ->   time in milliseconds which has to be converted in units
+ *                  of year(s) / month(s) / day(s) / hour(s) / minute(s)
+ * @return -> A string of the format "__ month(s)"
+ * It also rounds off depending upon the proximity to the lower limit and to the upper limit
+ */
 private fun timeLeftFormatted(time: Long): String {
     val calendar = Calendar.getInstance()
     calendar.timeInMillis = time - TimeZone.getDefault().rawOffset

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.yogig.android.codingcalendar.ContestListAdapter
 import com.yogig.android.codingcalendar.R
@@ -38,6 +39,8 @@ class ContestListFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(ContestListViewModel::class.java)
         binding.viewModel = viewModel
 
+        val columnCount = resources.getInteger(R.integer.grid_column_count)
+        binding.contestRecyclerView.layoutManager = GridLayoutManager(context, columnCount)
         binding.contestRecyclerView.adapter = ContestListAdapter(ContestListAdapter.OnClickListener {
             viewModel.onCalendarNavigate(it)
         })

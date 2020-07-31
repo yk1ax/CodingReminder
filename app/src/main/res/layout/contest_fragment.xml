@@ -1,115 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".contestFragment.ContestFragment">
 
     <data>
+
         <variable
             name="contestProperty"
             type="com.yogig.android.codingcalendar.repository.Contest" />
+
         <variable
             name="viewModel"
             type="com.yogig.android.codingcalendar.contestFragment.ContestViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/siteLogo"
-            websiteImage="@{contestProperty.site}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="80dp"
-            android:adjustViewBounds="true"
-            android:maxHeight="120dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/ic_codechef_svg" />
-
-        <TextView
-            android:id="@+id/contestName"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
-            android:gravity="center"
-            android:text="@{contestProperty.name}"
-            android:textColor="@color/titleColor"
-            android:textSize="24sp"
-            app:layout_constraintTop_toBottomOf="@id/siteLogo"
-            tools:layout_editor_absoluteX="16dp"
-            tools:text="Contest Name" />
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <TextView
-            android:id="@+id/contestTime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:gravity="center"
-            android:textColor="@color/subtitleColor"
-            android:textSize="18sp"
-            app:contestTime="@{contestProperty}"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintTop_toBottomOf="@id/contestName"
-            tools:text="Contest Time" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/siteLogo"
+                websiteImage="@{contestProperty.site}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="80dp"
+                android:adjustViewBounds="true"
+                android:maxHeight="120dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/ic_codechef_svg" />
 
-        <TextView
-            android:id="@+id/timeLeft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@color/subtitleColor"
-            android:textSize="14sp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:timeLeftFormatted="@{contestProperty}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/contestTime"
-            tools:text="Starts in a day" />
+            <TextView
+                android:id="@+id/contestName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:gravity="center"
+                android:text="@{contestProperty.name}"
+                android:textColor="@color/titleColor"
+                android:textSize="24sp"
+                app:layout_constraintTop_toBottomOf="@id/siteLogo"
+                tools:layout_editor_absoluteX="16dp"
+                tools:text="Contest Name" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:contentDescription="Time left icon"
-            app:layout_constraintBottom_toBottomOf="@+id/timeLeft"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/timeLeft"
-            app:layout_constraintTop_toTopOf="@+id/timeLeft"
-            app:srcCompat="@drawable/ic_time_left" />
+            <TextView
+                android:id="@+id/contestTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:textColor="@color/subtitleColor"
+                android:textSize="18sp"
+                app:contestTime="@{contestProperty}"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintTop_toBottomOf="@id/contestName"
+                tools:text="Contest Time" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/calendarButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="64dp"
-            android:onClick="@{() -> viewModel.onClickCalendarEvent()}"
-            android:text="@string/add_to_calendar"
-            app:icon="@drawable/ic_calendar_event"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/timeLeft" />
+            <TextView
+                android:id="@+id/timeLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:textColor="@color/subtitleColor"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@id/imageView"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/contestTime"
+                app:timeLeftFormatted="@{contestProperty}"
+                tools:text="Starts in a day" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/websiteButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/go_to_website"
-            android:onClick="@{() -> viewModel.onclickWebsiteEvent()}"
-            app:icon="@drawable/ic_open_in_browser"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/calendarButton" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:contentDescription="Time left icon"
+                app:layout_constraintBottom_toBottomOf="@+id/timeLeft"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/timeLeft"
+                app:layout_constraintTop_toTopOf="@+id/timeLeft"
+                app:srcCompat="@drawable/ic_time_left" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/calendarButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="64dp"
+                android:onClick="@{() -> viewModel.onClickCalendarEvent()}"
+                android:text="@string/add_to_calendar"
+                app:icon="@drawable/ic_calendar_event"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/timeLeft" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/websiteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="64dp"
+                android:onClick="@{() -> viewModel.onclickWebsiteEvent()}"
+                android:text="@string/go_to_website"
+                app:icon="@drawable/ic_open_in_browser"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/calendarButton" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

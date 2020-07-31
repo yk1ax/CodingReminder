@@ -32,8 +32,6 @@ object NetworkRequests {
                 exceptions++
                 exceptionInfo.addSuppressed(e)
             }
-
-            contests.sortBy { it.startTimeSeconds + it.durationSeconds }
         }
 
         if(exceptions == 2) {
