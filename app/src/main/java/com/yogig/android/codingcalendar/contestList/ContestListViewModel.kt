@@ -11,8 +11,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.yogig.android.codingcalendar.R
 import com.yogig.android.codingcalendar.database.ContestDatabase
-import com.yogig.android.codingcalendar.network.NetworkContest
-import com.yogig.android.codingcalendar.network.NetworkRequests
 import com.yogig.android.codingcalendar.repository.Contest
 import com.yogig.android.codingcalendar.repository.ContestRepository
 import kotlinx.coroutines.*
@@ -36,9 +34,9 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
 
 
 
-    private val _progressBarVisible = MutableLiveData<Boolean>(true)
-    val progressBarVisible: LiveData<Boolean>
-        get() = _progressBarVisible
+    private val _refreshingState = MutableLiveData<Int>(1)
+    val progressBarVisible: LiveData<Int>
+        get() = _refreshingState
 
     private val _snackBarText = MutableLiveData<String?>()
     val snackBarText: LiveData<String?>
@@ -66,17 +64,17 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
             fetchContests()
         } else {
             _snackBarText.value = app.getString(R.string.no_internet)
-            _progressBarVisible.value = false
+            _refreshingState.value = 0
         }
     }
 
     fun retryFetching() {
-        _progressBarVisible.value = true
+        _refreshingState.value = 1
         if (checkConnection()) {
             fetchContests()
         } else {
             _snackBarText.value = getApplication<Application>().getString(R.string.no_internet)
-            _progressBarVisible.value = false
+            _refreshingState.value = 0
         }
     }
 
@@ -102,7 +100,7 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
                     getApplication<Application>().getString(R.string.failed_fetch_contests)
             }
 
-            _progressBarVisible.value = false
+            _refreshingState.value = 0
         }
     }
 

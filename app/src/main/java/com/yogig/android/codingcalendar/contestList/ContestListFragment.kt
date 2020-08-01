@@ -1,14 +1,13 @@
 package com.yogig.android.codingcalendar.contestList
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
 import com.yogig.android.codingcalendar.ContestListAdapter
 import com.yogig.android.codingcalendar.R
@@ -44,12 +43,16 @@ class ContestListFragment : Fragment() {
         binding.contestRecyclerView.adapter = ContestListAdapter(ContestListAdapter.OnClickListener {
             viewModel.onCalendarNavigate(it)
         })
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.retryFetching()
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
 
         viewModel.progressBarVisible.observe(viewLifecycleOwner, Observer {
-            if(it) {
+            if(it == 1) {
                 binding.progressIndicator.visibility = View.VISIBLE
             }
-            else {
+            else if(it == 0) {
                 binding.progressIndicator.visibility = View.GONE
             }
         })
@@ -75,9 +78,24 @@ class ContestListFragment : Fragment() {
                 viewModel.onCalendarNavigateCompleted()
             }
         })
+        setHasOptionsMenu(true)
 
         return binding.root
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_menu, menu)
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.refresh_item -> {
+                viewModel.retryFetching()
+                true
+            }
+            else -> {
+                false
+            }
+        }
+    }
 }
