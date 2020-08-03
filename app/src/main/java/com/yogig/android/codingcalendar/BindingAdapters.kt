@@ -8,13 +8,9 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.yogig.android.codingcalendar.contestList.SITE_TYPE
-import com.yogig.android.codingcalendar.network.NetworkContest
 import com.yogig.android.codingcalendar.repository.Contest
 import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.time.ZoneId
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 /**
  * Using data binding for submitting list for the recycler view adapter

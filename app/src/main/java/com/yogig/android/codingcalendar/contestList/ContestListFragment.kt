@@ -78,6 +78,15 @@ class ContestListFragment : Fragment() {
                 viewModel.onCalendarNavigateCompleted()
             }
         })
+
+        viewModel.newContestEvent.observe(viewLifecycleOwner, Observer {
+            if(it) {
+                this.findNavController().navigate(ContestListFragmentDirections
+                    .actionContestListFragmentToNewContest())
+                viewModel.onNewContestNavigateComplete()
+            }
+        })
+
         setHasOptionsMenu(true)
 
         return binding.root

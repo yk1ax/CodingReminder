@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_contestListFragment_to_contestFragment"
             app:destination="@id/contestFragment" />
+        <action
+            android:id="@+id/action_contestListFragment_to_newContest"
+            app:destination="@id/newContestFragment" />
     </fragment>
     <fragment
         android:id="@+id/contestFragment"
@@ -23,4 +26,9 @@
             android:name="contest"
             app:argType="com.yogig.android.codingcalendar.repository.Contest" />
     </fragment>
+    <fragment
+        android:id="@+id/newContestFragment"
+        android:name="com.yogig.android.codingcalendar.NewContestFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/new_contest_fragment"/>
 </navigation>

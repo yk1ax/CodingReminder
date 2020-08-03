@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.yogig.android.codingcalendar.NewContestViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".NewContestFragment">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="208dp"
+            android:layout_height="208dp"
+            android:layout_marginTop="64dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_code" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/contestNameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            app:layout_constraintTop_toBottomOf="@id/imageView"
+            android:hint="Contest Name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/contestNameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/startDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:onClick="@{() -> viewModel.onCalendarSetEvent(viewModel.START)}"
+            android:text="Start Date"
+            app:layout_constraintEnd_toStartOf="@id/endDate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contestNameLayout" />
+
+        <TextView
+            android:id="@+id/endDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.onCalendarSetEvent(viewModel.END)}"
+            android:text="End Date"
+            android:textSize="18sp"
+            android:gravity="center"
+            app:layout_constraintBaseline_toBaselineOf="@id/startDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/startDate" />
+
+        <TextView
+            android:id="@+id/startTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:onClick="@{() -> viewModel.onTimeSetEvent(viewModel.START)}"
+            android:text="Start Time"
+            app:layout_constraintEnd_toStartOf="@id/endTime"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/startDate" />
+
+        <TextView
+            android:id="@+id/endTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:onClick="@{() -> viewModel.onTimeSetEvent(viewModel.END)}"
+            android:text="End Time"
+            app:layout_constraintBaseline_toBaselineOf="@id/startTime"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/startTime" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

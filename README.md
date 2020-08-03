@@ -17,8 +17,8 @@ For APK `TODO:- add a drive link`
 - [x] Swipe refresh functionality
 - [x] Final UI polishing (_with support for both light and dark theme_)
 - [ ] Daily fetching with WorkManager
-- [ ] Notifications (if possible)
-- [ ] Manual adding of contest
+- [ ] Notifications (~~if possible~~)
+- [ ] Add firebase where it fetches the contests in the backend and apps just have to fetch it from one source(if possible)
 
 ## Relevant learning Resources
 - [Udacity's Android Basics Free Course](https://www.udacity.com/course/android-basics-nanodegree-by-google--nd803) (Free Course)

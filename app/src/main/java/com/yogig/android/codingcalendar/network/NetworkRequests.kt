@@ -14,7 +14,7 @@ object NetworkRequests {
         val contests = mutableListOf<NetworkContest>()
 
         var exceptions = 0
-        val exceptionInfo = Exception()
+        val exceptionInfo = IOException()
 
         withContext(Dispatchers.IO) {
             try {

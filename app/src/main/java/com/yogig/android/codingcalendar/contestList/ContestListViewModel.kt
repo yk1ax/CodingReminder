@@ -32,8 +32,6 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
         viewModelJob.cancel()
     }
 
-
-
     private val _refreshingState = MutableLiveData<Int>(1)
     val progressBarVisible: LiveData<Int>
         get() = _refreshingState
@@ -46,12 +44,24 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
     val calendarEvent: LiveData<Contest?>
         get() = _calendarEvent
 
+    private val _newContestEvent = MutableLiveData<Boolean>(false)
+    val newContestEvent: LiveData<Boolean>
+        get() = _newContestEvent
+
     fun onCalendarNavigate(contest: Contest) {
         _calendarEvent.value = contest
     }
 
     fun onCalendarNavigateCompleted() {
         _calendarEvent.value = null
+    }
+
+    fun onNewContestNavigate() {
+        _newContestEvent.value = true
+    }
+
+    fun onNewContestNavigateComplete() {
+        _newContestEvent.value = false
     }
 
     val repository: ContestRepository = ContestRepository(database)
