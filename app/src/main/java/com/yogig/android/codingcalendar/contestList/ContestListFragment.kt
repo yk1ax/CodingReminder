@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
 import com.yogig.android.codingcalendar.ContestListAdapter
@@ -43,6 +44,7 @@ class ContestListFragment : Fragment() {
         binding.contestRecyclerView.adapter = ContestListAdapter(ContestListAdapter.OnClickListener {
             viewModel.onCalendarNavigate(it)
         })
+
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.retryFetching()
             binding.swipeRefreshLayout.isRefreshing = false
@@ -84,6 +86,14 @@ class ContestListFragment : Fragment() {
                 this.findNavController().navigate(ContestListFragmentDirections
                     .actionContestListFragmentToNewContest())
                 viewModel.onNewContestNavigateComplete()
+            }
+        })
+
+        viewModel.currentContestList.observe(viewLifecycleOwner, Observer {
+            if(it.isNullOrEmpty()) {
+                binding.emptyView.visibility = View.VISIBLE
+            } else {
+                binding.emptyView.visibility = View.GONE
             }
         })
 

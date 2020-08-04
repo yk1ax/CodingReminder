@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.yogig.android.codingcalendar.contestList.ContestListViewModel" />
@@ -50,6 +50,14 @@
                 tools:listitem="@layout/recycler_view_item" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <ImageView
+            android:id="@+id/emptyView"
+            android:layout_width="400dp"
+            android:layout_height="503dp"
+            android:src="@drawable/ic_empty_list"
+            android:layout_gravity="center"
+            android:visibility="visible"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
