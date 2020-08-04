@@ -7,10 +7,17 @@
             name="viewModel"
             type="com.yogig.android.codingcalendar.NewContestViewModel" />
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".NewContestFragment">
+        android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/parentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".NewContestFragment"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <ImageView
             android:id="@+id/imageView"
@@ -28,12 +35,40 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="64dp"
             app:layout_constraintTop_toBottomOf="@id/imageView"
-            android:hint="Contest Name">
+            android:hint="Contest Name"
+            android:nextFocusDown="@id/startDate"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            app:hintTextColor="@color/secondaryColor">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/contestNameEditText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@={viewModel.contestName}"
+                android:singleLine="true"
+                android:imeActionLabel="Next"
+                android:imeOptions="actionNext"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/contestLinkLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            app:layout_constraintTop_toBottomOf="@id/contestNameLayout"
+            android:hint="Contest Page URL"
+            android:nextFocusDown="@id/startDate"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            app:hintTextColor="@color/secondaryColor">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/contestLinkEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@={viewModel.contestUrl}"
+                android:singleLine="true"
+                android:imeActionLabel="Done"
+                android:imeOptions="actionDone"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -46,18 +81,20 @@
             android:focusable="true"
             android:gravity="center"
             android:textSize="18sp"
+            android:nextFocusRight="@id/endDate"
             android:onClick="@{() -> viewModel.onCalendarSetEvent(viewModel.START)}"
-            android:text="Start Date"
+            android:text="@string/start_date"
             app:layout_constraintEnd_toStartOf="@id/endDate"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/contestNameLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/contestLinkLayout" />
 
         <TextView
             android:id="@+id/endDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:nextFocusDown="@id/startTime"
             android:onClick="@{() -> viewModel.onCalendarSetEvent(viewModel.END)}"
-            android:text="End Date"
+            android:text="@string/end_date"
             android:textSize="18sp"
             android:gravity="center"
             app:layout_constraintBaseline_toBaselineOf="@id/startDate"
@@ -70,12 +107,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:nextFocusDown="@id/endTime"
             android:clickable="true"
             android:focusable="true"
             android:textSize="18sp"
             android:gravity="center"
             android:onClick="@{() -> viewModel.onTimeSetEvent(viewModel.START)}"
-            android:text="Start Time"
+            android:text="@string/start_time"
             app:layout_constraintEnd_toStartOf="@id/endTime"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/startDate" />
@@ -85,12 +123,27 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
             android:textSize="18sp"
             android:onClick="@{() -> viewModel.onTimeSetEvent(viewModel.END)}"
-            android:text="End Time"
+            android:text="@string/end_time"
             app:layout_constraintBaseline_toBaselineOf="@id/startTime"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/startTime" />
 
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Submit"
+            android:onClick="@{() -> viewModel.onSubmitEvent()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/startTime" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

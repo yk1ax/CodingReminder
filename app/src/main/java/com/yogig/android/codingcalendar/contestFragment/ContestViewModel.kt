@@ -6,10 +6,21 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.yogig.android.codingcalendar.database.ContestDatabase
+import com.yogig.android.codingcalendar.database.DatabaseContest
+import kotlinx.coroutines.*
 
 
-class ContestViewModel() : ViewModel() {
+class ContestViewModel(private val database: ContestDatabase) : ViewModel() {
 
+    private val viewModelJob = Job()
+
+    override fun onCleared() {
+        viewModelJob.cancel()
+        super.onCleared()
+    }
+
+    val coroutineScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     // Encapsulated calendarEvent boolean variable
     private val _calendarEvent = MutableLiveData<Boolean>(false)
@@ -41,5 +52,13 @@ class ContestViewModel() : ViewModel() {
     // To be called to initiate the Website Event by updating the LiveData
     fun onclickWebsiteEvent() {
         _websiteEvent.value = true
+    }
+
+    fun onContestDelete(contest: DatabaseContest) {
+        coroutineScope.launch {
+            withContext(Dispatchers.IO) {
+                database.contestDao.deleteContest(contest)
+            }
+        }
     }
 }

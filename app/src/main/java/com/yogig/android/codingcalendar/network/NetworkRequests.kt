@@ -43,7 +43,6 @@ object NetworkRequests {
     @Throws(IOException::class)
     private suspend fun fetchCFContests(): List<NetworkContest> {
 
-        @SuppressWarnings("BlockingMethod")
         val list: List<NetworkContest> = CodeforcesApi.retrofitService.getContests().contestList
 
         val contests = mutableListOf<NetworkContest>()

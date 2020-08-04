@@ -1,5 +1,7 @@
 package com.yogig.android.codingcalendar
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
@@ -35,7 +37,7 @@ fun TextView.setContestTime(contest: Contest) {
     val dateFormatter = DateFormat.getDateTimeInstance(DateFormat.DEFAULT,DateFormat.SHORT,Locale.UK)
     builder.append(dateFormatter.format(dateObj))
     builder.append(" - ")
-    dateObj.time += contest.durationMilliseconds
+    dateObj.time += contest.endTimeSeconds - contest.startTimeMilliseconds
 
     builder.append(dateFormatter.format(dateObj))
 
@@ -49,7 +51,8 @@ fun TextView.setContestTime(contest: Contest) {
 fun ImageView.setWebsiteImage(type: SITE_TYPE) {
     setImageResource(when(type) {
         SITE_TYPE.CODEFORCES_SITE -> R.drawable.ic_codeforces_svg
-        else -> R.drawable.ic_codechef_svg
+        SITE_TYPE.CODECHEF_SITE -> R.drawable.ic_codechef_svg
+        else -> R.drawable.ic_code
     })
 }
 

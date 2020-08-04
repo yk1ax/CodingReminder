@@ -61,9 +61,9 @@ class ContestListFragment : Fragment() {
         viewModel.snackBarText.observe(viewLifecycleOwner, Observer {
             it?.let {
                 if(it.startsWith("Fetched") || it == getString(R.string.no_new_contest)) {
-                    Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).show()
                 } else {
-                    Snackbar.make(binding.root, it, Snackbar.LENGTH_INDEFINITE)
+                    Snackbar.make(binding.root, it, Snackbar.LENGTH_INDEFINITE).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
                         .setAction("RETRY") { viewModel.retryFetching() }
                         .show()
                 }

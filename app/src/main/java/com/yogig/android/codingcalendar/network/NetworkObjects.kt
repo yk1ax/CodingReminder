@@ -22,15 +22,12 @@ data class NetworkContest(
     var site: SITE_TYPE,
     val websiteUrl: String = "")
 
-fun List<NetworkContest>.asDatabaseModel(): Array<DatabaseContest> {
+fun List<NetworkContest>.asDatabaseModel(): List<DatabaseContest> {
     return map {
         DatabaseContest(
             it.id,
             it.name,
-            it.phase,
             it.startTimeSeconds
-                .times(if(it.site == SITE_TYPE.CODEFORCES_SITE) 1000 else 1),
-            it.durationSeconds
                 .times(if(it.site == SITE_TYPE.CODEFORCES_SITE) 1000 else 1),
             (it.startTimeSeconds + it.durationSeconds)
                 .times(if(it.site == SITE_TYPE.CODEFORCES_SITE) 1000 else 1),
@@ -40,5 +37,5 @@ fun List<NetworkContest>.asDatabaseModel(): Array<DatabaseContest> {
                 else -> CODECHEF_BASE
             }.plus(it.id)
         )
-    }.toTypedArray()
+    }
 }

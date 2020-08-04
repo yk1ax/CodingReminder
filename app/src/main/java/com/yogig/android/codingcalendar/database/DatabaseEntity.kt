@@ -11,11 +11,8 @@ data class DatabaseContest(
     @PrimaryKey
     val id: String,
     val name: String,
-    val phase: String,
     @ColumnInfo(name = "start_time_milliseconds")
     val startTimeMilliseconds: Long,
-    @ColumnInfo(name = "duration_milliseconds")
-    val durationMilliseconds: Long,
     @ColumnInfo(name = "end_time_milliseconds")
     val endTimeSeconds: Long,
     var site: SITE_TYPE,
@@ -28,9 +25,7 @@ fun List<DatabaseContest>.asDomainModel(): List<Contest> {
         Contest(
             it.id,
             it.name,
-            it.phase,
             it.startTimeMilliseconds,
-            it.durationMilliseconds,
             it.endTimeSeconds,
             it.site,
             it.websiteUrl

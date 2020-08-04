@@ -18,7 +18,8 @@ import java.io.IOException
 
 enum class SITE_TYPE(val type: Int) {
     CODEFORCES_SITE(1),
-    CODECHEF_SITE(2)
+    CODECHEF_SITE(2),
+    UNKNOWN_SITE(0)
 }
 
 class ContestListViewModel(database: ContestDatabase, app: Application) : AndroidViewModel(app) {
