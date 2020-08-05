@@ -1,4 +1,4 @@
-package com.yogig.android.codingcalendar
+package com.yogig.android.codingReminder
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.yogig.android.codingcalendar", appContext.packageName)
+        assertEquals("com.yogig.android.codingReminder", appContext.packageName)
     }
 }

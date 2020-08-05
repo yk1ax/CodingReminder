@@ -1,4 +1,4 @@
-package com.yogig.android.codingcalendar.contestList
+package com.yogig.android.codingReminder.contestList
 
 import android.os.Bundle
 import android.view.*
@@ -7,13 +7,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
-import com.yogig.android.codingcalendar.ContestListAdapter
-import com.yogig.android.codingcalendar.R
-import com.yogig.android.codingcalendar.database.ContestDatabase
-import com.yogig.android.codingcalendar.databinding.ContestListFragmentBinding
+import com.yogig.android.codingReminder.ContestListAdapter
+import com.yogig.android.codingReminder.R
+import com.yogig.android.codingReminder.database.ContestDatabase
+import com.yogig.android.codingReminder.databinding.ContestListFragmentBinding
 
 class ContestListFragment : Fragment() {
 

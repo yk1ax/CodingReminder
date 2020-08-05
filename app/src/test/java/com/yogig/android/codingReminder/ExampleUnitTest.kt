@@ -1,4 +1,4 @@
-package com.yogig.android.codingcalendar
+package com.yogig.android.codingReminder
 
 import org.junit.Test
 

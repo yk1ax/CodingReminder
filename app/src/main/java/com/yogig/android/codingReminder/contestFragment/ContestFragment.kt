@@ -1,24 +1,21 @@
-package com.yogig.android.codingcalendar.contestFragment
+package com.yogig.android.codingReminder.contestFragment
 
-import android.app.DatePickerDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.CalendarContract
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import com.yogig.android.codingcalendar.R
-import com.yogig.android.codingcalendar.database.ContestDatabase
-import com.yogig.android.codingcalendar.database.DatabaseContest
-import com.yogig.android.codingcalendar.databinding.ContestFragmentBinding
-import com.yogig.android.codingcalendar.repository.Contest
-import java.util.*
+import com.yogig.android.codingReminder.R
+import com.yogig.android.codingReminder.database.ContestDatabase
+import com.yogig.android.codingReminder.database.DatabaseContest
+import com.yogig.android.codingReminder.databinding.ContestFragmentBinding
+import com.yogig.android.codingReminder.repository.Contest
 
 class ContestFragment : Fragment() {
 

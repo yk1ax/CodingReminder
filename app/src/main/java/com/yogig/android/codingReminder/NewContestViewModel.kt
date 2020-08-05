@@ -1,22 +1,18 @@
-package com.yogig.android.codingcalendar
+package com.yogig.android.codingReminder
 
 import android.app.Application
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.util.Log
 import android.webkit.URLUtil
 import android.widget.TextView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.google.android.material.snackbar.Snackbar
-import com.yogig.android.codingcalendar.contestList.SITE_TYPE
-import com.yogig.android.codingcalendar.database.ContestDatabase
-import com.yogig.android.codingcalendar.database.DatabaseContest
+import com.yogig.android.codingReminder.contestList.SITE_TYPE
+import com.yogig.android.codingReminder.database.ContestDatabase
+import com.yogig.android.codingReminder.database.DatabaseContest
 import kotlinx.coroutines.*
 import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.*
 
 lateinit var startCalendar: Calendar
@@ -152,7 +148,7 @@ fun TextView.setDate(id: Int) {
 
     val dialog = DatePickerDialog(
         this.context,
-        DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+        DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             calendar.set(Calendar.YEAR, year)
             calendar.set(Calendar.MONTH, month)
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
@@ -175,7 +171,7 @@ fun TextView.setTime(id: Int) {
 
     val dialog = TimePickerDialog(
         this.context,
-        TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+        TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
             calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
             calendar.set(Calendar.MINUTE, minute)
             text = formatter.format(calendar.timeInMillis)

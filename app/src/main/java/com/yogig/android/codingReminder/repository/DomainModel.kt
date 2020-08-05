@@ -1,7 +1,7 @@
-package com.yogig.android.codingcalendar.repository
+package com.yogig.android.codingReminder.repository
 
 import android.os.Parcelable
-import com.yogig.android.codingcalendar.contestList.SITE_TYPE
+import com.yogig.android.codingReminder.contestList.SITE_TYPE
 import kotlinx.android.parcel.Parcelize
 
 /**

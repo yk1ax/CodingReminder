@@ -1,9 +1,9 @@
-package com.yogig.android.codingcalendar.database
+package com.yogig.android.codingReminder.database
 
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.yogig.android.codingcalendar.contestList.SITE_TYPE
+import com.yogig.android.codingReminder.contestList.SITE_TYPE
 
 @Dao
 interface ContestDao {

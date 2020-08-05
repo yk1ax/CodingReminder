@@ -1,7 +1,5 @@
-package com.yogig.android.codingcalendar
+package com.yogig.android.codingReminder
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
@@ -9,8 +7,8 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.yogig.android.codingcalendar.contestList.SITE_TYPE
-import com.yogig.android.codingcalendar.repository.Contest
+import com.yogig.android.codingReminder.contestList.SITE_TYPE
+import com.yogig.android.codingReminder.repository.Contest
 import java.text.DateFormat
 import java.util.*
 

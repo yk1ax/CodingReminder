@@ -1,4 +1,4 @@
-# CodingCalendar
+# Coding Reminder
 An App for keeping track of future Coding Contests and adding them to your Calender (_yet to be implemented_)
 
 ## Download
@@ -12,8 +12,7 @@ For APK `TODO:- add a drive link`
 - [x] Adding Repository layer to interact with network and database
 - [x] Adding Contest Fragment for details of single contest
 - [x] Feature to add it in Calendar
-- [ ] Filtering contests with chips
-- [ ] Filtering contests with SharedPreferences (_think of more options to put in it_)
+- [ ] ~~Filtering contests with chips~~
 - [x] Swipe refresh functionality
 - [x] Final UI polishing (_with support for both light and dark theme_)
 - [ ] Daily fetching with WorkManager

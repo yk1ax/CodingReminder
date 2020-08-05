@@ -1,10 +1,10 @@
-package com.yogig.android.codingcalendar.database
+package com.yogig.android.codingReminder.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.yogig.android.codingcalendar.contestList.SITE_TYPE
-import com.yogig.android.codingcalendar.repository.Contest
+import com.yogig.android.codingReminder.contestList.SITE_TYPE
+import com.yogig.android.codingReminder.repository.Contest
 
 @Entity(tableName = "contest_table")
 data class DatabaseContest(

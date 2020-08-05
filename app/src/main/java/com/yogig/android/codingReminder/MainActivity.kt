@@ -1,4 +1,4 @@
-package com.yogig.android.codingcalendar
+package com.yogig.android.codingReminder
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,7 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import com.yogig.android.codingcalendar.databinding.ActivityMainBinding
+import com.yogig.android.codingReminder.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 

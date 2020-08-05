@@ -1,12 +1,12 @@
-package com.yogig.android.codingcalendar
+package com.yogig.android.codingReminder
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.yogig.android.codingcalendar.databinding.RecyclerViewItemBinding
-import com.yogig.android.codingcalendar.repository.Contest
+import com.yogig.android.codingReminder.databinding.RecyclerViewItemBinding
+import com.yogig.android.codingReminder.repository.Contest
 
 class ContestListAdapter(val onClickListener: OnClickListener):
     ListAdapter<Contest, ContestListAdapter.ContestViewHolder>(DiffCallback) {

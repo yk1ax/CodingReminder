@@ -6,7 +6,7 @@
     <data>
         <variable
             name="contestProperty"
-            type="com.yogig.android.codingcalendar.repository.Contest" />
+            type="com.yogig.android.codingReminder.repository.Contest" />
     </data>
 
     <androidx.cardview.widget.CardView

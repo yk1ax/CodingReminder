@@ -1,13 +1,11 @@
-package com.yogig.android.codingcalendar.contestFragment
+package com.yogig.android.codingReminder.contestFragment
 
-import android.content.Intent
-import android.provider.CalendarContract
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.yogig.android.codingcalendar.database.ContestDatabase
-import com.yogig.android.codingcalendar.database.DatabaseContest
+import com.yogig.android.codingReminder.database.ContestDatabase
+import com.yogig.android.codingReminder.database.DatabaseContest
 import kotlinx.coroutines.*
 
 

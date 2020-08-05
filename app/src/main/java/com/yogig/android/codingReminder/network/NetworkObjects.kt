@@ -1,9 +1,8 @@
-package com.yogig.android.codingcalendar.network
+package com.yogig.android.codingReminder.network
 
 import com.google.gson.annotations.SerializedName
-import com.yogig.android.codingcalendar.contestList.SITE_TYPE
-import com.yogig.android.codingcalendar.database.DatabaseContest
-import com.yogig.android.codingcalendar.repository.Contest
+import com.yogig.android.codingReminder.contestList.SITE_TYPE
+import com.yogig.android.codingReminder.database.DatabaseContest
 
 const val CODEFORCES_BASE = "https://codeforces.com/contest/"
 const val CODECHEF_BASE = "https://www.codechef.com/"

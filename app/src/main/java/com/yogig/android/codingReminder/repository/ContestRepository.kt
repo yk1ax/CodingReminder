@@ -1,10 +1,10 @@
-package com.yogig.android.codingcalendar.repository
+package com.yogig.android.codingReminder.repository
 
 import androidx.lifecycle.Transformations
-import com.yogig.android.codingcalendar.database.ContestDatabase
-import com.yogig.android.codingcalendar.database.asDomainModel
-import com.yogig.android.codingcalendar.network.NetworkRequests
-import com.yogig.android.codingcalendar.network.asDatabaseModel
+import com.yogig.android.codingReminder.database.ContestDatabase
+import com.yogig.android.codingReminder.database.asDomainModel
+import com.yogig.android.codingReminder.network.NetworkRequests
+import com.yogig.android.codingReminder.network.asDatabaseModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException

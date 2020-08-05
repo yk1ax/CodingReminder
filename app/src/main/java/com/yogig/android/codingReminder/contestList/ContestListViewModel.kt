@@ -1,4 +1,4 @@
-package com.yogig.android.codingcalendar.contestList
+package com.yogig.android.codingReminder.contestList
 
 import android.app.Application
 import android.content.Context
@@ -9,10 +9,10 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.yogig.android.codingcalendar.R
-import com.yogig.android.codingcalendar.database.ContestDatabase
-import com.yogig.android.codingcalendar.repository.Contest
-import com.yogig.android.codingcalendar.repository.ContestRepository
+import com.yogig.android.codingReminder.R
+import com.yogig.android.codingReminder.database.ContestDatabase
+import com.yogig.android.codingReminder.repository.Contest
+import com.yogig.android.codingReminder.repository.ContestRepository
 import kotlinx.coroutines.*
 import java.io.IOException
 

@@ -1,9 +1,9 @@
-package com.yogig.android.codingcalendar
+package com.yogig.android.codingReminder
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.yogig.android.codingcalendar.database.ContestDatabase
+import com.yogig.android.codingReminder.database.ContestDatabase
 import java.lang.IllegalArgumentException
 
 class NewContestViewModelFactory(private val database : ContestDatabase, private val app: Application) : ViewModelProvider.Factory {
