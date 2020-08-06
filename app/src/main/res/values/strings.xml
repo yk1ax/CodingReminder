@@ -15,7 +15,9 @@
     <string name="end_date">End Date</string>
     <string name="start_time">Start Time</string>
     <string name="end_time">End Time</string>
-    <string name="notification_message">Time for Contest</string>
     <string name="contest_notification_channel_id" translatable="false">notification_default_channel</string>
     <string name="notification_title">Contest time</string>
+    <string name="set_reminder">Set Reminder</string>
+    <string name="contest_notification_channel_name">Reminder</string>
+    <string name="notification_message">Get ready for contest%1$s.</string>
 </resources>

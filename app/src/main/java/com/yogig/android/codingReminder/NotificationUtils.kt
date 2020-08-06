@@ -4,11 +4,10 @@ import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.graphics.BitmapFactory
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 
-private val NOTIFICATION_ID = 0
+private const val NOTIFICATION_ID = 0
 
 class AlarmReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
@@ -17,25 +16,28 @@ class AlarmReceiver: BroadcastReceiver() {
             NotificationManager::class.java
         ) as NotificationManager
 
+        val siteName = intent?.getStringExtra("site")?:""
+
         notificationManager.sendNotification(
-            context.getString(R.string.notification_message),
+            NOTIFICATION_ID,
+            siteName,
             context
         )
     }
 }
 
-fun NotificationManager.sendNotification(message: String, context: Context) {
-
-    val appImage = BitmapFactory.decodeResource(context.resources, R.drawable.ic_notification_icon)
+fun NotificationManager.sendNotification(id: Int, siteName: String, context: Context) {
 
     val builder = NotificationCompat.Builder(
         context,
         context.getString(R.string.contest_notification_channel_id)
     )
-        .setContentTitle(context.getString(R.string.notification_title))
-        .setContentText(message)
         .setSmallIcon(R.drawable.ic_notification_icon)
+        .setContentTitle(context.getString(R.string.notification_title))
+        .setContentText(context.getString(R.string.notification_message, siteName))
         .setPriority(NotificationCompat.PRIORITY_HIGH)
+
+    cancel(NOTIFICATION_ID)
 
     notify(NOTIFICATION_ID, builder.build())
 }

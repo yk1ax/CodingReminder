@@ -17,9 +17,9 @@ import kotlinx.coroutines.*
 import java.io.IOException
 
 enum class SITE_TYPE(val type: Int) {
+    UNKNOWN_SITE(0),
     CODEFORCES_SITE(1),
-    CODECHEF_SITE(2),
-    UNKNOWN_SITE(0)
+    CODECHEF_SITE(2)
 }
 
 class ContestListViewModel(database: ContestDatabase, app: Application) : AndroidViewModel(app) {

@@ -1,11 +1,16 @@
 package com.yogig.android.codingReminder.contestFragment
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.CalendarContract
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -41,7 +46,8 @@ class ContestFragment : Fragment() {
 
         // Creating the ViewModel
         val database = ContestDatabase.getInstance(requireContext())
-        val viewModelFactory = ContestViewModelFactory(database)
+        val application = requireActivity().application
+        val viewModelFactory = ContestViewModelFactory(application, database)
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(ContestViewModel::class.java)
 
@@ -53,15 +59,6 @@ class ContestFragment : Fragment() {
 
         // Linking the ContestViewModel object with the viewModel variable present in the XML
         binding.viewModel = viewModel
-
-        // Disabling the Add event buttons in case the contest has started
-        val curTime = System.currentTimeMillis()
-        if(contest.startTimeMilliseconds <= curTime) {
-            binding.calendarButton.isEnabled = false
-        }
-        if(contest.websiteUrl.isNullOrEmpty()) {
-            binding.websiteButton.isEnabled = false
-        }
 
         // Calendar Intent for sending the event to the Calendar App
         val calendarIntent = Intent(Intent.ACTION_INSERT).setData(CalendarContract.Events.CONTENT_URI)
@@ -114,6 +111,8 @@ class ContestFragment : Fragment() {
             }
         })
 
+        createChannel(getString(R.string.contest_notification_channel_id), getString(R.string.contest_notification_channel_name))
+
         setHasOptionsMenu(true)
         // Return the root view of the binding, i.e., the fragment itself
         return binding.root
@@ -146,4 +145,24 @@ class ContestFragment : Fragment() {
         }
     }
 
+    private fun createChannel(channelId: String, channelName: String) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(
+                channelId,
+                channelName,
+                NotificationManager.IMPORTANCE_LOW
+            )
+                .apply { setShowBadge(true) }
+
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = Color.WHITE
+            notificationChannel.enableVibration(true)
+            notificationChannel.description = "Time for contest"
+
+            val notificationManager = requireActivity().getSystemService(
+                NotificationManager::class.java
+            ) as NotificationManager
+            notificationManager.createNotificationChannel(notificationChannel)
+        }
+    }
 }

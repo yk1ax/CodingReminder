@@ -19,7 +19,6 @@ private fun jsoupFetch(): List<NetworkContest> {
         for (row in rows) {
             // fetch data for every individual contest
             val columns = row.getElementsByTag("td")
-            Log.v("CodechefFetching", "Size of columns list is ${columns.size}")
 
             val code = columns[0].text()
             val name = columns[1].text()

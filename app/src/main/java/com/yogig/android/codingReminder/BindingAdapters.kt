@@ -61,8 +61,9 @@ fun ImageView.setWebsiteImage(type: SITE_TYPE) {
 fun CardView.setColor(type: SITE_TYPE){
     setCardBackgroundColor(ContextCompat.getColor( context,
         when(type) {
+            SITE_TYPE.CODEFORCES_SITE -> R.color.codeforcesColor
             SITE_TYPE.CODECHEF_SITE -> R.color.codechefColor
-            else -> R.color.codeforcesColor
+            else -> R.color.unknownColor
         }
     ))
 }

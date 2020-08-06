@@ -13,4 +13,5 @@
     <color name="titleColor">#ffffff</color>
     <color name="subtitleColor">#80ffffff</color>
     <color name="trackColor">#7f302b</color>
+    <color name="unknownColor">@color/primaryLightColor</color>
 </resources>

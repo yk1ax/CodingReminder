@@ -40,7 +40,8 @@ class Converters{
     fun intToSiteType(type: Int): SITE_TYPE {
         return when(type) {
             SITE_TYPE.CODEFORCES_SITE.type -> SITE_TYPE.CODEFORCES_SITE
-            else -> SITE_TYPE.CODECHEF_SITE
+            SITE_TYPE.CODECHEF_SITE.type -> SITE_TYPE.CODECHEF_SITE
+            else -> SITE_TYPE.UNKNOWN_SITE
         }
     }
 }

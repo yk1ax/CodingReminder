@@ -22,7 +22,7 @@
         app:cardElevation="8dp"
         app:cardCornerRadius="16dp"
         bindBackground="@{contestProperty.site}"
-        tools:cardBackgroundColor="@color/codeforcesColor">
+        tools:cardBackgroundColor="@color/secondaryLightColor">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -44,7 +44,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:transitionName="site_logo"
-                tools:srcCompat="@drawable/ic_codechef_svg" />
+                tools:srcCompat="@drawable/ic_code" />
 
             <TextView
                 android:id="@+id/contestName"
