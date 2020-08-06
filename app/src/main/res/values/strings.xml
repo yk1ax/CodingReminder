@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Coding Calendar</string>
+    <string name="app_name">Coding Reminder</string>
     <string name="no_new_contest">No new contests.</string>
     <string name="success_fetch_contests">Fetched %1$d new Contests.</string>
     <string name="failed_fetch_contests">Failed to fetch contests.</string>
@@ -15,4 +15,7 @@
     <string name="end_date">End Date</string>
     <string name="start_time">Start Time</string>
     <string name="end_time">End Time</string>
+    <string name="notification_message">Time for Contest</string>
+    <string name="contest_notification_channel_id" translatable="false">notification_default_channel</string>
+    <string name="notification_title">Contest time</string>
 </resources>

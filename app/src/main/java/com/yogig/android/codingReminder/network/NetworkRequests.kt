@@ -1,7 +1,7 @@
 package com.yogig.android.codingReminder.network
 
 import android.util.Log
-import com.yogig.android.codingReminder.contestList.SITE_TYPE
+import com.yogig.android.codingReminder.contestListFragment.SITE_TYPE
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException

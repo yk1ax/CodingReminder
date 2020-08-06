@@ -1,8 +1,8 @@
 # Coding Reminder
-An App for keeping track of future Coding Contests and adding them to your Calender (_yet to be implemented_)
+An App for keeping track of future Coding Contests and adding reminders for them
 
 ## Download
-For whole Project `git clone https://github.com/yk1ax/CodingCalendar.git`\
+For whole Project `git clone https://github.com/yk1ax/CodingReminder.git`\
 For APK `TODO:- add a drive link`
 
 ## Roadmap

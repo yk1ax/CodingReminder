@@ -7,7 +7,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.yogig.android.codingReminder.contestList.SITE_TYPE
+import com.yogig.android.codingReminder.contestListFragment.SITE_TYPE
 import com.yogig.android.codingReminder.repository.Contest
 import java.text.DateFormat
 import java.util.*

@@ -1,4 +1,4 @@
-package com.yogig.android.codingReminder
+package com.yogig.android.codingReminder.newContestFragment
 
 import android.app.Application
 import android.app.DatePickerDialog
@@ -8,7 +8,8 @@ import android.widget.TextView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.yogig.android.codingReminder.contestList.SITE_TYPE
+import com.yogig.android.codingReminder.R
+import com.yogig.android.codingReminder.contestListFragment.SITE_TYPE
 import com.yogig.android.codingReminder.database.ContestDatabase
 import com.yogig.android.codingReminder.database.DatabaseContest
 import kotlinx.coroutines.*

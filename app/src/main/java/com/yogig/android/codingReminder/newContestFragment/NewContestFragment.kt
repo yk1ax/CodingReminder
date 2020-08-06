@@ -1,4 +1,4 @@
-package com.yogig.android.codingReminder
+package com.yogig.android.codingReminder.newContestFragment
 
 import android.os.Build
 import android.os.Bundle
@@ -11,13 +11,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.yogig.android.codingReminder.*
 import com.yogig.android.codingReminder.database.ContestDatabase
 import com.yogig.android.codingReminder.databinding.NewContestFragmentBinding
 
 class NewContestFragment : Fragment() {
 
     companion object {
-        fun newInstance() = NewContestFragment()
+        fun newInstance() =
+            NewContestFragment()
     }
 
     private lateinit var viewModel: NewContestViewModel
@@ -30,7 +32,11 @@ class NewContestFragment : Fragment() {
         binding = NewContestFragmentBinding.inflate(inflater)
         val database = ContestDatabase.getInstance(requireContext().applicationContext)
         val application = requireActivity().application
-        val viewModelFactory = NewContestViewModelFactory(database, application)
+        val viewModelFactory =
+            NewContestViewModelFactory(
+                database,
+                application
+            )
         viewModel = ViewModelProvider(this, viewModelFactory).get(NewContestViewModel::class.java)
 
         binding.viewModel = viewModel
