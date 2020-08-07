@@ -17,7 +17,9 @@ data class DatabaseContest(
     val endTimeSeconds: Long,
     var site: SITE_TYPE,
     @ColumnInfo(name = "website_url")
-    val websiteUrl: String
+    val websiteUrl: String,
+    @ColumnInfo(name = "is_notification_set")
+    val isNotificationSet: Boolean
 )
 
 fun List<DatabaseContest>.asDomainModel(): List<Contest> {
@@ -28,7 +30,8 @@ fun List<DatabaseContest>.asDomainModel(): List<Contest> {
             it.startTimeMilliseconds,
             it.endTimeSeconds,
             it.site,
-            it.websiteUrl
+            it.websiteUrl,
+            it.isNotificationSet
         )
     }
 }

@@ -46,7 +46,7 @@ class Converters{
     }
 }
 
-@Database(entities = [DatabaseContest::class], version = 2, exportSchema = false)
+@Database(entities = [DatabaseContest::class], version = 3, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class ContestDatabase: RoomDatabase() {
     abstract val contestDao: ContestDao

@@ -20,4 +20,7 @@
     <string name="set_reminder">Set Reminder</string>
     <string name="contest_notification_channel_name">Reminder</string>
     <string name="notification_message">Get ready for contest%1$s.</string>
+    <string name="remove_reminder">Remove Reminder</string>
+    <string name="reminder_removed">Reminder has been removed.</string>
+    <string name="notification_set">You\'ll be reminded 15 minutes before the contest.</string>
 </resources>

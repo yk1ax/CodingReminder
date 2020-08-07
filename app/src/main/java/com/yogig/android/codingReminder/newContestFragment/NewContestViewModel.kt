@@ -126,7 +126,8 @@ class NewContestViewModel(private val database: ContestDatabase, app: Applicatio
                             endCalendar.timeInMillis,
                             SITE_TYPE.UNKNOWN_SITE,
                             if(contestUrl.value.isNullOrEmpty()) ""
-                            else "https://".plus(contestUrl.value)
+                            else "https://".plus(contestUrl.value),
+                            false
                         )
 
                         database.contestDao.insertContest(contest)

@@ -16,7 +16,8 @@ data class Contest(
     val startTimeMilliseconds: Long,
     val endTimeSeconds: Long,
     var site: SITE_TYPE,
-    val websiteUrl: String
+    val websiteUrl: String,
+    var isNotificationSet: Boolean
 ) : Parcelable {
     @IgnoredOnParcel
     val hasStarted = startTimeMilliseconds < System.currentTimeMillis()

@@ -34,7 +34,8 @@ fun List<NetworkContest>.asDatabaseModel(): List<DatabaseContest> {
             when(it.site) {
                 SITE_TYPE.CODEFORCES_SITE -> CODEFORCES_BASE
                 else -> CODECHEF_BASE
-            }.plus(it.id)
+            }.plus(it.id),
+            false
         )
     }
 }

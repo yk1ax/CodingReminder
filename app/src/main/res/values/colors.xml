@@ -14,4 +14,5 @@
   <color name="subtitleColor">#80000000</color>
   <color name="trackColor">@color/primaryLightColor</color>
   <color name="unknownColor">@color/primaryLightColor</color>
+  <color name="notification_color">#ff4b4d</color>
 </resources>

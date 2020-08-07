@@ -12,11 +12,10 @@ For APK `TODO:- add a drive link`
 - [x] Adding Repository layer to interact with network and database
 - [x] Adding Contest Fragment for details of single contest
 - [x] Feature to add it in Calendar
-- [ ] ~~Filtering contests with chips~~
 - [x] Swipe refresh functionality
 - [x] Final UI polishing (_with support for both light and dark theme_)
+- [x] Notifications (~~if possible~~)
 - [ ] Daily fetching with WorkManager
-- [ ] Notifications (~~if possible~~)
 - [ ] Add firebase where it fetches the contests in the backend and apps just have to fetch it from one source(if possible)
 
 ## Relevant learning Resources

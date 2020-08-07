@@ -7,6 +7,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.yogig.android.codingReminder.contestListFragment.SITE_TYPE
 import com.yogig.android.codingReminder.repository.Contest
 import java.text.DateFormat
@@ -81,6 +82,17 @@ fun TextView.setTimeFormatted(contest: Contest) {
         contest.endTimeSeconds > curTime -> "Ends in "
             .plus(timeLeftFormatted(contest.endTimeSeconds - curTime))
         else -> ""
+    }
+}
+
+@BindingAdapter("bindNotification")
+fun MaterialButton.setButton(isNotificationSet: Boolean) {
+    if(isNotificationSet) {
+        text = context.getString(R.string.remove_reminder)
+        icon = context.getDrawable(R.drawable.ic_remove_notification)
+    } else {
+        text = context.getString(R.string.set_reminder)
+        icon = context.getDrawable(R.drawable.ic_add_notification)
     }
 }
 
