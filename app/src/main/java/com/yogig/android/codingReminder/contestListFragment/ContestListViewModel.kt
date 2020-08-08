@@ -25,7 +25,6 @@ enum class SITE_TYPE(val type: Int) {
 class ContestListViewModel(database: ContestDatabase, app: Application) : AndroidViewModel(app) {
 
     private val viewModelJob = Job()
-
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     override fun onCleared() {
@@ -65,10 +64,11 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
         _newContestEvent.value = false
     }
 
-    val repository: ContestRepository = ContestRepository(database)
+    val repository: ContestRepository
     val currentContestList: LiveData<List<Contest>>
 
     init {
+        repository = ContestRepository(database)
         currentContestList = repository.contests
 
         if (checkConnection()) {
@@ -80,7 +80,6 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
     }
 
     fun retryFetching() {
-        setRefreshingState()
         if (checkConnection()) {
             fetchContests()
         } else {

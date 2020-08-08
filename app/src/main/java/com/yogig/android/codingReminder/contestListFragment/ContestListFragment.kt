@@ -46,7 +46,6 @@ class ContestListFragment : Fragment() {
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.retryFetching()
-            binding.swipeRefreshLayout.isRefreshing = false
         }
 
         viewModel.refreshingState.observe(viewLifecycleOwner, Observer {
@@ -54,12 +53,13 @@ class ContestListFragment : Fragment() {
                 // binding.progressIndicator.visibility = View.VISIBLE
                 binding.contestRecyclerView.visibility = View.GONE
                 binding.shimmerLayout.visibility = View.VISIBLE
-                binding.shimmerLayout.startShimmer()
+                binding.shimmerLayout.showShimmer(true)
             }
             else {
                 // binding.progressIndicator.visibility = View.GONE
-                binding.shimmerLayout.stopShimmer()
+                binding.shimmerLayout.showShimmer(false)
                 binding.shimmerLayout.visibility = View.GONE
+                binding.swipeRefreshLayout.isRefreshing = false
                 if(viewModel.currentContestList.value.isNullOrEmpty()) {
                     binding.contestRecyclerView.visibility = View.GONE
                     binding.emptyView.visibility = View.VISIBLE
@@ -100,37 +100,32 @@ class ContestListFragment : Fragment() {
             }
         })
 
-        viewModel.currentContestList.observe(viewLifecycleOwner, Observer {
-            if(it.isNotEmpty()) {
-                binding.emptyView.visibility = View.GONE
-            }
-        })
-
-        setHasOptionsMenu(true)
+        // setHasOptionsMenu(true)
 
         return binding.root
     }
 
     override fun onStart() {
-        if(binding.shimmerLayout.isVisible) {
-            binding.shimmerLayout.startShimmer()
-        } else {
-            binding.shimmerLayout.stopShimmer()
-        }
+        binding.shimmerLayout.showShimmer(true)
         super.onStart()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.main_menu, menu)
+    override fun onStop() {
+        binding.shimmerLayout.showShimmer(false)
+        super.onStop()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
-            R.id.refresh_item -> {
-                viewModel.retryFetching()
-                true
-            }
-            else -> false
-        }
-    }
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater.inflate(R.menu.main_menu, menu)
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return when(item.itemId) {
+//            R.id.refresh_item -> {
+//                viewModel.retryFetching()
+//                true
+//            }
+//            else -> false
+//        }
+//    }
 }

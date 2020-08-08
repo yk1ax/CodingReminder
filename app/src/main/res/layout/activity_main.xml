@@ -18,8 +18,7 @@
             app:title="@string/app_name"
             app:titleTextColor="?colorOnPrimary"
             app:layout_constraintTop_toTopOf="parent"
-            android:elevation="16dp"
-            app:menu="@menu/main_menu"/>
+            android:elevation="16dp"/>
 
         <fragment
             android:id="@+id/nav_host_fragment"
