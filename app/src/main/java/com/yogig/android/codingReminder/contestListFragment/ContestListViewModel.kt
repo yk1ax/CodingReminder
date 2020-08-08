@@ -33,8 +33,8 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
         viewModelJob.cancel()
     }
 
-    private val _refreshingState = MutableLiveData<Int>(1)
-    val progressBarVisible: LiveData<Int>
+    private val _refreshingState = MutableLiveData<Boolean>(true)
+    val refreshingState: LiveData<Boolean>
         get() = _refreshingState
 
     private val _snackBarText = MutableLiveData<String?>()
@@ -75,18 +75,19 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
             fetchContests()
         } else {
             _snackBarText.value = app.getString(R.string.no_internet)
-            _refreshingState.value = 0
+            _refreshingState.value = false
         }
     }
 
     fun retryFetching() {
-        _refreshingState.value = 1
+        setRefreshingState()
         if (checkConnection()) {
             fetchContests()
         } else {
             _snackBarText.value = getApplication<Application>().getString(R.string.no_internet)
-            _refreshingState.value = 0
+            _refreshingState.value = false
         }
+
     }
 
     private fun fetchContests() {
@@ -110,8 +111,8 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
                 _snackBarText.value =
                     getApplication<Application>().getString(R.string.failed_fetch_contests)
             }
+            _refreshingState.value = false
 
-            _refreshingState.value = 0
         }
     }
 
@@ -140,5 +141,9 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
                 else -> false
             }
         }
+    }
+
+    fun setRefreshingState() {
+        _refreshingState.value = true
     }
 }

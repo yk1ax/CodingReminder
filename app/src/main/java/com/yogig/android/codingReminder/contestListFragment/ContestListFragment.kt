@@ -2,6 +2,7 @@ package com.yogig.android.codingReminder.contestListFragment
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -48,12 +49,24 @@ class ContestListFragment : Fragment() {
             binding.swipeRefreshLayout.isRefreshing = false
         }
 
-        viewModel.progressBarVisible.observe(viewLifecycleOwner, Observer {
-            if(it == 1) {
-                binding.progressIndicator.visibility = View.VISIBLE
+        viewModel.refreshingState.observe(viewLifecycleOwner, Observer {
+            if(it) {
+                // binding.progressIndicator.visibility = View.VISIBLE
+                binding.contestRecyclerView.visibility = View.GONE
+                binding.shimmerLayout.visibility = View.VISIBLE
+                binding.shimmerLayout.startShimmer()
             }
-            else if(it == 0) {
-                binding.progressIndicator.visibility = View.GONE
+            else {
+                // binding.progressIndicator.visibility = View.GONE
+                binding.shimmerLayout.stopShimmer()
+                binding.shimmerLayout.visibility = View.GONE
+                if(viewModel.currentContestList.value.isNullOrEmpty()) {
+                    binding.contestRecyclerView.visibility = View.GONE
+                    binding.emptyView.visibility = View.VISIBLE
+                } else {
+                    binding.contestRecyclerView.visibility = View.VISIBLE
+                    binding.emptyView.visibility = View.GONE
+                }
             }
         })
 
@@ -88,9 +101,7 @@ class ContestListFragment : Fragment() {
         })
 
         viewModel.currentContestList.observe(viewLifecycleOwner, Observer {
-            if(it.isNullOrEmpty()) {
-                binding.emptyView.visibility = View.VISIBLE
-            } else {
+            if(it.isNotEmpty()) {
                 binding.emptyView.visibility = View.GONE
             }
         })
@@ -98,6 +109,15 @@ class ContestListFragment : Fragment() {
         setHasOptionsMenu(true)
 
         return binding.root
+    }
+
+    override fun onStart() {
+        if(binding.shimmerLayout.isVisible) {
+            binding.shimmerLayout.startShimmer()
+        } else {
+            binding.shimmerLayout.stopShimmer()
+        }
+        super.onStart()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -110,9 +130,7 @@ class ContestListFragment : Fragment() {
                 viewModel.retryFetching()
                 true
             }
-            else -> {
-                false
-            }
+            else -> false
         }
     }
 }

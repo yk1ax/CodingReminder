@@ -15,4 +15,6 @@
   <color name="trackColor">@color/primaryLightColor</color>
   <color name="unknownColor">@color/primaryLightColor</color>
   <color name="notification_color">#ff4b4d</color>
+  <color name="shimmerCardColor">#c7c7c7</color>
+  <color name="splashColor">@color/primaryDarkColor</color>
 </resources>
