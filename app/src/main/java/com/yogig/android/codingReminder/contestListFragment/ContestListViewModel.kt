@@ -41,20 +41,20 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
     val snackBarText: LiveData<String?>
         get() = _snackBarText
 
-    private val _calendarEvent = MutableLiveData<Contest?>()
-    val calendarEvent: LiveData<Contest?>
-        get() = _calendarEvent
+    private val _contestEvent = MutableLiveData<Contest?>()
+    val contestEvent: LiveData<Contest?>
+        get() = _contestEvent
 
     private val _newContestEvent = MutableLiveData<Boolean>(false)
     val newContestEvent: LiveData<Boolean>
         get() = _newContestEvent
 
-    fun onCalendarNavigate(contest: Contest) {
-        _calendarEvent.value = contest
+    fun onContestNavigate(contest: Contest) {
+        _contestEvent.value = contest
     }
 
-    fun onCalendarNavigateCompleted() {
-        _calendarEvent.value = null
+    fun onContestNavigateComplete() {
+        _contestEvent.value = null
     }
 
     fun onNewContestNavigate() {

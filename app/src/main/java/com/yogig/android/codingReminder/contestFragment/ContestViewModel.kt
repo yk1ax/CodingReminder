@@ -2,23 +2,14 @@ package com.yogig.android.codingReminder.contestFragment
 
 import android.app.AlarmManager
 import android.app.Application
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Build
-import android.os.SystemClock
-import android.provider.AlarmClock
 import android.util.Log
-import android.widget.Toast
 import androidx.core.app.AlarmManagerCompat
-import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.google.android.material.snackbar.Snackbar
 import com.yogig.android.codingReminder.AlarmReceiver
 import com.yogig.android.codingReminder.contestListFragment.SITE_TYPE
 import com.yogig.android.codingReminder.database.ContestDatabase
@@ -94,7 +85,7 @@ class ContestViewModel(app: Application, private val database: ContestDatabase, 
         _notificationEvent.value = false
     }
 
-    fun setNotification(contest: Contest) {
+    fun setNotification() {
 
         Log.i("ContestViewModel", "setNotification has been called.")
         notificationAlreadySet.value = true
@@ -139,7 +130,7 @@ class ContestViewModel(app: Application, private val database: ContestDatabase, 
         }
     }
 
-    fun removeNotification(contest: Contest) {
+    fun removeNotification() {
 
         Log.i("ContestViewModel", "removeNotification has been called.")
         notificationAlreadySet.value = false
@@ -176,10 +167,10 @@ class ContestViewModel(app: Application, private val database: ContestDatabase, 
         }
     }
 
-    fun onContestDelete(contest: DatabaseContest) {
+    fun deleteContest() {
         coroutineScope.launch {
             withContext(Dispatchers.IO) {
-                database.contestDao.deleteContest(contest)
+                database.contestDao.deleteContest(contest.asDatabaseModel())
             }
         }
     }

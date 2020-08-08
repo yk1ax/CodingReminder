@@ -44,6 +44,5 @@ fun NotificationManager.sendNotification(siteName: String, context: Context) {
     }
 
     cancel(NOTIFICATION_ID)
-
     notify(NOTIFICATION_ID, builder.build())
 }

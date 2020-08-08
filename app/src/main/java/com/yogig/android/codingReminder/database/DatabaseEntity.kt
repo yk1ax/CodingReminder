@@ -20,18 +20,31 @@ data class DatabaseContest(
     val websiteUrl: String,
     @ColumnInfo(name = "is_notification_set")
     val isNotificationSet: Boolean
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        val newItem = other as DatabaseContest
+        return when {
+            this.id != newItem.id || this.name != newItem.name ||
+                    this.startTimeMilliseconds != newItem.startTimeMilliseconds ||
+                    this.endTimeSeconds != newItem.endTimeSeconds || this.site != newItem.site ||
+                    this.websiteUrl != newItem.websiteUrl -> false
+            else -> true
+        }
+    }
+
+    fun asDomainModel() = Contest(
+            id,
+            name,
+            startTimeMilliseconds,
+            endTimeSeconds,
+            site,
+            websiteUrl,
+            isNotificationSet
+    )
+}
 
 fun List<DatabaseContest>.asDomainModel(): List<Contest> {
     return map {
-        Contest(
-            it.id,
-            it.name,
-            it.startTimeMilliseconds,
-            it.endTimeSeconds,
-            it.site,
-            it.websiteUrl,
-            it.isNotificationSet
-        )
+        it.asDomainModel()
     }
 }

@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.yogig.android.codingReminder.databinding.RecyclerViewItemBinding
 import com.yogig.android.codingReminder.repository.Contest
 
+/**
+ * Adapter for the recyclerview used to display the contest list
+ */
 class ContestListAdapter(val onClickListener: OnClickListener):
     ListAdapter<Contest, ContestListAdapter.ContestViewHolder>(DiffCallback) {
 
@@ -19,6 +22,10 @@ class ContestListAdapter(val onClickListener: OnClickListener):
         }
     }
 
+    /**
+     * DiffCallBack being used for determining which items items in the recyclerview have
+     * changed and thus only updating them and for determining new items which are to be added
+     */
     companion object DiffCallback : DiffUtil.ItemCallback<Contest>() {
         override fun areItemsTheSame(oldItem: Contest, newItem: Contest): Boolean {
             return oldItem.id == newItem.id
@@ -36,14 +43,17 @@ class ContestListAdapter(val onClickListener: OnClickListener):
     }
 
     override fun onBindViewHolder(holder: ContestViewHolder, position: Int) {
-        val conetestProperty = getItem(position)
+        val contestProperty = getItem(position)
         holder.itemView.setOnClickListener {
-            onClickListener.onClick(conetestProperty)
+            onClickListener.onClick(contestProperty)
         }
 
-        holder.bind(conetestProperty)
+        holder.bind(contestProperty)
     }
 
+    /**
+     * Class used for passing the onClickListener for contestEvent
+     */
     class OnClickListener(private val clickListener: (contest: Contest) -> Unit) {
         fun onClick(contest: Contest) = clickListener(contest)
     }

@@ -40,7 +40,7 @@ class ContestListFragment : Fragment() {
         val columnCount = resources.getInteger(R.integer.grid_column_count)
         binding.contestRecyclerView.layoutManager = GridLayoutManager(context, columnCount)
         binding.contestRecyclerView.adapter = ContestListAdapter(ContestListAdapter.OnClickListener {
-            viewModel.onCalendarNavigate(it)
+            viewModel.onContestNavigate(it)
         })
 
         binding.swipeRefreshLayout.setOnRefreshListener {
@@ -71,11 +71,11 @@ class ContestListFragment : Fragment() {
             }
         })
 
-        viewModel.calendarEvent.observe(viewLifecycleOwner, Observer {
+        viewModel.contestEvent.observe(viewLifecycleOwner, Observer {
             if(it != null) {
                 this.findNavController().navigate(ContestListFragmentDirections
                     .actionContestListFragmentToContestFragment(it))
-                viewModel.onCalendarNavigateCompleted()
+                viewModel.onContestNavigateComplete()
             }
         })
 

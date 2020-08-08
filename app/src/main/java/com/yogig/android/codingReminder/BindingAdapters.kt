@@ -85,6 +85,9 @@ fun TextView.setTimeFormatted(contest: Contest) {
     }
 }
 
+/**
+ * Sets the Notification button depending upon whether the notification has been set or not
+ */
 @BindingAdapter("bindNotification")
 fun MaterialButton.setButton(isNotificationSet: Boolean) {
     if(isNotificationSet) {

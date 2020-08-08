@@ -12,8 +12,7 @@ import com.yogig.android.codingReminder.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var appBarConfiguration: AppBarConfiguration
-    lateinit var navController: NavController
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,10 +20,8 @@ class MainActivity : AppCompatActivity() {
         this.setSupportActionBar(binding.toolbar)
 
         navController = this.findNavController(R.id.nav_host_fragment)
-
+        NavigationUI.setupWithNavController(binding.toolbar, navController)
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-
-        NavigationUI.setupWithNavController(binding.toolbar, navController)
     }
 }

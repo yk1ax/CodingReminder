@@ -10,7 +10,6 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.CalendarContract
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -43,7 +42,7 @@ class ContestFragment : Fragment() {
         // Extracting the Contest from the FragmentArgs passed in by safe-args
         contest = ContestFragmentArgs.fromBundle(requireArguments()).contest
 
-        // Obtain the PackageManager for checking the existence of support for the intents
+        // Obtain the PackageManager for checking the existence of activities for the implicit intents
         val packageManager = requireNotNull(context).packageManager
         binding.lifecycleOwner = this
 
@@ -114,12 +113,12 @@ class ContestFragment : Fragment() {
         viewModel.notificationEvent.observe(viewLifecycleOwner, Observer {
             if(it) {
                 if(viewModel.notificationAlreadySet.value!!) {
-                    viewModel.removeNotification(contest)
+                    viewModel.removeNotification()
                     Snackbar.make(binding.root, getString(R.string.reminder_removed), Snackbar.LENGTH_LONG)
                         .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
                         .show()
                 } else {
-                    viewModel.setNotification(contest)
+                    viewModel.setNotification()
                     Snackbar.make(binding.root, getString(R.string.notification_set), Snackbar.LENGTH_LONG)
                         .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
                         .show()
@@ -143,24 +142,16 @@ class ContestFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
             R.id.delete_item -> {
-                viewModel.onContestDelete(DatabaseContest(
-                    contest.id,
-                    contest.name,
-                    contest.startTimeMilliseconds,
-                    contest.endTimeSeconds,
-                    contest.site,
-                    contest.websiteUrl,
-                    contest.isNotificationSet
-                ))
+                viewModel.deleteContest()
+                viewModel.removeNotification()
                 Snackbar.make(binding.root, "Contest deleted.", Snackbar.LENGTH_LONG)
                     .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
                     .show()
+
                 this.findNavController().navigateUp()
                 true
             }
-            else -> {
-                false
-            }
+            else -> false
         }
     }
 

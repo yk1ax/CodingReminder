@@ -2,6 +2,7 @@ package com.yogig.android.codingReminder.repository
 
 import android.os.Parcelable
 import com.yogig.android.codingReminder.contestListFragment.SITE_TYPE
+import com.yogig.android.codingReminder.database.DatabaseContest
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
@@ -21,4 +22,25 @@ data class Contest(
 ) : Parcelable {
     @IgnoredOnParcel
     val hasStarted = startTimeMilliseconds < System.currentTimeMillis()
+
+    override fun equals(other: Any?): Boolean {
+        val newItem = other as Contest
+        return when {
+            this.id != newItem.id || this.name != newItem.name ||
+                    this.startTimeMilliseconds != newItem.startTimeMilliseconds ||
+                    this.endTimeSeconds != newItem.endTimeSeconds || this.site != newItem.site ||
+                    this.websiteUrl != newItem.websiteUrl -> false
+            else -> true
+        }
+    }
+
+    fun asDatabaseModel(): DatabaseContest = DatabaseContest(
+        id,
+        name,
+        startTimeMilliseconds,
+        endTimeSeconds,
+        site,
+        websiteUrl,
+        isNotificationSet
+    )
 }
