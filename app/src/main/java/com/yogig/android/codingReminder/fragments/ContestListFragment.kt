@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.yogig.android.codingReminder.adapters.ContestListAdapter
 import com.yogig.android.codingReminder.R
-import com.yogig.android.codingReminder.contestListFragment.ContestListFragmentDirections
 import com.yogig.android.codingReminder.viewModels.ContestListViewModel
 import com.yogig.android.codingReminder.viewModels.ContestListViewModelFactory
 import com.yogig.android.codingReminder.database.ContestDatabase

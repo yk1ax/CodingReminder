@@ -41,6 +41,17 @@ data class DatabaseContest(
             websiteUrl,
             isNotificationSet
     )
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + name.hashCode()
+        result = 31 * result + startTimeMilliseconds.hashCode()
+        result = 31 * result + endTimeSeconds.hashCode()
+        result = 31 * result + site.hashCode()
+        result = 31 * result + websiteUrl.hashCode()
+        result = 31 * result + isNotificationSet.hashCode()
+        return result
+    }
 }
 
 fun List<DatabaseContest>.asDomainModel(): List<Contest> {

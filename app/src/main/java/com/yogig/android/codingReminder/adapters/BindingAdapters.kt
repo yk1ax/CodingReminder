@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
+import com.yogig.android.codingReminder.R
 import com.yogig.android.codingReminder.viewModels.SiteType
 import com.yogig.android.codingReminder.viewModels.endCalendar
 import com.yogig.android.codingReminder.viewModels.startCalendar

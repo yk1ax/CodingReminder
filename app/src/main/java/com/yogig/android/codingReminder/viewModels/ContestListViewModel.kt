@@ -100,8 +100,7 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
         coroutineScope.launch {
 
             try {
-                var new = 0
-                new = repository.refreshContests()
+                var new = repository.refreshContests()
 
                 if(new == 0) {
                     _snackBarText.value =

@@ -1,8 +1,12 @@
 package com.yogig.android.codingReminder.network
 
+import android.provider.DocumentsContract
 import android.util.Log
 import com.yogig.android.codingReminder.viewModels.SiteType
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -12,7 +16,9 @@ suspend fun fetchCCContests(): List<NetworkContest> {
 
     Log.i("NetworkRequests", "fetchCCContests has been called")
     val list = mutableListOf<NetworkContest>()
-    val document = Jsoup.connect(CODECHEF_URL).timeout(15000).get()
+    val document: Document =
+        withContext(Dispatchers.IO) { Jsoup.connect(CODECHEF_URL).timeout(15000).get() }
+
     val tables = document.getElementsByClass("dataTable")
     for (i in 0..1) {
         val table = tables[i].getElementsByTag("tbody").first()

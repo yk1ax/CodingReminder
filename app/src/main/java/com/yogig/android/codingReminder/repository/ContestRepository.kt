@@ -5,9 +5,6 @@ import com.yogig.android.codingReminder.database.ContestDatabase
 import com.yogig.android.codingReminder.database.asDomainModel
 import com.yogig.android.codingReminder.network.NetworkRequests
 import com.yogig.android.codingReminder.network.asDatabaseModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import java.io.IOException
 
 /**
  * Repository layer for the App
