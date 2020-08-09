@@ -11,7 +11,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.yogig.android.codingReminder.AlarmReceiver
-import com.yogig.android.codingReminder.contestListFragment.SITE_TYPE
+import com.yogig.android.codingReminder.contestListFragment.SiteType
 import com.yogig.android.codingReminder.database.ContestDatabase
 import com.yogig.android.codingReminder.database.DatabaseContest
 import com.yogig.android.codingReminder.repository.Contest
@@ -91,8 +91,8 @@ class ContestViewModel(app: Application, private val database: ContestDatabase, 
         notificationAlreadySet.value = true
         val notificationIntent = Intent(getApplication(), AlarmReceiver::class.java)
         notificationIntent.putExtra("site", when(contest.site){
-            SITE_TYPE.CODEFORCES_SITE -> " on Codeforces"
-            SITE_TYPE.CODECHEF_SITE -> " on Codechef"
+            SiteType.CODEFORCES_SITE -> " on Codeforces"
+            SiteType.CODECHEF_SITE -> " on Codechef"
             else -> ""
         })
 
@@ -136,8 +136,8 @@ class ContestViewModel(app: Application, private val database: ContestDatabase, 
         notificationAlreadySet.value = false
         val notificationIntent = Intent(getApplication(), AlarmReceiver::class.java)
         notificationIntent.putExtra("site", when(contest.site){
-            SITE_TYPE.CODEFORCES_SITE -> " on Codeforces"
-            SITE_TYPE.CODECHEF_SITE -> " on Codechef"
+            SiteType.CODEFORCES_SITE -> " on Codeforces"
+            SiteType.CODECHEF_SITE -> " on Codechef"
             else -> ""
         })
 

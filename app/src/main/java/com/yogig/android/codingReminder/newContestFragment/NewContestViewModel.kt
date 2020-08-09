@@ -9,7 +9,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.yogig.android.codingReminder.R
-import com.yogig.android.codingReminder.contestListFragment.SITE_TYPE
+import com.yogig.android.codingReminder.contestListFragment.SiteType
 import com.yogig.android.codingReminder.database.ContestDatabase
 import com.yogig.android.codingReminder.database.DatabaseContest
 import kotlinx.coroutines.*
@@ -28,7 +28,7 @@ class NewContestViewModel(private val database: ContestDatabase, app: Applicatio
         super.onCleared()
     }
 
-    val coroutineScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+    private val coroutineScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     init {
         startCalendar = Calendar.getInstance()
@@ -114,7 +114,7 @@ class NewContestViewModel(private val database: ContestDatabase, app: Applicatio
         return true
     }
 
-    fun submitContest() {
+    private fun submitContest() {
         coroutineScope.launch {
             withContext(Dispatchers.IO) {
                 loop@ for(i in 1..1000) {
@@ -124,7 +124,7 @@ class NewContestViewModel(private val database: ContestDatabase, app: Applicatio
                             contestName.value?:"",
                             startCalendar.timeInMillis,
                             endCalendar.timeInMillis,
-                            SITE_TYPE.UNKNOWN_SITE,
+                            SiteType.UNKNOWN_SITE,
                             if(contestUrl.value.isNullOrEmpty()) ""
                             else "https://".plus(contestUrl.value),
                             false
@@ -138,49 +138,4 @@ class NewContestViewModel(private val database: ContestDatabase, app: Applicatio
         }
     }
 
-}
-
-fun TextView.setDate(id: Int) {
-    val calendar = if(id == 1) startCalendar else endCalendar
-    val mYear = calendar.get(Calendar.YEAR)
-    val mMonth = calendar.get(Calendar.MONTH)
-    val mDay = calendar.get(Calendar.DAY_OF_MONTH)
-
-    val formatter = DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.UK)
-
-    val dialog = DatePickerDialog(
-        this.context,
-        DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            calendar.set(Calendar.YEAR, year)
-            calendar.set(Calendar.MONTH, month)
-            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
-            text = formatter.format(calendar.timeInMillis)
-        },
-        mYear,
-        mMonth,
-        mDay
-    )
-    dialog.show()
-}
-
-fun TextView.setTime(id: Int) {
-    val calendar = if(id == 1) startCalendar else endCalendar
-    val mHour = calendar.get(Calendar.HOUR_OF_DAY)
-    val mMinute = calendar.get(Calendar.MINUTE)
-
-    val formatter = DateFormat.getTimeInstance(DateFormat.SHORT, Locale.UK)
-
-    val dialog = TimePickerDialog(
-        this.context,
-        TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
-            calendar.set(Calendar.MINUTE, minute)
-            text = formatter.format(calendar.timeInMillis)
-        },
-        mHour,
-        mMinute,
-        true
-    )
-    dialog.show()
 }

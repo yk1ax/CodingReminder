@@ -23,7 +23,6 @@ private val retrofit = Retrofit.Builder()
 
 interface CodeforcesApiService {
 
-    @Throws(IOException::class)
     @GET(value = "contest.list")
     suspend fun getContests(): CodeforcesContestList
 }

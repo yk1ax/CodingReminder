@@ -1,23 +1,24 @@
 package com.yogig.android.codingReminder.network
 
 import android.util.Log
-import com.yogig.android.codingReminder.contestListFragment.SITE_TYPE
+import com.yogig.android.codingReminder.contestListFragment.SiteType
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import java.io.IOException
 
 object NetworkRequests {
 
-    @Throws(IOException::class)
     suspend fun contestsFromNetwork(): List<NetworkContest> {
         val contests = mutableListOf<NetworkContest>()
 
         var exceptions = 0
         val exceptionInfo = IOException()
-
         withContext(Dispatchers.IO) {
+            val list1 = async { fetchCFContests() }
+            val list2 = async { fetchCCContests() }
             try {
-                contests.addAll(fetchCFContests())
+                contests.addAll(list1.await())
             } catch (e: IOException) {
                 Log.i("NetworkRequests", "Failed $e")
                 exceptions++
@@ -25,7 +26,7 @@ object NetworkRequests {
             }
 
             try {
-                contests.addAll(CodechefFetching.contestList)
+                contests.addAll(list2.await())
             } catch (e: IOException) {
                 Log.i("NetworkRequests", "Failed $e")
                 exceptions++
@@ -42,18 +43,20 @@ object NetworkRequests {
     @Throws(IOException::class)
     private suspend fun fetchCFContests(): List<NetworkContest> {
 
+        Log.i("NetworkRequests", "fetchCFContests has been called")
         val list: List<NetworkContest> = CodeforcesApi.retrofitService.getContests().contestList
 
         val contests = mutableListOf<NetworkContest>()
         if (list.isNotEmpty()) {
             loop@ for (contest in list) {
-                contest.site = SITE_TYPE.CODEFORCES_SITE
+                contest.site = SiteType.CODEFORCES_SITE
                 when (contest.phase) {
                     "BEFORE", "CODING" -> contests.add(contest)
                     else -> break@loop
                 }
             }
         }
+        Log.i("NetworkRequests", "fetchCFContests is returning")
         return contests
 
     }

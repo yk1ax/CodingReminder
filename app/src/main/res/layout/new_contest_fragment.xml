@@ -17,7 +17,8 @@
         tools:context=".newContestFragment.NewContestFragment"
         android:clickable="true"
         android:focusable="true"
-        android:focusableInTouchMode="true">
+        android:focusableInTouchMode="true"
+        tools:background="@android:color/white">
 
         <ImageView
             android:id="@+id/imageView"

@@ -3,7 +3,7 @@ package com.yogig.android.codingReminder.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.yogig.android.codingReminder.contestListFragment.SITE_TYPE
+import com.yogig.android.codingReminder.contestListFragment.SiteType
 import com.yogig.android.codingReminder.repository.Contest
 
 @Entity(tableName = "contest_table")
@@ -15,7 +15,7 @@ data class DatabaseContest(
     val startTimeMilliseconds: Long,
     @ColumnInfo(name = "end_time_milliseconds")
     val endTimeSeconds: Long,
-    var site: SITE_TYPE,
+    var site: SiteType,
     @ColumnInfo(name = "website_url")
     val websiteUrl: String,
     @ColumnInfo(name = "is_notification_set")

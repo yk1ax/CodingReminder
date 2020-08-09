@@ -1,15 +1,18 @@
 package com.yogig.android.codingReminder.network
 
 import android.util.Log
-import com.yogig.android.codingReminder.contestListFragment.SITE_TYPE
+import com.yogig.android.codingReminder.contestListFragment.SiteType
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 import java.text.SimpleDateFormat
 import java.util.*
 
 private const val CODECHEF_URL = "https://www.codechef.com/contests"
 
-private fun jsoupFetch(): List<NetworkContest> {
+suspend fun fetchCCContests(): List<NetworkContest> {
 
+    Log.i("NetworkRequests", "fetchCCContests has been called")
     val list = mutableListOf<NetworkContest>()
     val document = Jsoup.connect(CODECHEF_URL).timeout(15000).get()
     val tables = document.getElementsByClass("dataTable")
@@ -38,13 +41,13 @@ private fun jsoupFetch(): List<NetworkContest> {
             }
 
 
-            val contest = NetworkContest(code, name, phase, (end - start), start, SITE_TYPE.CODECHEF_SITE)
+            val contest =
+                NetworkContest(code, name, phase, (end - start), start, SiteType.CODECHEF_SITE)
             list.add(contest)
         }
     }
+    Log.i("NetworkRequests", "fetchCCContests is returning")
     return list
-}
 
-object CodechefFetching {
-    val contestList: List<NetworkContest> by lazy { jsoupFetch() }
+
 }

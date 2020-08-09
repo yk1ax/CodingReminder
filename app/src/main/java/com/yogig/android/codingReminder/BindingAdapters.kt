@@ -1,5 +1,7 @@
 package com.yogig.android.codingReminder
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
@@ -8,7 +10,9 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
-import com.yogig.android.codingReminder.contestListFragment.SITE_TYPE
+import com.yogig.android.codingReminder.contestListFragment.SiteType
+import com.yogig.android.codingReminder.newContestFragment.endCalendar
+import com.yogig.android.codingReminder.newContestFragment.startCalendar
 import com.yogig.android.codingReminder.repository.Contest
 import java.text.DateFormat
 import java.util.*
@@ -47,10 +51,10 @@ fun TextView.setContestTime(contest: Contest) {
  * Sets vector drawable of the logo of the Website depending upon the contest site
  */
 @BindingAdapter("websiteImage")
-fun ImageView.setWebsiteImage(type: SITE_TYPE) {
+fun ImageView.setWebsiteImage(type: SiteType) {
     setImageResource(when(type) {
-        SITE_TYPE.CODEFORCES_SITE -> R.drawable.ic_codeforces_svg
-        SITE_TYPE.CODECHEF_SITE -> R.drawable.ic_codechef_svg
+        SiteType.CODEFORCES_SITE -> R.drawable.ic_codeforces_svg
+        SiteType.CODECHEF_SITE -> R.drawable.ic_codechef_svg
         else -> R.drawable.ic_code
     })
 }
@@ -59,11 +63,11 @@ fun ImageView.setWebsiteImage(type: SITE_TYPE) {
  * Sets the background color for the card view depending upon the contest site
  */
 @BindingAdapter("bindBackground")
-fun CardView.setColor(type: SITE_TYPE){
+fun CardView.setColor(type: SiteType){
     setCardBackgroundColor(ContextCompat.getColor( context,
         when(type) {
-            SITE_TYPE.CODEFORCES_SITE -> R.color.codeforcesColor
-            SITE_TYPE.CODECHEF_SITE -> R.color.codechefColor
+            SiteType.CODEFORCES_SITE -> R.color.codeforcesColor
+            SiteType.CODECHEF_SITE -> R.color.codechefColor
             else -> R.color.unknownColor
         }
     ))
@@ -135,4 +139,49 @@ private fun timeLeftFormatted(time: Long): String {
     }
     period = calendar.get(Calendar.MINUTE)
     return "$period minute".plus(if(period>1) "s" else "")
+}
+
+fun TextView.setDate(id: Int) {
+    val calendar = if(id == 1) startCalendar else endCalendar
+    val mYear = calendar.get(Calendar.YEAR)
+    val mMonth = calendar.get(Calendar.MONTH)
+    val mDay = calendar.get(Calendar.DAY_OF_MONTH)
+
+    val formatter = DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.UK)
+
+    val dialog = DatePickerDialog(
+        this.context,
+        DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+            calendar.set(Calendar.YEAR, year)
+            calendar.set(Calendar.MONTH, month)
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+            text = formatter.format(calendar.timeInMillis)
+        },
+        mYear,
+        mMonth,
+        mDay
+    )
+    dialog.show()
+}
+
+fun TextView.setTime(id: Int) {
+    val calendar = if(id == 1) startCalendar else endCalendar
+    val mHour = calendar.get(Calendar.HOUR_OF_DAY)
+    val mMinute = calendar.get(Calendar.MINUTE)
+
+    val formatter = DateFormat.getTimeInstance(DateFormat.SHORT, Locale.UK)
+
+    val dialog = TimePickerDialog(
+        this.context,
+        TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+            calendar.set(Calendar.MINUTE, minute)
+            text = formatter.format(calendar.timeInMillis)
+        },
+        mHour,
+        mMinute,
+        true
+    )
+    dialog.show()
 }

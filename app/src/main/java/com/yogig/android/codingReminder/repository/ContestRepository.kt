@@ -19,13 +19,12 @@ class ContestRepository(private val database: ContestDatabase) {
      * with the order such that if it is a future contest the ordered by its start time
      * else by its end time
      */
-    val contests = Transformations.map(database.contestDao.getContests()) {
-            list ->
-            val curTime = System.currentTimeMillis()
-            list.asDomainModel().sortedBy {
-                if(it.startTimeMilliseconds >= curTime) it.startTimeMilliseconds
-                else it.endTimeSeconds
-            }
+    val contests = Transformations.map(database.contestDao.getContests()) { list ->
+        val curTime = System.currentTimeMillis()
+        list.asDomainModel().sortedBy {
+            if (it.startTimeMilliseconds >= curTime) it.startTimeMilliseconds
+            else it.endTimeSeconds
+        }
     }
 
     /**
@@ -40,27 +39,25 @@ class ContestRepository(private val database: ContestDatabase) {
      *      contest in the database, if not then it updates the contest
      * @return[Int] It returns the number of new contests added / updated in the database
      */
-    @Throws(IOException::class)
+
     suspend fun refreshContests(): Int {
         val curTime = System.currentTimeMillis()
-        return withContext(Dispatchers.IO) {
-            database.contestDao.validateContests(curTime)
-            val contests = NetworkRequests.contestsFromNetwork().asDatabaseModel()
+        database.contestDao.validateContests(curTime)
+        val contests = NetworkRequests.contestsFromNetwork().asDatabaseModel()
 
-            var newContests = 0
-            for(newContest in contests) {
-                val contest = database.contestDao.getContest(newContest.id)
-                if(contest == null) {
-                    database.contestDao.insertContest(newContest)
+        var newContests = 0
+        for (newContest in contests) {
+            val contest = database.contestDao.getContest(newContest.id)
+            if (contest == null) {
+                database.contestDao.insertContest(newContest)
+                newContests++
+            } else {
+                if (contest != newContest) {
+                    database.contestDao.updateContest(newContest)
                     newContests++
-                } else {
-                    if(contest != newContest) {
-                        database.contestDao.updateContest(newContest)
-                        newContests++
-                    }
                 }
             }
-            newContests
         }
+        return newContests
     }
 }

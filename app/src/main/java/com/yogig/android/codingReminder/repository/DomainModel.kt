@@ -1,7 +1,7 @@
 package com.yogig.android.codingReminder.repository
 
 import android.os.Parcelable
-import com.yogig.android.codingReminder.contestListFragment.SITE_TYPE
+import com.yogig.android.codingReminder.contestListFragment.SiteType
 import com.yogig.android.codingReminder.database.DatabaseContest
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
@@ -16,7 +16,7 @@ data class Contest(
     val name: String,
     val startTimeMilliseconds: Long,
     val endTimeSeconds: Long,
-    var site: SITE_TYPE,
+    var site: SiteType,
     val websiteUrl: String,
     var isNotificationSet: Boolean
 ) : Parcelable {

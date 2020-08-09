@@ -3,45 +3,45 @@ package com.yogig.android.codingReminder.database
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.yogig.android.codingReminder.contestListFragment.SITE_TYPE
+import com.yogig.android.codingReminder.contestListFragment.SiteType
 
 @Dao
 interface ContestDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg list: DatabaseContest)
+    suspend fun insertAll(vararg list: DatabaseContest)
 
     @Insert
-    fun insertContest(contest: DatabaseContest)
+    suspend fun insertContest(contest: DatabaseContest)
 
     @Update
-    fun updateContest(contest: DatabaseContest)
+    suspend fun updateContest(contest: DatabaseContest)
 
     @Query("SELECT * from contest_table")
     fun getContests(): LiveData<List<DatabaseContest>>
 
     @Delete
-    fun deleteContest(contest: DatabaseContest)
+    suspend fun deleteContest(contest: DatabaseContest)
 
     @Query("SELECT * from contest_table WHERE id = :id")
-    fun getContest(id: String): DatabaseContest?
+    suspend fun getContest(id: String): DatabaseContest?
 
     @Query("DELETE FROM contest_table WHERE end_time_milliseconds <= :curTime")
-    fun validateContests(curTime: Long)
+    suspend fun validateContests(curTime: Long)
 }
 
 class Converters{
     @TypeConverter
-    fun siteTypeToInt(type: SITE_TYPE): Int {
+    fun siteTypeToInt(type: SiteType): Int {
         return type.type
     }
 
     @TypeConverter
-    fun intToSiteType(type: Int): SITE_TYPE {
+    fun intToSiteType(type: Int): SiteType {
         return when(type) {
-            SITE_TYPE.CODEFORCES_SITE.type -> SITE_TYPE.CODEFORCES_SITE
-            SITE_TYPE.CODECHEF_SITE.type -> SITE_TYPE.CODECHEF_SITE
-            else -> SITE_TYPE.UNKNOWN_SITE
+            SiteType.CODEFORCES_SITE.type -> SiteType.CODEFORCES_SITE
+            SiteType.CODECHEF_SITE.type -> SiteType.CODECHEF_SITE
+            else -> SiteType.UNKNOWN_SITE
         }
     }
 }

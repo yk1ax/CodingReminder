@@ -16,7 +16,7 @@ import com.yogig.android.codingReminder.repository.ContestRepository
 import kotlinx.coroutines.*
 import java.io.IOException
 
-enum class SITE_TYPE(val type: Int) {
+enum class SiteType(val type: Int) {
     UNKNOWN_SITE(0),
     CODEFORCES_SITE(1),
     CODECHEF_SITE(2)
@@ -64,11 +64,14 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
         _newContestEvent.value = false
     }
 
-    val repository: ContestRepository
+    fun onCompleteSnackBarEvent() {
+        _snackBarText.value = null
+    }
+
+    private val repository: ContestRepository = ContestRepository(database)
     val currentContestList: LiveData<List<Contest>>
 
     init {
-        repository = ContestRepository(database)
         currentContestList = repository.contests
 
         if (checkConnection()) {
@@ -89,14 +92,17 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
 
     }
 
+    /**
+     * Fetches the contests and changes @see[_snackBarText] which is observed in the fragment
+     * to generate SnackBar text
+     */
     private fun fetchContests() {
         coroutineScope.launch {
 
             try {
                 var new = 0
-                withContext(Dispatchers.IO) {
-                    new = repository.refreshContests()
-                }
+                new = repository.refreshContests()
+
                 if(new == 0) {
                     _snackBarText.value =
                         getApplication<Application>().getString(R.string.no_new_contest)
@@ -113,10 +119,6 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
             _refreshingState.value = false
 
         }
-    }
-
-    fun onCompleteSnackBarEvent() {
-        _snackBarText.value = null
     }
 
     // Check Internet Connection
@@ -140,9 +142,5 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
                 else -> false
             }
         }
-    }
-
-    fun setRefreshingState() {
-        _refreshingState.value = true
     }
 }

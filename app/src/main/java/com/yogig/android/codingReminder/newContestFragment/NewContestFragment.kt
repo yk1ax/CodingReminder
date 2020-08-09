@@ -30,13 +30,10 @@ class NewContestFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = NewContestFragmentBinding.inflate(inflater)
-        val database = ContestDatabase.getInstance(requireContext().applicationContext)
+
         val application = requireActivity().application
-        val viewModelFactory =
-            NewContestViewModelFactory(
-                database,
-                application
-            )
+        val database = ContestDatabase.getInstance(requireContext().applicationContext)
+        val viewModelFactory = NewContestViewModelFactory(database, application)
         viewModel = ViewModelProvider(this, viewModelFactory).get(NewContestViewModel::class.java)
 
         binding.viewModel = viewModel
@@ -101,10 +98,8 @@ class NewContestFragment : Fragment() {
             }
         }
 
-        binding.contestNameEditText.setOnFocusChangeListener(focusChangeListener)
-        binding.contestLinkEditText.setOnFocusChangeListener(focusChangeListener)
-
-
+        binding.contestNameEditText.onFocusChangeListener = focusChangeListener
+        binding.contestLinkEditText.onFocusChangeListener = focusChangeListener
 
         return binding.root
     }
