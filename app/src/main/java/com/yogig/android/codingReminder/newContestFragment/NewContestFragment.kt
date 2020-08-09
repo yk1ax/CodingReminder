@@ -2,11 +2,13 @@ package com.yogig.android.codingReminder.newContestFragment
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -59,7 +61,7 @@ class NewContestFragment : Fragment() {
         })
 
         viewModel.snackBarText.observe(viewLifecycleOwner, Observer {
-            if(it != null) {
+            if (it != null) {
                 Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG)
                     .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
                     .show()
@@ -67,35 +69,27 @@ class NewContestFragment : Fragment() {
         })
 
         viewModel.submitEvent.observe(viewLifecycleOwner, Observer {
-            if(it) {
-                if(isTimeRangeSet()) {
-                    viewModel.trySubmit()
+            if (it) {
+                val isSubmitted = viewModel.trySubmit(isTimeRangeSet())
+                if (isSubmitted) {
                     viewModel.onSubmitEventComplete()
                     this.findNavController().navigateUp()
-                } else {
-                    Snackbar.make(binding.root, "Set the time range.", Snackbar.LENGTH_LONG)
-                        .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
-                        .show()
                 }
             }
         })
 
         val focusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if(!hasFocus) {
-                    val inputMethodManager = requireContext().getSystemService(
-                        InputMethodManager::class.java
-                    ) as InputMethodManager
+            val inputMethodManager = ContextCompat.getSystemService(
+                requireContext(),
+                InputMethodManager::class.java
+            ) as InputMethodManager
 
-                    inputMethodManager.hideSoftInputFromWindow(v.applicationWindowToken, 0)
-                } else {
-                    val inputMethodManager = requireContext().getSystemService(
-                        InputMethodManager::class.java
-                    ) as InputMethodManager
-
-                    inputMethodManager.showSoftInput(v, 0)
-                }
+            if (!hasFocus) {
+                inputMethodManager.hideSoftInputFromWindow(v.applicationWindowToken, 0)
+            } else {
+                inputMethodManager.showSoftInput(v, 0)
             }
+
         }
 
         binding.contestNameEditText.onFocusChangeListener = focusChangeListener
@@ -106,11 +100,13 @@ class NewContestFragment : Fragment() {
 
     private fun isTimeRangeSet(): Boolean {
         return when {
-            binding.startDate.text == getString(R.string.start_date) -> false
-            binding.startTime.text == getString(R.string.start_time) -> false
-            binding.endDate.text == getString(R.string.end_date) -> false
-            binding.endTime.text == getString(R.string.end_time) -> false
+            binding.startDate.text.toString() == getString(R.string.start_date) -> false
+            binding.startTime.text.toString() == getString(R.string.start_time) -> false
+            binding.endDate.text.toString() == getString(R.string.end_date) -> false
+            binding.endTime.text.toString() == getString(R.string.end_time) -> false
             else -> true
         }
     }
+
+
 }

@@ -68,8 +68,8 @@
                 android:layout_height="wrap_content"
                 android:text="@={viewModel.contestUrl}"
                 android:singleLine="true"
-                android:imeActionLabel="Done"
-                android:imeOptions="actionDone"/>
+                android:imeActionLabel="Next"
+                android:imeOptions="actionNext" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView

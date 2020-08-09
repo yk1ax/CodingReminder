@@ -16,6 +16,7 @@ import com.yogig.android.codingReminder.newContestFragment.startCalendar
 import com.yogig.android.codingReminder.repository.Contest
 import java.text.DateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 /**
  * Using data binding for submitting list for the recycler view adapter
@@ -92,14 +93,19 @@ fun TextView.setTimeFormatted(contest: Contest) {
 /**
  * Sets the Notification button depending upon whether the notification has been set or not
  */
-@BindingAdapter("bindNotification")
-fun MaterialButton.setButton(isNotificationSet: Boolean) {
-    if(isNotificationSet) {
+@BindingAdapter("isSet", "time")
+fun MaterialButton.setButton(isNotificationSet: Boolean, time: Long) {
+    val curTime = System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(15)
+    if(isNotificationSet && curTime < time) {
         text = context.getString(R.string.remove_reminder)
         icon = context.getDrawable(R.drawable.ic_remove_notification)
     } else {
         text = context.getString(R.string.set_reminder)
         icon = context.getDrawable(R.drawable.ic_add_notification)
+    }
+
+    if(curTime >= time) {
+        isEnabled = false
     }
 }
 

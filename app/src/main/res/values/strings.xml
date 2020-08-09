@@ -23,4 +23,6 @@
     <string name="remove_reminder">Remove Reminder</string>
     <string name="reminder_removed">Reminder has been removed.</string>
     <string name="notification_set">You\'ll be reminded 15 minutes before the contest.</string>
+    <string name="add_contest">Add Contest</string>
+    <string name="set_time_range">Set the time range.</string>
 </resources>

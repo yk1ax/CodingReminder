@@ -19,7 +19,8 @@ import java.util.*
 lateinit var startCalendar: Calendar
 lateinit var endCalendar: Calendar
 
-class NewContestViewModel(private val database: ContestDatabase, app: Application) : AndroidViewModel(app) {
+class NewContestViewModel(private val database: ContestDatabase, app: Application) :
+    AndroidViewModel(app) {
 
     private val viewModelJob = Job()
 
@@ -85,30 +86,41 @@ class NewContestViewModel(private val database: ContestDatabase, app: Applicatio
         _snackBarText.value = null
     }
 
-    fun trySubmit() {
-        val isValid = validateData()
+    fun trySubmit(isTimeRangeSet: Boolean): Boolean {
+        val isValid = validateData(isTimeRangeSet)
 
-        if(isValid) {
+        if (isValid) {
             submitContest()
             _snackBarText.value = getApplication<Application>().getString(R.string.contest_added)
+            return true
         }
+
+        return false
     }
 
-    private fun validateData(): Boolean {
-        if(contestName.value.isNullOrEmpty()) {
-            _snackBarText.value = getApplication<Application>().getString(R.string.contest_name_invalid)
+    private fun validateData(isTimeRangeSet: Boolean): Boolean {
+        if (contestName.value.isNullOrEmpty()) {
+            _snackBarText.value =
+                getApplication<Application>().getString(R.string.contest_name_invalid)
             return false
         }
-        if(!URLUtil.isNetworkUrl("https://".plus(contestUrl.value)) && !contestUrl.value.isNullOrEmpty()) {
-            _snackBarText.value = getApplication<Application>().getString(R.string.contest_link_invalid)
+        if (!URLUtil.isNetworkUrl("https://".plus(contestUrl.value)) && !contestUrl.value.isNullOrEmpty()) {
+            _snackBarText.value =
+                getApplication<Application>().getString(R.string.contest_link_invalid)
             return false
         }
-        if(startCalendar.timeInMillis <= System.currentTimeMillis()) {
-            _snackBarText.value = getApplication<Application>().getString(R.string.contest_alerady_started)
+        if(!isTimeRangeSet) {
+            _snackBarText.value = getApplication<Application>().getString(R.string.set_time_range)
             return false
         }
-        if(startCalendar.timeInMillis >= endCalendar.timeInMillis) {
-            _snackBarText.value = getApplication<Application>().getString(R.string.invalid_time_range)
+        if (startCalendar.timeInMillis >= endCalendar.timeInMillis) {
+            _snackBarText.value =
+                getApplication<Application>().getString(R.string.invalid_time_range)
+            return false
+        }
+        if (startCalendar.timeInMillis <= System.currentTimeMillis()) {
+            _snackBarText.value =
+                getApplication<Application>().getString(R.string.contest_alerady_started)
             return false
         }
         return true
@@ -117,15 +129,15 @@ class NewContestViewModel(private val database: ContestDatabase, app: Applicatio
     private fun submitContest() {
         coroutineScope.launch {
             withContext(Dispatchers.IO) {
-                loop@ for(i in 1..1000) {
-                    if(database.contestDao.getContest(i.toString()) == null) {
+                loop@ for (i in 1..1000) {
+                    if (database.contestDao.getContest(i.toString()) == null) {
                         val contest = DatabaseContest(
                             i.toString(),
-                            contestName.value?:"",
+                            contestName.value ?: "",
                             startCalendar.timeInMillis,
                             endCalendar.timeInMillis,
                             SiteType.UNKNOWN_SITE,
-                            if(contestUrl.value.isNullOrEmpty()) ""
+                            if (contestUrl.value.isNullOrEmpty()) ""
                             else "https://".plus(contestUrl.value),
                             false
                         )
