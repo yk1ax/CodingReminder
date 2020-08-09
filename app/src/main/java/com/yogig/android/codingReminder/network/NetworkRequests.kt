@@ -43,7 +43,6 @@ object NetworkRequests {
     @Throws(IOException::class)
     private suspend fun fetchCFContests(): List<NetworkContest> {
 
-        Log.i("NetworkRequests", "fetchCFContests has been called")
         val list: List<NetworkContest> = CodeforcesApi.retrofitService.getContests().contestList
 
         val contests = mutableListOf<NetworkContest>()
@@ -56,7 +55,6 @@ object NetworkRequests {
                 }
             }
         }
-        Log.i("NetworkRequests", "fetchCFContests is returning")
         return contests
 
     }

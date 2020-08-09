@@ -58,7 +58,6 @@ class ContestViewModel(
 
     // To be called when the Calendar Event has been completed to update the LiveData
     fun onCalendarEventComplete() {
-        Log.i("ContestViewModel", "Came back from Calendar")
         _calendarEvent.value = false
     }
 
@@ -69,7 +68,6 @@ class ContestViewModel(
 
     // To be called when the Website Event has been completed to update the LiveData
     fun onWebsiteEventComplete() {
-        Log.i("ContestViewModel", "Came back from browser")
         _websiteEvent.value = false
     }
 
@@ -88,7 +86,6 @@ class ContestViewModel(
 
     fun setNotification() {
 
-        Log.i("ContestViewModel", "setNotification has been called.")
         notificationAlreadySet.value = true
         val notificationIntent = Intent(getApplication(), AlarmReceiver::class.java)
         notificationIntent.putExtra(
@@ -133,7 +130,6 @@ class ContestViewModel(
 
     fun removeNotification() {
 
-        Log.i("ContestViewModel", "removeNotification has been called.")
         notificationAlreadySet.value = false
         val notificationIntent = Intent(getApplication(), AlarmReceiver::class.java)
         notificationIntent.putExtra(

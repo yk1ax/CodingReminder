@@ -26,7 +26,6 @@ import java.util.concurrent.TimeUnit
 fun setContestList(view: RecyclerView, contestList: List<Contest>?) {
     val adapter = view.adapter as ContestListAdapter
     adapter.submitList(contestList)
-    Log.i("BindingAdapters", "Here the list has ${contestList?.size?:-1} elements.")
 }
 
 /**

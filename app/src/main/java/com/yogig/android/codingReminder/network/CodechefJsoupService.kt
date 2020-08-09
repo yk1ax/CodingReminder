@@ -14,7 +14,6 @@ private const val CODECHEF_URL = "https://www.codechef.com/contests"
 
 suspend fun fetchCCContests(): List<NetworkContest> {
 
-    Log.i("NetworkRequests", "fetchCCContests has been called")
     val list = mutableListOf<NetworkContest>()
     val document: Document =
         withContext(Dispatchers.IO) { Jsoup.connect(CODECHEF_URL).timeout(15000).get() }
@@ -50,7 +49,6 @@ suspend fun fetchCCContests(): List<NetworkContest> {
             list.add(contest)
         }
     }
-    Log.i("NetworkRequests", "fetchCCContests is returning")
     return list
 
 
