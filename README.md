@@ -2,8 +2,16 @@
 An App for keeping track of future Coding Contests and adding reminders for them
 
 ## Download
-For whole Project `git clone https://github.com/yk1ax/CodingReminder.git`\
-For APK `TODO:- add a drive link`
+For whole Project : - `git clone https://github.com/yk1ax/CodingReminder.git`\
+For APK : - [Google Drive Link](https://drive.google.com/drive/folders/1zhwiB3C1yJ3uTkWLCw2QGSK6jpUJSfOl?usp=sharing)
+
+## Features
+1.  Get a list of future contests from Codeforces and Codechef
+2.  Already fetched contests are saved
+3.  Add Custom Contests on your own
+4.  Add Contest as Event to your Calendar App
+5.  Add a Notification as Reminder from the contest from the app itself and delete that as well if needed
+6.  Supports both Light and Dark theme
 
 ## Roadmap
 - [x] Basic fetching of contests from Codeforces and Codechef
@@ -17,9 +25,3 @@ For APK `TODO:- add a drive link`
 - [x] Notifications (~~if possible~~)
 - [ ] Daily fetching with WorkManager
 - [ ] Add firebase where it fetches the contests in the backend and apps just have to fetch it from one source(if possible)
-
-## Relevant learning Resources
-- [Udacity's Android Basics Free Course](https://www.udacity.com/course/android-basics-nanodegree-by-google--nd803) (Free Course)
-- [Udacity's Kotlin Bootcamp for Programmers](https://www.udacity.com/course/kotlin-bootcamp-for-programmers--ud9011) (Free Course) (_I still have to finish this one_)
-- [Udacity's Developing Android Apps with Kotlin](https://www.udacity.com/course/developing-android-apps-with-kotlin--ud9012) (Free Course as well)
-- [Udacity's Writing READMEs](https://www.udacity.com/course/writing-readmes--ud777) (... duh)😅
