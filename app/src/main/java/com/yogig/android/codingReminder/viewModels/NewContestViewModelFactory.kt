@@ -1,4 +1,4 @@
-package com.yogig.android.codingReminder.newContestFragment
+package com.yogig.android.codingReminder.viewModels
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

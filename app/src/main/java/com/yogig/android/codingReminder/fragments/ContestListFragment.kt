@@ -1,4 +1,4 @@
-package com.yogig.android.codingReminder.contestListFragment
+package com.yogig.android.codingReminder.fragments
 
 import android.os.Bundle
 import android.view.*
@@ -8,8 +8,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.yogig.android.codingReminder.ContestListAdapter
+import com.yogig.android.codingReminder.adapters.ContestListAdapter
 import com.yogig.android.codingReminder.R
+import com.yogig.android.codingReminder.contestListFragment.ContestListFragmentDirections
+import com.yogig.android.codingReminder.viewModels.ContestListViewModel
+import com.yogig.android.codingReminder.viewModels.ContestListViewModelFactory
 import com.yogig.android.codingReminder.database.ContestDatabase
 import com.yogig.android.codingReminder.databinding.ContestListFragmentBinding
 
@@ -33,15 +36,21 @@ class ContestListFragment : Fragment() {
         val application = requireNotNull(activity).application
         val database = ContestDatabase.getInstance(application)
 
-        val viewModelFactory = ContestListViewModelFactory(database,application)
+        val viewModelFactory =
+            ContestListViewModelFactory(
+                database,
+                application
+            )
         viewModel = ViewModelProvider(this, viewModelFactory).get(ContestListViewModel::class.java)
         binding.viewModel = viewModel
 
         val columnCount = resources.getInteger(R.integer.grid_column_count)
         binding.contestRecyclerView.layoutManager = GridLayoutManager(context, columnCount)
-        binding.contestRecyclerView.adapter = ContestListAdapter(ContestListAdapter.OnClickListener {
-            viewModel.onContestNavigate(it)
-        })
+        binding.contestRecyclerView.adapter =
+            ContestListAdapter(
+                ContestListAdapter.OnClickListener {
+                    viewModel.onContestNavigate(it)
+                })
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.retryFetching()
@@ -90,16 +99,18 @@ class ContestListFragment : Fragment() {
 
         viewModel.contestEvent.observe(viewLifecycleOwner, Observer {
             if(it != null) {
-                this.findNavController().navigate(ContestListFragmentDirections
-                    .actionContestListFragmentToContestFragment(it))
+                this.findNavController().navigate(
+                    ContestListFragmentDirections.actionContestListFragmentToContestFragment(
+                        it
+                    )
+                )
                 viewModel.onContestNavigateComplete()
             }
         })
 
         viewModel.newContestEvent.observe(viewLifecycleOwner, Observer {
             if(it) {
-                this.findNavController().navigate(ContestListFragmentDirections
-                    .actionContestListFragmentToNewContest())
+                this.findNavController().navigate(ContestListFragmentDirections.actionContestListFragmentToNewContest())
                 viewModel.onNewContestNavigateComplete()
             }
         })

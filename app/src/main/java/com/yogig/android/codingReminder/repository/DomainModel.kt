@@ -1,7 +1,7 @@
 package com.yogig.android.codingReminder.repository
 
 import android.os.Parcelable
-import com.yogig.android.codingReminder.contestListFragment.SiteType
+import com.yogig.android.codingReminder.viewModels.SiteType
 import com.yogig.android.codingReminder.database.DatabaseContest
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize

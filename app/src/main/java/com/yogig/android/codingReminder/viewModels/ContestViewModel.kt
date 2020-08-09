@@ -1,4 +1,4 @@
-package com.yogig.android.codingReminder.contestFragment
+package com.yogig.android.codingReminder.viewModels
 
 import android.app.AlarmManager
 import android.app.Application
@@ -11,7 +11,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.yogig.android.codingReminder.AlarmReceiver
-import com.yogig.android.codingReminder.contestListFragment.SiteType
 import com.yogig.android.codingReminder.database.ContestDatabase
 import com.yogig.android.codingReminder.database.DatabaseContest
 import com.yogig.android.codingReminder.repository.Contest
@@ -20,18 +19,20 @@ import java.util.concurrent.TimeUnit
 
 private const val REQUEST_ID = 0
 
-class ContestViewModel(app: Application, private val database: ContestDatabase, private val contest: Contest) :
+class ContestViewModel(
+    app: Application,
+    private val database: ContestDatabase,
+    private val contest: Contest
+) :
     AndroidViewModel(app) {
 
     private val viewModelJob = Job()
+    private val coroutineScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     override fun onCleared() {
         viewModelJob.cancel()
         super.onCleared()
     }
-
-    // TODO -> add remove notification functionality in deleteContest function
-    private val coroutineScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     private val alarmManager = app.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
@@ -90,11 +91,13 @@ class ContestViewModel(app: Application, private val database: ContestDatabase, 
         Log.i("ContestViewModel", "setNotification has been called.")
         notificationAlreadySet.value = true
         val notificationIntent = Intent(getApplication(), AlarmReceiver::class.java)
-        notificationIntent.putExtra("site", when(contest.site){
-            SiteType.CODEFORCES_SITE -> " on Codeforces"
-            SiteType.CODECHEF_SITE -> " on Codechef"
-            else -> ""
-        })
+        notificationIntent.putExtra(
+            "site", when (contest.site) {
+                SiteType.CODEFORCES_SITE -> " on Codeforces"
+                SiteType.CODECHEF_SITE -> " on Codechef"
+                else -> ""
+            }
+        )
 
         val notificationPendingIntent: PendingIntent
         notificationPendingIntent = PendingIntent.getBroadcast(
@@ -114,19 +117,17 @@ class ContestViewModel(app: Application, private val database: ContestDatabase, 
         )
 
         coroutineScope.launch {
-            withContext(Dispatchers.IO) {
-                database.contestDao.updateContest(
-                    DatabaseContest(
-                        contest.id,
-                        contest.name,
-                        contest.startTimeMilliseconds,
-                        contest.endTimeSeconds,
-                        contest.site,
-                        contest.websiteUrl,
-                        true
-                    )
+            database.contestDao.updateContest(
+                DatabaseContest(
+                    contest.id,
+                    contest.name,
+                    contest.startTimeMilliseconds,
+                    contest.endTimeSeconds,
+                    contest.site,
+                    contest.websiteUrl,
+                    true
                 )
-            }
+            )
         }
     }
 
@@ -135,11 +136,13 @@ class ContestViewModel(app: Application, private val database: ContestDatabase, 
         Log.i("ContestViewModel", "removeNotification has been called.")
         notificationAlreadySet.value = false
         val notificationIntent = Intent(getApplication(), AlarmReceiver::class.java)
-        notificationIntent.putExtra("site", when(contest.site){
-            SiteType.CODEFORCES_SITE -> " on Codeforces"
-            SiteType.CODECHEF_SITE -> " on Codechef"
-            else -> ""
-        })
+        notificationIntent.putExtra(
+            "site", when (contest.site) {
+                SiteType.CODEFORCES_SITE -> " on Codeforces"
+                SiteType.CODECHEF_SITE -> " on Codechef"
+                else -> ""
+            }
+        )
 
         val notificationPendingIntent: PendingIntent
         notificationPendingIntent = PendingIntent.getBroadcast(
@@ -151,27 +154,22 @@ class ContestViewModel(app: Application, private val database: ContestDatabase, 
         alarmManager.cancel(notificationPendingIntent)
 
         coroutineScope.launch {
-            withContext(Dispatchers.IO) {
-                database.contestDao.updateContest(
-                    DatabaseContest(
-                        contest.id,
-                        contest.name,
-                        contest.startTimeMilliseconds,
-                        contest.endTimeSeconds,
-                        contest.site,
-                        contest.websiteUrl,
-                        false
-                    )
+            database.contestDao.updateContest(
+                DatabaseContest(
+                    contest.id,
+                    contest.name,
+                    contest.startTimeMilliseconds,
+                    contest.endTimeSeconds,
+                    contest.site,
+                    contest.websiteUrl,
+                    false
                 )
-            }
+            )
         }
     }
 
     fun deleteContest() {
-        coroutineScope.launch {
-            withContext(Dispatchers.IO) {
-                database.contestDao.deleteContest(contest.asDatabaseModel())
-            }
-        }
+        removeNotification()
+        coroutineScope.launch { database.contestDao.deleteContest(contest.asDatabaseModel()) }
     }
 }

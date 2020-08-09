@@ -1,4 +1,4 @@
-package com.yogig.android.codingReminder.contestListFragment
+package com.yogig.android.codingReminder.viewModels
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
@@ -11,7 +11,10 @@ class ContestListViewModelFactory(private val database: ContestDatabase, private
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ContestListViewModel::class.java)) {
-            return ContestListViewModel(database, application) as T
+            return ContestListViewModel(
+                database,
+                application
+            ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class.")
     }

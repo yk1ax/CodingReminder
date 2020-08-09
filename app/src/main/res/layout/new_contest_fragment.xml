@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.yogig.android.codingReminder.newContestFragment.NewContestViewModel" />
+            type="com.yogig.android.codingReminder.viewModels.NewContestViewModel" />
     </data>
     <ScrollView
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         android:id="@+id/parentLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".newContestFragment.NewContestFragment"
+        tools:context=".fragments.NewContestFragment"
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="true"

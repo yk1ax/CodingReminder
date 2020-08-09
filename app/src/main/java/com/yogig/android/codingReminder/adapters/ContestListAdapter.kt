@@ -1,4 +1,4 @@
-package com.yogig.android.codingReminder
+package com.yogig.android.codingReminder.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,7 +12,9 @@ import com.yogig.android.codingReminder.repository.Contest
  * Adapter for the recyclerview used to display the contest list
  */
 class ContestListAdapter(val onClickListener: OnClickListener):
-    ListAdapter<Contest, ContestListAdapter.ContestViewHolder>(DiffCallback) {
+    ListAdapter<Contest, ContestListAdapter.ContestViewHolder>(
+        DiffCallback
+    ) {
 
     class ContestViewHolder(private var binding: RecyclerViewItemBinding):
         RecyclerView.ViewHolder(binding.root) {
@@ -37,8 +39,10 @@ class ContestListAdapter(val onClickListener: OnClickListener):
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContestViewHolder {
-        return ContestViewHolder(RecyclerViewItemBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false)
+        return ContestViewHolder(
+            RecyclerViewItemBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            )
         )
     }
 

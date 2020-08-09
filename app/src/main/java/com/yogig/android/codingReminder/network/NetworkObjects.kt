@@ -1,7 +1,7 @@
 package com.yogig.android.codingReminder.network
 
 import com.google.gson.annotations.SerializedName
-import com.yogig.android.codingReminder.contestListFragment.SiteType
+import com.yogig.android.codingReminder.viewModels.SiteType
 import com.yogig.android.codingReminder.database.DatabaseContest
 
 const val CODEFORCES_BASE = "https://codeforces.com/contest/"

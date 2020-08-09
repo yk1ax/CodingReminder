@@ -1,9 +1,12 @@
 package com.yogig.android.codingReminder
 
+import android.app.Activity
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
@@ -45,4 +48,25 @@ fun NotificationManager.sendNotification(siteName: String, context: Context) {
 
     cancel(NOTIFICATION_ID)
     notify(NOTIFICATION_ID, builder.build())
+}
+
+fun createChannel(channelId: String, channelName: String, activity: Activity) {
+    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val notificationChannel = NotificationChannel(
+            channelId,
+            channelName,
+            NotificationManager.IMPORTANCE_HIGH
+        )
+            .apply { setShowBadge(true) }
+
+        notificationChannel.enableLights(true)
+        notificationChannel.lightColor = Color.WHITE
+        notificationChannel.enableVibration(true)
+        notificationChannel.description = "Time for contest"
+
+        val notificationManager = activity.getSystemService(
+            NotificationManager::class.java
+        ) as NotificationManager
+        notificationManager.createNotificationChannel(notificationChannel)
+    }
 }

@@ -1,8 +1,6 @@
-package com.yogig.android.codingReminder.newContestFragment
+package com.yogig.android.codingReminder.fragments
 
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +14,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.yogig.android.codingReminder.*
 import com.yogig.android.codingReminder.database.ContestDatabase
 import com.yogig.android.codingReminder.databinding.NewContestFragmentBinding
+import com.yogig.android.codingReminder.viewModels.NewContestViewModel
+import com.yogig.android.codingReminder.viewModels.NewContestViewModelFactory
 
 class NewContestFragment : Fragment() {
 
@@ -35,7 +35,11 @@ class NewContestFragment : Fragment() {
 
         val application = requireActivity().application
         val database = ContestDatabase.getInstance(requireContext().applicationContext)
-        val viewModelFactory = NewContestViewModelFactory(database, application)
+        val viewModelFactory =
+            NewContestViewModelFactory(
+                database,
+                application
+            )
         viewModel = ViewModelProvider(this, viewModelFactory).get(NewContestViewModel::class.java)
 
         binding.viewModel = viewModel

@@ -3,7 +3,7 @@ package com.yogig.android.codingReminder.database
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.yogig.android.codingReminder.contestListFragment.SiteType
+import com.yogig.android.codingReminder.viewModels.SiteType
 
 @Dao
 interface ContestDao {

@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".contestFragment.ContestFragment">
+    tools:context=".fragments.ContestFragment">
 
     <data>
         <import type="android.view.View"/>
@@ -12,7 +12,7 @@
 
         <variable
             name="viewModel"
-            type="com.yogig.android.codingReminder.contestFragment.ContestViewModel" />
+            type="com.yogig.android.codingReminder.viewModels.ContestViewModel" />
     </data>
 
     <ScrollView

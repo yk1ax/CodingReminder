@@ -7,13 +7,13 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.yogig.android.codingReminder.contestListFragment.ContestListViewModel" />
+            type="com.yogig.android.codingReminder.viewModels.ContestListViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".contestListFragment.ContestListFragment">
+        tools:context=".fragments.ContestListFragment">
 
 <!--        <com.google.android.material.progressindicator.ProgressIndicator-->
 <!--            android:id="@+id/progressIndicator"-->

@@ -1,9 +1,7 @@
 package com.yogig.android.codingReminder.network
 
 import android.util.Log
-import com.yogig.android.codingReminder.contestListFragment.SiteType
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.yogig.android.codingReminder.viewModels.SiteType
 import org.jsoup.Jsoup
 import java.text.SimpleDateFormat
 import java.util.*

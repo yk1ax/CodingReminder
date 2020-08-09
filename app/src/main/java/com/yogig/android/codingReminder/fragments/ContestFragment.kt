@@ -1,12 +1,8 @@
-package com.yogig.android.codingReminder.contestFragment
+package com.yogig.android.codingReminder.fragments
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.CalendarContract
 import android.view.*
@@ -16,8 +12,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.yogig.android.codingReminder.R
+import com.yogig.android.codingReminder.contestFragment.ContestFragmentArgs
+import com.yogig.android.codingReminder.viewModels.ContestViewModel
+import com.yogig.android.codingReminder.viewModels.ContestViewModelFactory
+import com.yogig.android.codingReminder.createChannel
 import com.yogig.android.codingReminder.database.ContestDatabase
-import com.yogig.android.codingReminder.database.DatabaseContest
 import com.yogig.android.codingReminder.databinding.ContestFragmentBinding
 import com.yogig.android.codingReminder.repository.Contest
 
@@ -40,16 +39,21 @@ class ContestFragment : Fragment() {
         binding =  ContestFragmentBinding.inflate(inflater, container, false)
 
         // Extracting the Contest from the FragmentArgs passed in by safe-args
-        contest = ContestFragmentArgs.fromBundle(requireArguments()).contest
+        contest = ContestFragmentArgs.fromBundle(
+            requireArguments()
+        ).contest
 
-        // Obtain the PackageManager for checking the existence of activities for the implicit intents
-        val packageManager = requireNotNull(context).packageManager
         binding.lifecycleOwner = this
 
         // Creating the ViewModel
         val database = ContestDatabase.getInstance(requireContext())
         val application = requireActivity().application
-        val viewModelFactory = ContestViewModelFactory(application, database, contest)
+        val viewModelFactory =
+            ContestViewModelFactory(
+                application,
+                database,
+                contest
+            )
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(ContestViewModel::class.java)
 
@@ -58,6 +62,9 @@ class ContestFragment : Fragment() {
 
         // Linking the ContestViewModel object with the viewModel variable present in the XML
         binding.viewModel = viewModel
+
+        // Obtain the PackageManager for checking the existence of activities for the implicit intents
+        val packageManager = requireNotNull(context).packageManager
 
         // Calendar Intent for sending the event to the Calendar App
         val calendarIntent = Intent(Intent.ACTION_INSERT).setData(CalendarContract.Events.CONTENT_URI)
@@ -128,7 +135,7 @@ class ContestFragment : Fragment() {
             }
         })
 
-        createChannel(getString(R.string.contest_notification_channel_id), getString(R.string.contest_notification_channel_name))
+        createChannel(getString(R.string.contest_notification_channel_id), getString(R.string.contest_notification_channel_name), requireActivity())
 
         setHasOptionsMenu(true)
         // Return the root view of the binding, i.e., the fragment itself
@@ -152,27 +159,6 @@ class ContestFragment : Fragment() {
                 true
             }
             else -> false
-        }
-    }
-
-    private fun createChannel(channelId: String, channelName: String) {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationChannel = NotificationChannel(
-                channelId,
-                channelName,
-                NotificationManager.IMPORTANCE_HIGH
-            )
-                .apply { setShowBadge(true) }
-
-            notificationChannel.enableLights(true)
-            notificationChannel.lightColor = Color.WHITE
-            notificationChannel.enableVibration(true)
-            notificationChannel.description = "Time for contest"
-
-            val notificationManager = requireActivity().getSystemService(
-                NotificationManager::class.java
-            ) as NotificationManager
-            notificationManager.createNotificationChannel(notificationChannel)
         }
     }
 }
