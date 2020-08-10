@@ -1,0 +1,41 @@
+package com.yogesh.android.codingReminder.network
+
+import com.google.gson.annotations.SerializedName
+import com.yogesh.android.codingReminder.viewModels.SiteType
+import com.yogesh.android.codingReminder.database.DatabaseContest
+
+const val CODEFORCES_BASE = "https://codeforces.com/contest/"
+const val CODECHEF_BASE = "https://www.codechef.com/"
+
+data class CodeforcesContestList(
+    @SerializedName("result")
+    val contestList: List<NetworkContest>
+)
+
+data class NetworkContest(
+    val id: String,
+    val name: String,
+    val phase: String = "",
+    val durationSeconds: Long,      // codeforces in seconds, codechef in milliseconds
+    val startTimeSeconds: Long,
+    var site: SiteType,
+    val websiteUrl: String = "")
+
+fun List<NetworkContest>.asDatabaseModel(): List<DatabaseContest> {
+    return map {
+        DatabaseContest(
+            it.id,
+            it.name,
+            it.startTimeSeconds
+                .times(if(it.site == SiteType.CODEFORCES_SITE) 1000 else 1),
+            (it.startTimeSeconds + it.durationSeconds)
+                .times(if(it.site == SiteType.CODEFORCES_SITE) 1000 else 1),
+            it.site,
+            when(it.site) {
+                SiteType.CODEFORCES_SITE -> CODEFORCES_BASE
+                else -> CODECHEF_BASE
+            }.plus(it.id),
+            false
+        )
+    }
+}

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.yogig.android.codingReminder.viewModels.NewContestViewModel" />
+            type="com.yogesh.android.codingReminder.viewModels.NewContestViewModel" />
     </data>
     <ScrollView
         android:layout_width="match_parent"

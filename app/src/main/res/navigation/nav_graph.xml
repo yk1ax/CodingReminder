@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/contestListFragment"
-        android:name="com.yogig.android.codingReminder.fragments.ContestListFragment"
+        android:name="com.yogesh.android.codingReminder.fragments.ContestListFragment"
         android:label="@string/app_name"
         tools:layout="@layout/contest_list_fragment" >
         <action
@@ -27,16 +27,16 @@
     </fragment>
     <fragment
         android:id="@+id/contestFragment"
-        android:name="com.yogig.android.codingReminder.fragments.ContestFragment"
+        android:name="com.yogesh.android.codingReminder.fragments.ContestFragment"
         android:label="@string/app_name"
         tools:layout="@layout/contest_fragment" >
         <argument
             android:name="contest"
-            app:argType="com.yogig.android.codingReminder.repository.Contest" />
+            app:argType="com.yogesh.android.codingReminder.repository.Contest" />
     </fragment>
     <fragment
         android:id="@+id/newContestFragment"
-        android:name="com.yogig.android.codingReminder.fragments.NewContestFragment"
+        android:name="com.yogesh.android.codingReminder.fragments.NewContestFragment"
         android:label="@string/app_name"
         tools:layout="@layout/new_contest_fragment"/>
 </navigation>

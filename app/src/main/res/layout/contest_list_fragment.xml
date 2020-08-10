@@ -7,7 +7,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.yogig.android.codingReminder.viewModels.ContestListViewModel" />
+            type="com.yogesh.android.codingReminder.viewModels.ContestListViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
