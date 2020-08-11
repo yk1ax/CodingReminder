@@ -36,7 +36,7 @@ fun NotificationManager.sendNotification(siteName: String, context: Context) {
         context,
         context.getString(R.string.contest_notification_channel_id)
     )
-        .setSmallIcon(R.drawable.ic_notification_icon)
+        .setSmallIcon(R.drawable.ic_notification)
         .setContentTitle(context.getString(R.string.notification_title))
         .setContentText(context.getString(R.string.notification_message, siteName))
         .setPriority(NotificationCompat.PRIORITY_HIGH)

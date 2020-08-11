@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.yogesh.android.codingReminder.*
+import com.yogesh.android.codingReminder.adapters.setDate
+import com.yogesh.android.codingReminder.adapters.setTime
 import com.yogesh.android.codingReminder.database.ContestDatabase
 import com.yogesh.android.codingReminder.databinding.NewContestFragmentBinding
 import com.yogesh.android.codingReminder.viewModels.NewContestViewModel
