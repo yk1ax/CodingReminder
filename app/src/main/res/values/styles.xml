@@ -14,7 +14,7 @@
     </style>
 
     <style name="AppTheme.Launcher">
-    <item name="android:windowBackground">@drawable/ic_notification</item>
+    <item name="android:windowBackground">@drawable/launch_screen</item>
     <!-- Optional, on Android 5+ you can modify the colorPrimaryDark color to match the windowBackground color for further branding-->
     <!-- <item name="colorPrimaryDark">@android:color/white</item> -->
     </style>

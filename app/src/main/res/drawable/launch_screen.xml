@@ -5,9 +5,18 @@
     <!-- The background color, preferably the same as your normal theme -->
     <item android:drawable="@color/splashColor"/>
 
-    <item>
+    <item
+        android:bottom="160dp">
+
         <bitmap
-            android:src="@drawable/ic_notification_icon"
+            android:src="@drawable/ic_background"
+            android:gravity="center"/>
+    </item>
+
+    <item
+        android:top="400dp">
+        <bitmap
+            android:src="@drawable/text_background"
             android:gravity="center"/>
     </item>
 
