@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingTop="8dp"
-                android:paddingBottom="8dp"
+                android:paddingBottom="64dp"
                 android:clipToPadding="false"
                 app:contestList="@{viewModel.currentContestList}"
                 tools:listitem="@layout/recycler_view_item" />
