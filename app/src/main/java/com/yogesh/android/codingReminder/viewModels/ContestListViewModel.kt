@@ -70,13 +70,13 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
 
     private val repository: ContestRepository = ContestRepository(database)
     val currentContestList: LiveData<List<Contest>>
+        get() = repository.contests
 
     init {
-        currentContestList = repository.contests
-
         if (checkConnection()) {
             fetchContests()
         } else {
+            Log.i("ContestListViewModel", "else block of init.")
             _snackBarText.value = app.getString(R.string.no_internet)
             _refreshingState.value = false
         }
@@ -100,7 +100,7 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
         coroutineScope.launch {
 
             try {
-                var new = repository.refreshContests()
+                val new = repository.refreshContests()
 
                 if(new == 0) {
                     _snackBarText.value =

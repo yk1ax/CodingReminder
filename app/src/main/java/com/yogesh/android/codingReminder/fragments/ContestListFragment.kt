@@ -1,6 +1,7 @@
 package com.yogesh.android.codingReminder.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -67,7 +68,7 @@ class ContestListFragment : Fragment() {
                 binding.shimmerLayout.showShimmer(false)
                 binding.shimmerLayout.visibility = View.GONE
                 binding.swipeRefreshLayout.isRefreshing = false
-                if(viewModel.currentContestList.value.isNullOrEmpty()) {
+                if(viewModel.currentContestList.value?.size == 0) {
                     binding.contestRecyclerView.visibility = View.GONE
                     binding.emptyView.visibility = View.VISIBLE
                 } else {
