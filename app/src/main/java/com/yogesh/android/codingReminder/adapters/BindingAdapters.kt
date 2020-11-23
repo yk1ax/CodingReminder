@@ -2,6 +2,7 @@ package com.yogesh.android.codingReminder.adapters
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -52,9 +53,11 @@ fun TextView.setContestTime(contest: Contest) {
  */
 @BindingAdapter("websiteImage")
 fun ImageView.setWebsiteImage(type: SiteType) {
+    Log.i("BindingAdapters","Type is $type")
     setImageResource(when(type) {
         SiteType.CODEFORCES_SITE -> R.drawable.ic_codeforces_svg
         SiteType.CODECHEF_SITE -> R.drawable.ic_codechef_svg
+        SiteType.ATCODER_SITE -> R.drawable.ic_atcoder
         else -> R.drawable.ic_code
     })
 }
@@ -68,6 +71,7 @@ fun CardView.setColor(type: SiteType){
         when(type) {
             SiteType.CODEFORCES_SITE -> R.color.codeforcesColor
             SiteType.CODECHEF_SITE -> R.color.codechefColor
+            SiteType.ATCODER_SITE -> R.color.atcoderColor
             else -> R.color.unknownColor
         }
     ))

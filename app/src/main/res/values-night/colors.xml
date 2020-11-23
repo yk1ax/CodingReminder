@@ -10,6 +10,7 @@
     <color name="secondaryTextColor">#ffffff</color>
     <color name="codeforcesColor">#003f64</color>
     <color name="codechefColor">#583118</color>
+    <color name="atcoderColor">#000000</color>
     <color name="titleColor">#ffffff</color>
     <color name="subtitleColor">#80ffffff</color>
     <color name="trackColor">#7f302b</color>

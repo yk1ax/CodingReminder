@@ -24,4 +24,4 @@ For APK : - [Google Drive Link](https://drive.google.com/drive/folders/1zhwiB3C1
 - [x] Final UI polishing (_with support for both light and dark theme_)
 - [x] Notifications (~~if possible~~)
 - [ ] Daily fetching with WorkManager
-- [ ] Add firebase where it fetches the contests in the backend and apps just have to fetch it from one source(if possible)
+- [ ] Option to set automatic reminder for all contests

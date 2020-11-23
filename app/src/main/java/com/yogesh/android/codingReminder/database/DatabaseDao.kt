@@ -41,6 +41,7 @@ class Converters{
         return when(type) {
             SiteType.CODEFORCES_SITE.type -> SiteType.CODEFORCES_SITE
             SiteType.CODECHEF_SITE.type -> SiteType.CODECHEF_SITE
+            SiteType.ATCODER_SITE.type -> SiteType.ATCODER_SITE
             else -> SiteType.UNKNOWN_SITE
         }
     }

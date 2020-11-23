@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 private const val CODECHEF_URL = "https://www.codechef.com/contests"
+private const val ATCODER_URL = "https://atcoder.jp/"
 
 suspend fun fetchCCContests(): List<NetworkContest> {
 
@@ -48,6 +49,36 @@ suspend fun fetchCCContests(): List<NetworkContest> {
         }
     }
     return list
+}
 
+suspend fun fetchACContests(): List<NetworkContest> {
 
+    // There is a problem, I can't fetch end time for the contests so I'll take the default of 100 mins
+    val list = mutableListOf<NetworkContest>()
+    val document: Document =
+        withContext(Dispatchers.IO) { Jsoup.connect(ATCODER_URL).timeout(15000).get() }
+
+    val table = document.getElementById("contest-table-upcoming").getElementsByTag("table").first()
+    val rows = table.getElementsByTag("tbody").first()
+        .getElementsByTag("tr")
+
+    for(row in rows)
+    {
+        val columns = row.getElementsByTag("td")
+        val timeText = columns[0].getElementsByTag("a").first().attr("href")
+            .substringAfter("iso=").split('T')
+        var startTime =
+            SimpleDateFormat("yyyyMMdd", Locale.US).parse(timeText[0])?.time ?: 0
+        startTime -= 12600000 // ms equivalent to 3.5 hrs, i.e. standard time difference between Japan and India
+        // taken the duration to be 100 mins
+
+        val nameTag = columns[1].getElementsByTag("a").first()
+        val name = nameTag.text()
+        val code = nameTag.attr("href").substringAfterLast('/')
+
+        val contest = NetworkContest(code, name, "BEFORE", 6000000, startTime, SiteType.ATCODER_SITE)
+        list.add(contest)
+    }
+
+    return list
 }

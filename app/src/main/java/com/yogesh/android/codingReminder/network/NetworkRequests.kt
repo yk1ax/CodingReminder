@@ -17,6 +17,8 @@ object NetworkRequests {
         withContext(Dispatchers.IO) {
             val list1 = async { fetchCFContests() }
             val list2 = async { fetchCCContests() }
+            val list3 = async { fetchACContests() }
+
             try {
                 contests.addAll(list1.await())
             } catch (e: IOException) {
@@ -32,9 +34,17 @@ object NetworkRequests {
                 exceptions++
                 exceptionInfo.addSuppressed(e)
             }
+
+            try {
+                contests.addAll(list3.await())
+            } catch (e: IOException) {
+                Log.i("NetworkRequests", "Failed $e")
+                exceptions++
+                exceptionInfo.addSuppressed(e)
+            }
         }
 
-        if(exceptions == 2) {
+        if(exceptions == 3) {
             throw exceptionInfo
         }
         return contests
@@ -49,6 +59,8 @@ object NetworkRequests {
         if (list.isNotEmpty()) {
             loop@ for (contest in list) {
                 contest.site = SiteType.CODEFORCES_SITE
+                contest.startTimeSeconds *= 1000
+                contest.durationSeconds *= 1000
                 when (contest.phase) {
                     "BEFORE", "CODING" -> contests.add(contest)
                     else -> break@loop

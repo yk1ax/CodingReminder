@@ -16,8 +16,8 @@ data class NetworkContest(
     val id: String,
     val name: String,
     val phase: String = "",
-    val durationSeconds: Long,      // codeforces in seconds, codechef in milliseconds
-    val startTimeSeconds: Long,
+    var durationSeconds: Long,      // codeforces in seconds, codechef in milliseconds
+    var startTimeSeconds: Long,
     var site: SiteType,
     val websiteUrl: String = "")
 
@@ -26,10 +26,8 @@ fun List<NetworkContest>.asDatabaseModel(): List<DatabaseContest> {
         DatabaseContest(
             it.id,
             it.name,
-            it.startTimeSeconds
-                .times(if(it.site == SiteType.CODEFORCES_SITE) 1000 else 1),
-            (it.startTimeSeconds + it.durationSeconds)
-                .times(if(it.site == SiteType.CODEFORCES_SITE) 1000 else 1),
+            it.startTimeSeconds,
+            (it.startTimeSeconds + it.durationSeconds),
             it.site,
             when(it.site) {
                 SiteType.CODEFORCES_SITE -> CODEFORCES_BASE
