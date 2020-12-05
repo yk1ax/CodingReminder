@@ -25,3 +25,15 @@ For APK : - [Google Drive Link](https://drive.google.com/drive/folders/1zhwiB3C1
 - [x] Notifications (~~if possible~~)
 - [ ] Daily fetching with WorkManager
 - [ ] Option to set automatic reminder for all contests
+
+# Screenshots
+<table>
+   <tr>
+      <td><img src="images/01.jpg" height = "480" width="270"></td>
+      <td><img src="images/02.jpg" height = "480" width="270"></td>
+  </tr>
+   <tr>
+      <td><img src="images/03.jpg" height = "480" width="270"></td>
+      <td><img src="images/04.jpg" height = "480" width="270"></td>   
+  </tr>
+</table>
