@@ -1,5 +1,6 @@
 package com.yogesh.android.codingReminder.network
 
+import android.util.Log
 import com.yogesh.android.codingReminder.viewModels.SiteType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -9,7 +10,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 private const val CODECHEF_URL = "https://www.codechef.com/contests"
-private const val ATCODER_URL = "https://atcoder.jp/"
+private const val ATCODER_URL = "https://atcoder.jp/contests"
 
 suspend fun fetchCCContests(): List<NetworkContest> {
 
@@ -68,15 +69,19 @@ suspend fun fetchACContests(): List<NetworkContest> {
         val timeText = columns[0].getElementsByTag("a").first().attr("href")
             .substringAfter("iso=").split('T')
         var startTime =
-            SimpleDateFormat("yyyyMMdd", Locale.US).parse(timeText[0])?.time ?: 0
+            SimpleDateFormat("yyyyMMddHHmm", Locale.US).parse(timeText[0]+timeText[1].substring(0,4))?.time ?: 0
         startTime -= 12600000 // ms equivalent to 3.5 hrs, i.e. standard time difference between Japan and India
-        // taken the duration to be 100 mins
+        var durationText = columns[2].getElementsByClass("text-center").first().text()
+        var duration = (durationText.substring(0,2).toLong().times(60) +
+                durationText.substring(3,5).toLong()).times(60000)
+        Log.i("AtcoderContest", "startTime = $startTime, duration = $duration")
+        // taken the default duration to be 100 mins
 
         val nameTag = columns[1].getElementsByTag("a").first()
         val name = nameTag.text()
         val code = nameTag.attr("href").substringAfterLast('/')
 
-        val contest = NetworkContest(code, name, "BEFORE", 6000000, startTime, SiteType.ATCODER_SITE)
+        val contest = NetworkContest(code, name, "BEFORE", duration, startTime, SiteType.ATCODER_SITE)
         list.add(contest)
     }
 

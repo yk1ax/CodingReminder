@@ -5,7 +5,8 @@ import com.yogesh.android.codingReminder.viewModels.SiteType
 import com.yogesh.android.codingReminder.database.DatabaseContest
 
 const val CODEFORCES_BASE = "https://codeforces.com/contest/"
-const val CODECHEF_BASE = "https://www.codechef.com/"
+const val CODECHEF_BASE = "https://www.codechef.com/contest/"
+const val ATCODER_BASE = "https://atcoder.jp/contests"
 
 data class CodeforcesContestList(
     @SerializedName("result")
@@ -31,6 +32,8 @@ fun List<NetworkContest>.asDatabaseModel(): List<DatabaseContest> {
             it.site,
             when(it.site) {
                 SiteType.CODEFORCES_SITE -> CODEFORCES_BASE
+                SiteType.CODECHEF_SITE -> CODECHEF_BASE
+                SiteType.ATCODER_SITE -> ATCODER_BASE
                 else -> CODECHEF_BASE
             }.plus(it.id),
             false
