@@ -13,8 +13,8 @@
     <color name="atcoderColor">#000000</color>
     <color name="titleColor">#ffffff</color>
     <color name="subtitleColor">#80ffffff</color>
-    <color name="trackColor">#7f302b</color>
-    <color name="indicatorColor">@color/primaryDarkColor</color>
+    <color name="trackColor">@color/primaryLightColor</color>
+    <color name="indicatorColor">@color/primaryColor</color>
     <color name="unknownColor">@color/primaryLightColor</color>
     <color name="splashColor">#000000</color>
 </resources>
