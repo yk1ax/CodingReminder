@@ -2,6 +2,7 @@ package com.yogesh.android.codingReminder
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                 .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
                 .show()
 
-            Handler().postDelayed({ backPressed = false }, 2000)
+            Handler(Looper.getMainLooper()).postDelayed({ backPressed = false }, 2000)
         }
     }
 }

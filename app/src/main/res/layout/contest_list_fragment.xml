@@ -15,14 +15,13 @@
         android:layout_height="match_parent"
         tools:context=".fragments.ContestListFragment">
 
-<!--        <com.google.android.material.progressindicator.ProgressIndicator-->
-<!--            android:id="@+id/progressIndicator"-->
-<!--            style="@style/Widget.MaterialComponents.ProgressIndicator.Linear.Indeterminate"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:elevation="12dp"-->
-<!--            app:indicatorType="linear"-->
-<!--            app:layout_constraintTop_toTopOf="parent"/>-->
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progressIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="12dp"
+            android:indeterminate="true"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmerLayout"

@@ -58,13 +58,15 @@ class ContestListFragment : Fragment() {
 
         viewModel.refreshingState.observe(viewLifecycleOwner, Observer {
             if(it) {
-                // binding.progressIndicator.visibility = View.VISIBLE
+//                 binding.progressIndicator.visibility = View.VISIBLE
+                binding.progressIndicator.show()
                 binding.contestRecyclerView.visibility = View.GONE
                 binding.shimmerLayout.visibility = View.VISIBLE
                 binding.shimmerLayout.showShimmer(true)
             }
             else {
-                // binding.progressIndicator.visibility = View.GONE
+//                 binding.progressIndicator.visibility = View.GONE
+                binding.progressIndicator.hide()
                 binding.shimmerLayout.showShimmer(false)
                 binding.shimmerLayout.visibility = View.GONE
                 binding.swipeRefreshLayout.isRefreshing = false

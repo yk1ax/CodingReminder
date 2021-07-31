@@ -3,8 +3,8 @@ package com.yogesh.android.codingReminder.repository
 import android.os.Parcelable
 import com.yogesh.android.codingReminder.viewModels.SiteType
 import com.yogesh.android.codingReminder.database.DatabaseContest
-import kotlinx.android.parcel.IgnoredOnParcel
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 
 /**
  * Domain Model of the Contest,
@@ -43,4 +43,16 @@ data class Contest(
         websiteUrl,
         isNotificationSet
     )
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + name.hashCode()
+        result = 31 * result + startTimeMilliseconds.hashCode()
+        result = 31 * result + endTimeSeconds.hashCode()
+        result = 31 * result + site.hashCode()
+        result = 31 * result + websiteUrl.hashCode()
+        result = 31 * result + isNotificationSet.hashCode()
+        result = 31 * result + hasStarted.hashCode()
+        return result
+    }
 }
