@@ -25,7 +25,7 @@ enum class SiteType(val type: Int) {
 
 class ContestListViewModel(database: ContestDatabase, app: Application) : AndroidViewModel(app) {
 
-    private val viewModelJob = Job()
+    private val viewModelJob = SupervisorJob()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     override fun onCleared() {

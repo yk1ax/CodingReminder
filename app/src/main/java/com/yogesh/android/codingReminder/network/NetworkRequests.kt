@@ -1,9 +1,7 @@
 package com.yogesh.android.codingReminder.network
 
-import android.util.Log
 import com.yogesh.android.codingReminder.viewModels.SiteType
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -19,15 +17,13 @@ object NetworkRequests {
 
         var exceptions = 0
         var exceptionInfo = IOException()
-        withContext(Dispatchers.IO) {
-            val list = async { fetchClistContests() }
+        val list = withContext(Dispatchers.IO) { fetchClistContests() }
 
-            try {
-                contests.addAll(list.await())
-            } catch (e: IOException) {
-                exceptions++
-                exceptionInfo = e
-            }
+        try {
+            contests.addAll(list)
+        } catch (e: IOException) {
+            exceptions++
+            exceptionInfo = e
         }
 
         if(exceptions==1) {
@@ -41,16 +37,19 @@ object NetworkRequests {
 
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
         val curTime = formatter.format(Calendar.getInstance(Locale.ENGLISH).time)
-        val list: List<ClistContest> = ClistApi.retrofitService
+        val contests: List<ClistContest> = ClistApi.retrofitService
                     .getContests(curTime, "start", CLIST_USERNAME, CLIST_API_KEY).contestList
 
-        for (contest in list) {
+        val list = mutableListOf<ClistContest>()
+
+        for (contest in contests) {
             contest.site = when(contest.resource.name) {
                 "codeforces.com" -> SiteType.CODEFORCES_SITE
                 "codechef.com" -> SiteType.CODECHEF_SITE
                 "atcoder.jp" -> SiteType.ATCODER_SITE
                 else -> SiteType.UNKNOWN_SITE
             }
+            if(contest.site != SiteType.UNKNOWN_SITE) list.add(contest)
         }
 
         return list

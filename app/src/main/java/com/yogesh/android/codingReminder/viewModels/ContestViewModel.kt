@@ -25,7 +25,7 @@ class ContestViewModel(
 ) :
     AndroidViewModel(app) {
 
-    private val viewModelJob = Job()
+    private val viewModelJob = SupervisorJob()
     private val coroutineScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     override fun onCleared() {

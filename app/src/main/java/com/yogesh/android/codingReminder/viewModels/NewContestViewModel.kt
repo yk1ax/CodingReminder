@@ -17,7 +17,7 @@ lateinit var endCalendar: Calendar
 class NewContestViewModel(private val database: ContestDatabase, app: Application) :
     AndroidViewModel(app) {
 
-    private val viewModelJob = Job()
+    private val viewModelJob = SupervisorJob()
 
     override fun onCleared() {
         viewModelJob.cancel()
