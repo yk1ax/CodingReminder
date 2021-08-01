@@ -53,7 +53,6 @@ fun TextView.setContestTime(contest: Contest) {
  */
 @BindingAdapter("websiteImage")
 fun ImageView.setWebsiteImage(type: SiteType) {
-    Log.i("BindingAdapters","Type is $type")
     setImageResource(when(type) {
         SiteType.CODEFORCES_SITE -> R.drawable.ic_codeforces_svg
         SiteType.CODECHEF_SITE -> R.drawable.ic_codechef_svg
@@ -123,8 +122,6 @@ fun MaterialButton.setButton(isNotificationSet: Boolean, time: Long) {
 private fun timeLeftFormatted(time: Long): String {
     val calendar = Calendar.getInstance()
     calendar.timeInMillis = time - TimeZone.getDefault().rawOffset
-
-    Log.i("BindingAdapters", time.toString())
 
     var period = calendar.get(Calendar.YEAR)-1970
     if(period !=0) {

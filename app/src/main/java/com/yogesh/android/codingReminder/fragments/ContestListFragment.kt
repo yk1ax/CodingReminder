@@ -1,7 +1,6 @@
 package com.yogesh.android.codingReminder.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -58,14 +57,12 @@ class ContestListFragment : Fragment() {
 
         viewModel.refreshingState.observe(viewLifecycleOwner, Observer {
             if(it) {
-//                 binding.progressIndicator.visibility = View.VISIBLE
                 binding.progressIndicator.show()
                 binding.contestRecyclerView.visibility = View.GONE
                 binding.shimmerLayout.visibility = View.VISIBLE
                 binding.shimmerLayout.showShimmer(true)
             }
             else {
-//                 binding.progressIndicator.visibility = View.GONE
                 binding.progressIndicator.hide()
                 binding.shimmerLayout.showShimmer(false)
                 binding.shimmerLayout.visibility = View.GONE
@@ -131,18 +128,4 @@ class ContestListFragment : Fragment() {
         binding.shimmerLayout.showShimmer(false)
         super.onStop()
     }
-
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        inflater.inflate(R.menu.main_menu, menu)
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return when(item.itemId) {
-//            R.id.refresh_item -> {
-//                viewModel.retryFetching()
-//                true
-//            }
-//            else -> false
-//        }
-//    }
 }

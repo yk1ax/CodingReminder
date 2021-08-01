@@ -5,7 +5,6 @@ import androidx.lifecycle.Transformations
 import com.yogesh.android.codingReminder.database.ContestDatabase
 import com.yogesh.android.codingReminder.database.asDomainModel
 import com.yogesh.android.codingReminder.network.NetworkRequests
-import com.yogesh.android.codingReminder.network.asDatabaseModel
 import com.yogesh.android.codingReminder.network.asTempDatabaseModel
 
 /**
@@ -40,11 +39,9 @@ class ContestRepository(private val database: ContestDatabase) {
      */
 
     suspend fun refreshContests(): Int {
-        Log.i("checking","at ContestRepository")
         val curTime = System.currentTimeMillis()
-        Log.i("ContestRepository","deleted ${database.contestDao.validateContests(curTime)}")
+        val deletedContests = database.contestDao.validateContests(curTime)
         val contests = NetworkRequests.contestsFromNetwork().asTempDatabaseModel()
-        Log.i("checking","at ContestRepository")
 
         var newContests = 0
         for (newContest in contests) {

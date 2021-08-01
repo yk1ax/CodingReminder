@@ -77,7 +77,6 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
         if (checkConnection()) {
             fetchContests()
         } else {
-            Log.i("ContestListViewModel", "else block of init.")
             _snackBarText.value = app.getString(R.string.no_internet)
             _refreshingState.value = false
         }
@@ -102,7 +101,6 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
 
             try {
                 val new = repository.refreshContests()
-
 
                 if(new == 0) {
                     _snackBarText.value =
