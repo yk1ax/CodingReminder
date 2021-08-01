@@ -1,7 +1,7 @@
 package com.yogesh.android.codingReminder.fragments
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.CalendarContract
@@ -74,20 +74,15 @@ class ContestFragment : Fragment() {
             .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
 
         // Website Intent to open the website using the website URL
-        val websiteIntent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(contest.websiteUrl))
+        val websiteIntent = Intent(Intent.ACTION_VIEW, Uri.parse(contest.websiteUrl))
 
         // Observe the calendarEvent boolean variable of the viewModel for
         // initiating the Calendar event
         viewModel.calendarEvent.observe(viewLifecycleOwner, Observer {
             if(it) {
-                val activities = packageManager.queryIntentActivities(
-                    calendarIntent,
-                    PackageManager.MATCH_DEFAULT_ONLY
-                )
-
-                if(activities.isNotEmpty()) {
+                try {
                     startActivity(calendarIntent)
-                } else {
+                } catch (e : ActivityNotFoundException) {
                     Snackbar.make(binding.root, "Calendar app not found.", Snackbar.LENGTH_LONG)
                         .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
                         .show()
@@ -101,14 +96,9 @@ class ContestFragment : Fragment() {
         // initiating the Website Intent
         viewModel.websiteEvent.observe(viewLifecycleOwner, Observer {
             if(it) {
-                val activities = packageManager.queryIntentActivities(
-                    websiteIntent,
-                    PackageManager.MATCH_DEFAULT_ONLY
-                )
-
-                if(activities.isNotEmpty()) {
+                try {
                     startActivity(websiteIntent)
-                } else {
+                } catch (e : ActivityNotFoundException) {
                     Snackbar.make(binding.root, "Internet browser not found.", Snackbar.LENGTH_LONG)
                         .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
                         .show()

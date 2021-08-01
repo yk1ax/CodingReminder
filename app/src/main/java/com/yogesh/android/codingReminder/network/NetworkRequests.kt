@@ -48,7 +48,7 @@ object NetworkRequests {
             contest.site = when(contest.resource.name) {
                 "codeforces.com" -> SiteType.CODEFORCES_SITE
                 "codechef.com" -> SiteType.CODECHEF_SITE
-                "atcoder.com" -> SiteType.ATCODER_SITE
+                "atcoder.jp" -> SiteType.ATCODER_SITE
                 else -> SiteType.UNKNOWN_SITE
             }
         }
