@@ -103,6 +103,7 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
             try {
                 val new = repository.refreshContests()
 
+
                 if(new == 0) {
                     _snackBarText.value =
                         getApplication<Application>().getString(R.string.no_new_contest)

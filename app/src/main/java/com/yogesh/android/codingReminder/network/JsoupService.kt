@@ -74,7 +74,7 @@ suspend fun fetchACContests(): List<NetworkContest> {
         var durationText = columns[2].getElementsByClass("text-center").first().text()
         var duration = (durationText.substring(0,2).toLong().times(60) +
                 durationText.substring(3,5).toLong()).times(60000)
-        Log.i("AtcoderContest", "startTime = $startTime, duration = $duration")
+        Log.i("WTFContest", "startTime = $startTime, duration = $duration")
         // taken the default duration to be 100 mins
 
         val nameTag = columns[1].getElementsByTag("a").first()

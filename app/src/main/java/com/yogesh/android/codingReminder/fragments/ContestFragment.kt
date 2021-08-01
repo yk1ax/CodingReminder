@@ -89,6 +89,8 @@ class ContestFragment : Fragment() {
                     startActivity(calendarIntent)
                 } else {
                     Snackbar.make(binding.root, "Calendar app not found.", Snackbar.LENGTH_LONG)
+                        .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
+                        .show()
                 }
 
                 viewModel.onCalendarEventComplete()

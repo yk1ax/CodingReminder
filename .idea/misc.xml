@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Projects/CodingReminder/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Projects/CodingReminder/app/src/main/res/layout/contest_fragment.xml" value="0.25416666666666665" />
         <entry key="..\:/Projects/CodingReminder/app/src/main/res/layout/contest_list_fragment.xml" value="0.13020833333333334" />
+        <entry key="..\:/Projects/CodingReminder/app/src/main/res/layout/recycler_view_item.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

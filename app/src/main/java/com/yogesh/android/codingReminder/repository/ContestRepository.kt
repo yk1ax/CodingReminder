@@ -1,10 +1,12 @@
 package com.yogesh.android.codingReminder.repository
 
+import android.util.Log
 import androidx.lifecycle.Transformations
 import com.yogesh.android.codingReminder.database.ContestDatabase
 import com.yogesh.android.codingReminder.database.asDomainModel
 import com.yogesh.android.codingReminder.network.NetworkRequests
 import com.yogesh.android.codingReminder.network.asDatabaseModel
+import com.yogesh.android.codingReminder.network.asTempDatabaseModel
 
 /**
  * Repository layer for the App
@@ -17,7 +19,7 @@ class ContestRepository(private val database: ContestDatabase) {
      * else by its end time
      */
     val contests = Transformations.map(database.contestDao.getContests()) { list ->
-        val curTime = System.currentTimeMillis()
+        val curTime = System.nanoTime()
         list.asDomainModel().sortedBy {
             if (it.startTimeMilliseconds >= curTime) it.startTimeMilliseconds
             else it.endTimeSeconds
@@ -38,9 +40,11 @@ class ContestRepository(private val database: ContestDatabase) {
      */
 
     suspend fun refreshContests(): Int {
+        Log.i("checking","at ContestRepository")
         val curTime = System.currentTimeMillis()
-        database.contestDao.validateContests(curTime)
-        val contests = NetworkRequests.contestsFromNetwork().asDatabaseModel()
+        Log.i("ContestRepository","deleted ${database.contestDao.validateContests(curTime)}")
+        val contests = NetworkRequests.contestsFromNetwork().asTempDatabaseModel()
+        Log.i("checking","at ContestRepository")
 
         var newContests = 0
         for (newContest in contests) {

@@ -89,7 +89,7 @@ fun TextView.setTimeFormatted(contest: Contest) {
             .plus(timeLeftFormatted(contest.startTimeMilliseconds - curTime))
         contest.endTimeSeconds > curTime -> "Ends in "
             .plus(timeLeftFormatted(contest.endTimeSeconds - curTime))
-        else -> ""
+        else -> "Ended"
     }
 }
 
@@ -123,6 +123,8 @@ fun MaterialButton.setButton(isNotificationSet: Boolean, time: Long) {
 private fun timeLeftFormatted(time: Long): String {
     val calendar = Calendar.getInstance()
     calendar.timeInMillis = time - TimeZone.getDefault().rawOffset
+
+    Log.i("BindingAdapters", time.toString())
 
     var period = calendar.get(Calendar.YEAR)-1970
     if(period !=0) {
