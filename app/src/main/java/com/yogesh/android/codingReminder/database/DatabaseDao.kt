@@ -24,7 +24,7 @@ interface ContestDao {
     suspend fun deleteContest(contest: DatabaseContest)
 
     @Query("SELECT * from contest_table WHERE id = :id")
-    suspend fun getContest(id: String): DatabaseContest?
+    suspend fun getContest(id: Long): DatabaseContest?
 
     @Query("DELETE FROM contest_table WHERE end_time_milliseconds <= :curTime")
     suspend fun validateContests(curTime: Long) : Int

@@ -125,9 +125,9 @@ class NewContestViewModel(private val database: ContestDatabase, app: Applicatio
         coroutineScope.launch {
             withContext(Dispatchers.IO) {
                 loop@ for (i in 1..1000) {
-                    if (database.contestDao.getContest(i.toString()) == null) {
+                    if (database.contestDao.getContest(i.toLong()) == null) {
                         val contest = DatabaseContest(
-                            i.toString(),
+                            i.toLong(),
                             contestName.value ?: "",
                             startCalendar.timeInMillis,
                             endCalendar.timeInMillis,

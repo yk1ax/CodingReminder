@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.CalendarContract
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -58,6 +59,8 @@ class ContestFragment : Fragment() {
 
         // Binding the Contest Property to facilitate it's display
         binding.contestProperty = contest
+
+        Log.i("ContestFragment","contest id = ${contest.id}")
 
         // Linking the ContestViewModel object with the viewModel variable present in the XML
         binding.viewModel = viewModel

@@ -9,7 +9,7 @@ import com.yogesh.android.codingReminder.repository.Contest
 @Entity(tableName = "contest_table")
 data class DatabaseContest(
     @PrimaryKey
-    val id: String,
+    val id: Long,
     val name: String,
     @ColumnInfo(name = "start_time_milliseconds")
     val startTimeMilliseconds: Long,

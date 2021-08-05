@@ -32,7 +32,7 @@ data class ClistContest(
 fun List<ClistContest>.asTempDatabaseModel(): List<DatabaseContest> {
     return map { it ->
         DatabaseContest(
-            it.id.toString(),
+            it.id,
             it.name,
             (SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).parse(it.start)?.time ?: 0L) + 1000L * 3600 * 11/2,
             (SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).parse(it.end)?.time ?: 0L) + 1000L * 3600 * 11/2,

@@ -12,7 +12,7 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class Contest(
-    val id: String,
+    val id: Long,
     val name: String,
     val startTimeMilliseconds: Long,
     val endTimeSeconds: Long,
