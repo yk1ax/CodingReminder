@@ -100,7 +100,7 @@ class ContestViewModel(
             getApplication(),
             contest.startTimeMilliseconds.div(1000).toInt(),
             notificationIntent,
-            PendingIntent.FLAG_CANCEL_CURRENT
+            PendingIntent.FLAG_CANCEL_CURRENT + PendingIntent.FLAG_IMMUTABLE
         )
 
         val triggerTime = contest.startTimeMilliseconds - TimeUnit.MINUTES.toMillis(15)
@@ -144,7 +144,7 @@ class ContestViewModel(
             getApplication(),
             contest.startTimeMilliseconds.div(1000).toInt(),
             notificationIntent,
-            PendingIntent.FLAG_CANCEL_CURRENT
+            PendingIntent.FLAG_CANCEL_CURRENT + PendingIntent.FLAG_IMMUTABLE
         )
         alarmManager.cancel(notificationPendingIntent)
 
