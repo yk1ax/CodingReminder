@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         val currentFragment = navController.currentDestination?.id?:0
 
-        if (backPressed || navController.graph.startDestination != currentFragment) {
+        if (backPressed || navController.graph.startDestinationId != currentFragment) {
             super.onBackPressed()
         } else {
             backPressed = true
