@@ -10,7 +10,7 @@ import java.lang.IllegalArgumentException
 class ContestViewModelFactory(private val app: Application, private val database: ContestDatabase, private val contest: Contest): ViewModelProvider.Factory {
 
     @Suppress("unchecked_cast")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(ContestViewModel::class.java)) {
             return ContestViewModel(
                 app,
