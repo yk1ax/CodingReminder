@@ -1,5 +1,6 @@
 package com.yogesh.android.codingReminder.fragments
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -32,72 +32,38 @@ class NewContestFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = NewContestFragmentBinding.inflate(inflater)
+        binding.lifecycleOwner = this
 
         val application = requireActivity().application
         val database = ContestDatabase.getInstance(requireContext().applicationContext)
-        val viewModelFactory =
-            NewContestViewModelFactory(
-                database,
-                application
-            )
-        viewModel = ViewModelProvider(this, viewModelFactory).get(NewContestViewModel::class.java)
 
+        val viewModelFactory = NewContestViewModelFactory(database, application)
+        viewModel = ViewModelProvider(this, viewModelFactory)[NewContestViewModel::class.java]
         binding.viewModel = viewModel
 
-        viewModel.calendarSetEvent.observe(viewLifecycleOwner, Observer {
-            if (it == 1) {
-                binding.startDate.setDate(it)
-                viewModel.onCalendarSetEventComplete()
-            } else if (it == 2) {
-                binding.endDate.setDate(it)
-                viewModel.onCalendarSetEventComplete()
-            }
-        })
-
-        viewModel.timeSetEvent.observe(viewLifecycleOwner, Observer {
-            if (it == 1) {
-                binding.startTime.setTime(it)
-                viewModel.onTimeSetEventComplete()
-            } else if (it == 2) {
-                binding.endTime.setTime(it)
-                viewModel.onTimeSetEventComplete()
-            }
-        })
-
-        viewModel.snackBarText.observe(viewLifecycleOwner, Observer {
-            if (it != null) {
-                Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG)
-                    .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
-                    .show()
-            }
-        })
-
-        viewModel.submitEvent.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                val isSubmitted = viewModel.trySubmit(isTimeRangeSet())
-                if (isSubmitted) {
-                    viewModel.onSubmitEventComplete()
-                    this.findNavController().navigateUp()
-                }
-            }
-        })
-
-        val focusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
-            val inputMethodManager = ContextCompat.getSystemService(
-                requireContext(),
-                InputMethodManager::class.java
-            ) as InputMethodManager
-
-            if (!hasFocus) {
-                inputMethodManager.hideSoftInputFromWindow(v.applicationWindowToken, 0)
-            } else {
-                inputMethodManager.showSoftInput(v, 0)
-            }
-
+        viewModel.calendarSetEvent.observe(viewLifecycleOwner) {
+            calendarSetEventHandler(it)
         }
 
+        viewModel.timeSetEvent.observe(viewLifecycleOwner) {
+            timeSetEventHandler(it)
+        }
+
+        viewModel.snackBarText.observe(viewLifecycleOwner) {
+            it?.let {
+                snackBarHandler(it)
+            }
+        }
+
+        viewModel.submitEvent.observe(viewLifecycleOwner) {
+            if (it) {
+                submitHandler()
+            }
+        }
+
+        val focusChangeListener = getFocusChangeListener(requireContext())
         binding.contestNameEditText.onFocusChangeListener = focusChangeListener
         binding.contestLinkEditText.onFocusChangeListener = focusChangeListener
 
@@ -114,5 +80,52 @@ class NewContestFragment : Fragment() {
         }
     }
 
+    private fun calendarSetEventHandler(type: Int) {
+        when (type) {
+            viewModel.START, viewModel.END -> {
+                binding.startDate.setDate(type)
+                viewModel.onCalendarSetEventComplete()
+            }
+        }
+    }
 
+    private fun timeSetEventHandler(type: Int) {
+        when (type) {
+            viewModel.START, viewModel.END -> {
+                binding.startTime.setTime(type)
+                viewModel.onTimeSetEventComplete()
+
+            }
+        }
+    }
+
+    private fun snackBarHandler(text: String) {
+        Snackbar
+            .make(binding.root, text, Snackbar.LENGTH_LONG)
+            .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
+            .show()
+    }
+
+    private fun submitHandler() {
+        val isSubmitted = viewModel.trySubmit(isTimeRangeSet())
+        if (isSubmitted) {
+            viewModel.onSubmitEventComplete()
+            this.findNavController().navigateUp()
+        }
+    }
+}
+
+fun getFocusChangeListener(context: Context): View.OnFocusChangeListener {
+    return View.OnFocusChangeListener { v, hasFocus ->
+        val inputMethodManager = ContextCompat.getSystemService(
+            context,
+            InputMethodManager::class.java
+        ) as InputMethodManager
+
+        if (!hasFocus) {
+            inputMethodManager.hideSoftInputFromWindow(v.applicationWindowToken, 0)
+        } else {
+            inputMethodManager.showSoftInput(v, 0)
+        }
+    }
 }
