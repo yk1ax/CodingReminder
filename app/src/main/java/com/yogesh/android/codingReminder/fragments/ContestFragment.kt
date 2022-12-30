@@ -1,7 +1,6 @@
 package com.yogesh.android.codingReminder.fragments
 
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -9,8 +8,6 @@ import android.provider.CalendarContract
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -62,14 +59,7 @@ class ContestFragment : Fragment() {
         // initiating the Calendar event
         viewModel.calendarEvent.observe(viewLifecycleOwner) {
             if (it) {
-                activity?.let { activity ->
-                    calendarEventHandler(
-                        contest,
-                        activity,
-                        binding,
-                        viewModel
-                    )
-                }
+                calendarEventHandler(contest)
             }
         }
 
@@ -77,20 +67,13 @@ class ContestFragment : Fragment() {
         // initiating the Website Intent
         viewModel.websiteEvent.observe(viewLifecycleOwner) {
             if (it) {
-                activity?.let { activity ->
-                    websiteEventHandler(
-                        contest,
-                        activity,
-                        binding,
-                        viewModel
-                    )
-                }
+                websiteEventHandler(contest)
             }
         }
 
         viewModel.notificationEvent.observe(viewLifecycleOwner) {
             if (it) {
-                notificationEventHandler(requireContext(), binding, viewModel)
+                notificationEventHandler()
             }
         }
 
@@ -120,67 +103,53 @@ class ContestFragment : Fragment() {
             else -> false
         }
     }
-}
 
-fun calendarEventHandler(
-    contest: Contest,
-    activity: FragmentActivity,
-    binding: ContestFragmentBinding,
-    viewModel: ContestViewModel
-) {
-    // Calendar Intent for sending the event to the Calendar App
-    val calendarIntent = Intent(Intent.ACTION_INSERT).setData(CalendarContract.Events.CONTENT_URI)
-        .putExtra(CalendarContract.Events.TITLE, contest.name)
-        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, contest.startTimeMilliseconds)
-        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, contest.endTimeSeconds)
-        .putExtra(CalendarContract.Events.DESCRIPTION, contest.websiteUrl)
-        .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
-    try {
-        activity.startActivity(calendarIntent)
-    } catch (e : ActivityNotFoundException) {
-        Snackbar
-            .make(binding.root, "Calendar app not found.", Snackbar.LENGTH_LONG)
-            .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
-            .show()
+    private fun calendarEventHandler(contest: Contest) {
+        // Calendar Intent for sending the event to the Calendar App
+        val calendarIntent = Intent(Intent.ACTION_INSERT).setData(CalendarContract.Events.CONTENT_URI)
+            .putExtra(CalendarContract.Events.TITLE, contest.name)
+            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, contest.startTimeMilliseconds)
+            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, contest.endTimeSeconds)
+            .putExtra(CalendarContract.Events.DESCRIPTION, contest.websiteUrl)
+            .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
+        try {
+            startActivity(calendarIntent)
+        } catch (e : ActivityNotFoundException) {
+            Snackbar
+                .make(binding.root, "Calendar app not found.", Snackbar.LENGTH_LONG)
+                .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
+                .show()
+        }
+        viewModel.onCalendarEventComplete()
     }
-    viewModel.onCalendarEventComplete()
-}
 
-fun websiteEventHandler(
-    contest: Contest,
-    activity: FragmentActivity,
-    binding: ContestFragmentBinding,
-    viewModel: ContestViewModel
-) {
-    try {
-        // Website Intent to open the website using the website URL
-        val websiteIntent = Intent(Intent.ACTION_VIEW, Uri.parse(contest.websiteUrl))
-        activity.startActivity(websiteIntent)
-    } catch (e : ActivityNotFoundException) {
-        Snackbar.make(binding.root, "Internet browser not found.", Snackbar.LENGTH_LONG)
-            .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
-            .show()
+    private fun websiteEventHandler(contest: Contest) {
+        try {
+            // Website Intent to open the website using the website URL
+            val websiteIntent = Intent(Intent.ACTION_VIEW, Uri.parse(contest.websiteUrl))
+            startActivity(websiteIntent)
+        } catch (e : ActivityNotFoundException) {
+            Snackbar.make(binding.root, "Internet browser not found.", Snackbar.LENGTH_LONG)
+                .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
+                .show()
+        }
+        viewModel.onWebsiteEventComplete()
     }
-    viewModel.onWebsiteEventComplete()
-}
 
-fun notificationEventHandler(
-    context: Context,
-    binding: ContestFragmentBinding,
-    viewModel: ContestViewModel
-) {
-    if (viewModel.notificationAlreadySet.value!!) {
-        viewModel.removeNotification()
-        Snackbar
-            .make(binding.root, context.getString(R.string.reminder_removed), Snackbar.LENGTH_LONG)
-            .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
-            .show()
-    } else {
-        viewModel.setNotification()
-        Snackbar
-            .make(binding.root, context.getString(R.string.notification_set), Snackbar.LENGTH_LONG)
-            .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
-            .show()
+    private fun notificationEventHandler() {
+        if (viewModel.notificationAlreadySet.value!!) {
+            viewModel.removeNotification()
+            Snackbar
+                .make(binding.root, getString(R.string.reminder_removed), Snackbar.LENGTH_LONG)
+                .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
+                .show()
+        } else {
+            viewModel.setNotification()
+            Snackbar
+                .make(binding.root, getString(R.string.notification_set), Snackbar.LENGTH_LONG)
+                .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
+                .show()
+        }
+        viewModel.onNotificationEventComplete()
     }
-    viewModel.onNotificationEventComplete()
 }
