@@ -52,7 +52,7 @@ class ContestListFragment : Fragment() {
         }
 
         viewModel.snackBarText.observe(viewLifecycleOwner) {
-            it?.let { context?.let { it1 -> handleSnackBar(it, it1, binding, viewModel) } }
+            it?.let { handleSnackBar(it, requireContext(), binding, viewModel) }
         }
 
         viewModel.contestEvent.observe(viewLifecycleOwner) {
