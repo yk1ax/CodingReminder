@@ -16,8 +16,6 @@ import com.yogesh.android.codingReminder.repository.Contest
 import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
 
-private const val REQUEST_ID = 0
-
 class ContestViewModel(
     app: Application,
     private val database: ContestDatabase,
@@ -95,8 +93,7 @@ class ContestViewModel(
             }
         )
 
-        val notificationPendingIntent: PendingIntent
-        notificationPendingIntent = PendingIntent.getBroadcast(
+        val notificationPendingIntent: PendingIntent = PendingIntent.getBroadcast(
             getApplication(),
             contest.startTimeMilliseconds.div(1000).toInt(),
             notificationIntent,

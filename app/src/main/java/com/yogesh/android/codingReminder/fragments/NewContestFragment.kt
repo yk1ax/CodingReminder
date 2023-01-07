@@ -34,7 +34,7 @@ class NewContestFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = NewContestFragmentBinding.inflate(inflater)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         val application = requireActivity().application
         val database = ContestDatabase.getInstance(requireContext().applicationContext)
@@ -82,19 +82,26 @@ class NewContestFragment : Fragment() {
 
     private fun calendarSetEventHandler(type: Int) {
         when (type) {
-            viewModel.START, viewModel.END -> {
+            viewModel.START -> {
                 binding.startDate.setDate(type)
-                viewModel.onCalendarSetEventComplete()
+                viewModel.onTimeSetEventComplete()
+            }
+            viewModel.END -> {
+                binding.endDate.setDate(type)
+                viewModel.onTimeSetEventComplete()
             }
         }
     }
 
     private fun timeSetEventHandler(type: Int) {
         when (type) {
-            viewModel.START, viewModel.END -> {
+            viewModel.START -> {
                 binding.startTime.setTime(type)
                 viewModel.onTimeSetEventComplete()
-
+            }
+            viewModel.END -> {
+                binding.endTime.setTime(type)
+                viewModel.onTimeSetEventComplete()
             }
         }
     }

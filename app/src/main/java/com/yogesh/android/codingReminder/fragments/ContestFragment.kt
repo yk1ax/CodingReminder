@@ -14,7 +14,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.yogesh.android.codingReminder.R
 import com.yogesh.android.codingReminder.viewModels.ContestViewModel
 import com.yogesh.android.codingReminder.viewModels.ContestViewModelFactory
-import com.yogesh.android.codingReminder.createChannel
 import com.yogesh.android.codingReminder.database.ContestDatabase
 import com.yogesh.android.codingReminder.databinding.ContestFragmentBinding
 import com.yogesh.android.codingReminder.repository.Contest
@@ -38,7 +37,7 @@ class ContestFragment : Fragment() {
         contest = ContestFragmentArgs.fromBundle(requireArguments()).contest
 
         binding =  ContestFragmentBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         val database = ContestDatabase.getInstance(requireContext())
         val application = requireActivity().application
@@ -76,8 +75,6 @@ class ContestFragment : Fragment() {
                 notificationEventHandler()
             }
         }
-
-        createChannel(getString(R.string.contest_notification_channel_id), getString(R.string.contest_notification_channel_name), requireActivity())
 
         setHasOptionsMenu(true)
         // Return the root view of the binding, i.e., the fragment itself

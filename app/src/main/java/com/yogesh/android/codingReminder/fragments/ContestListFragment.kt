@@ -30,7 +30,7 @@ class ContestListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = ContestListFragmentBinding.inflate(inflater)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         val application = requireNotNull(activity).application
         val database = ContestDatabase.getInstance(application)
