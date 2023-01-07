@@ -1,5 +1,8 @@
 package com.yogesh.android.codingReminder.network
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import com.yogesh.android.codingReminder.viewModels.SiteType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -54,5 +57,20 @@ object NetworkRequests {
 
         return list
 
+    }
+
+    fun checkConnection(context: Context): Boolean {
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        val activeNetwork = cm.activeNetwork
+        val capabilities = cm.getNetworkCapabilities(activeNetwork)
+        return when {
+            capabilities == null -> false
+            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                    or capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+                    or capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+            -> true
+            else -> false
+        }
     }
 }

@@ -124,10 +124,11 @@ class NewContestViewModel(private val database: ContestDatabase, app: Applicatio
     private fun submitContest() {
         coroutineScope.launch {
             withContext(Dispatchers.IO) {
-                loop@ for (i in 1..1000) {
-                    if (database.contestDao.getContest(i.toLong()) == null) {
+                var id: Long = 0
+                loop@ while (true) {
+                    if (database.contestDao.getContest(id) == null) {
                         val contest = DatabaseContest(
-                            i.toLong(),
+                            id,
                             contestName.value ?: "",
                             startCalendar.timeInMillis,
                             endCalendar.timeInMillis,
@@ -140,6 +141,7 @@ class NewContestViewModel(private val database: ContestDatabase, app: Applicatio
                         database.contestDao.insertContest(contest)
                         break@loop
                     }
+                    id++
                 }
             }
         }

@@ -1,16 +1,13 @@
 package com.yogesh.android.codingReminder.viewModels
 
 import android.app.Application
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.os.Build
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.yogesh.android.codingReminder.R
 import com.yogesh.android.codingReminder.database.ContestDatabase
+import com.yogesh.android.codingReminder.network.NetworkRequests
 import com.yogesh.android.codingReminder.repository.Contest
 import com.yogesh.android.codingReminder.repository.ContestRepository
 import kotlinx.coroutines.*
@@ -74,7 +71,7 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
         get() = repository.contests
 
     init {
-        if (checkConnection()) {
+        if (NetworkRequests.checkConnection(getApplication())) {
             fetchContests()
         } else {
             _snackBarText.value = app.getString(R.string.no_internet)
@@ -83,7 +80,7 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
     }
 
     fun retryFetching() {
-        if (checkConnection()) {
+        if (NetworkRequests.checkConnection(getApplication())) {
             fetchContests()
         } else {
             _snackBarText.value = getApplication<Application>().getString(R.string.no_internet)
@@ -117,29 +114,6 @@ class ContestListViewModel(database: ContestDatabase, app: Application) : Androi
             }
             _refreshingState.value = false
 
-        }
-    }
-
-    // Check Internet Connection
-    private fun checkConnection(): Boolean {
-        val cm = getApplication<Application>().applicationContext
-            .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-        return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            val netInfo = cm.activeNetworkInfo
-            netInfo?.isConnectedOrConnecting == true
-        } else {
-            val activeNetwork = cm.activeNetwork
-            val capabilities = cm.getNetworkCapabilities(activeNetwork)
-
-            when {
-                capabilities == null -> false
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
-                        or capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
-                        or capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
-                -> true
-                else -> false
-            }
         }
     }
 }
