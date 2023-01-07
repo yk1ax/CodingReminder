@@ -1,20 +1,14 @@
 package com.yogesh.android.codingReminder.viewModels
 
-import android.app.AlarmManager
 import android.app.Application
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
-import androidx.core.app.AlarmManagerCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.yogesh.android.codingReminder.AlarmReceiver
 import com.yogesh.android.codingReminder.database.ContestDatabase
-import com.yogesh.android.codingReminder.database.DatabaseContest
 import com.yogesh.android.codingReminder.repository.Contest
+import com.yogesh.android.codingReminder.utils.removeNotification
+import com.yogesh.android.codingReminder.utils.setNotification
 import kotlinx.coroutines.*
-import java.util.concurrent.TimeUnit
 
 class ContestViewModel(
     app: Application,
@@ -30,8 +24,6 @@ class ContestViewModel(
         viewModelJob.cancel()
         super.onCleared()
     }
-
-    private val alarmManager = app.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
     // Encapsulated calendarEvent boolean variable
     private val _calendarEvent = MutableLiveData<Boolean>(false)
@@ -84,79 +76,22 @@ class ContestViewModel(
     fun setNotification() {
 
         notificationAlreadySet.value = true
-        val notificationIntent = Intent(getApplication(), AlarmReceiver::class.java)
-        notificationIntent.putExtra(
-            "site", when (contest.site) {
-                SiteType.CODEFORCES_SITE -> " on Codeforces"
-                SiteType.CODECHEF_SITE -> " on Codechef"
-                else -> ""
-            }
-        )
-
-        val notificationPendingIntent: PendingIntent = PendingIntent.getBroadcast(
-            getApplication(),
-            contest.startTimeMilliseconds.div(1000).toInt(),
-            notificationIntent,
-            PendingIntent.FLAG_CANCEL_CURRENT + PendingIntent.FLAG_IMMUTABLE
-        )
-
-        val triggerTime = contest.startTimeMilliseconds - TimeUnit.MINUTES.toMillis(15)
-
-        AlarmManagerCompat.setExactAndAllowWhileIdle(
-            alarmManager,
-            AlarmManager.RTC,
-            triggerTime,
-            notificationPendingIntent
-        )
+        contest.isNotificationSet = true
+        contest.setNotification(getApplication())
 
         coroutineScope.launch {
-            database.contestDao.updateContest(
-                DatabaseContest(
-                    contest.id,
-                    contest.name,
-                    contest.startTimeMilliseconds,
-                    contest.endTimeSeconds,
-                    contest.site,
-                    contest.websiteUrl,
-                    true
-                )
-            )
+            database.contestDao.updateContest(contest.asDatabaseModel())
         }
     }
 
     fun removeNotification() {
 
         notificationAlreadySet.value = false
-        val notificationIntent = Intent(getApplication(), AlarmReceiver::class.java)
-        notificationIntent.putExtra(
-            "site", when (contest.site) {
-                SiteType.CODEFORCES_SITE -> " on Codeforces"
-                SiteType.CODECHEF_SITE -> " on Codechef"
-                else -> ""
-            }
-        )
-
-        val notificationPendingIntent: PendingIntent
-        notificationPendingIntent = PendingIntent.getBroadcast(
-            getApplication(),
-            contest.startTimeMilliseconds.div(1000).toInt(),
-            notificationIntent,
-            PendingIntent.FLAG_CANCEL_CURRENT + PendingIntent.FLAG_IMMUTABLE
-        )
-        alarmManager.cancel(notificationPendingIntent)
+        contest.isNotificationSet = false
+        contest.removeNotification(getApplication())
 
         coroutineScope.launch {
-            database.contestDao.updateContest(
-                DatabaseContest(
-                    contest.id,
-                    contest.name,
-                    contest.startTimeMilliseconds,
-                    contest.endTimeSeconds,
-                    contest.site,
-                    contest.websiteUrl,
-                    false
-                )
-            )
+            database.contestDao.updateContest(contest.asDatabaseModel())
         }
     }
 
