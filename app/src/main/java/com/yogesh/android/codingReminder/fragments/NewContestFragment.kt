@@ -84,11 +84,11 @@ class NewContestFragment : Fragment() {
         when (type) {
             viewModel.START -> {
                 binding.startDate.setDate(type)
-                viewModel.onTimeSetEventComplete()
+                viewModel.onCalendarSetEventComplete()
             }
             viewModel.END -> {
                 binding.endDate.setDate(type)
-                viewModel.onTimeSetEventComplete()
+                viewModel.onCalendarSetEventComplete()
             }
         }
     }
