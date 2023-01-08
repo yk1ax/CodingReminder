@@ -20,6 +20,7 @@ import com.yogesh.android.codingReminder.utils.requestPostNotificationPermission
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
+    private lateinit var binding: ActivityMainBinding
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             val currentFragment = navController.currentDestination?.id ?: 0
@@ -37,15 +38,16 @@ class MainActivity : AppCompatActivity() {
 
                 Handler(Looper.getMainLooper())
                     .postDelayed({ this.isEnabled = true }, 2000)
+            } else {
+                navController.navigateUp()
             }
         }
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
-        val binding =
+        binding =
             DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         this.setSupportActionBar(binding.toolbar)
 

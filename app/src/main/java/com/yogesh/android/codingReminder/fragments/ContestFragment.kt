@@ -7,7 +7,10 @@ import android.os.Bundle
 import android.provider.CalendarContract
 import android.util.Log
 import android.view.*
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -76,29 +79,43 @@ class ContestFragment : Fragment() {
             }
         }
 
-        setHasOptionsMenu(true)
+//        setHasOptionsMenu(true)
         // Return the root view of the binding, i.e., the fragment itself
         return binding.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.contest_menu, menu)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupContestFragmentMenu()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
-            R.id.delete_item -> {
-                viewModel.deleteContest()
-                viewModel.removeNotification()
-                Snackbar.make(binding.root, "Contest deleted.", Snackbar.LENGTH_LONG)
-                    .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
-                    .show()
-
-                this.findNavController().navigateUp()
-                true
+    private fun setupContestFragmentMenu() {
+        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
+            override fun onPrepareMenu(menu: Menu) {
+                // Handle for example visibility of menu items
             }
-            else -> false
-        }
+
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.contest_menu, menu)
+            }
+
+            override fun onMenuItemSelected(item: MenuItem): Boolean {
+                // Validate and handle the selected menu item
+                return when(item.itemId) {
+                    R.id.delete_item -> {
+                        viewModel.deleteContest()
+                        viewModel.removeNotification()
+                        Snackbar.make(binding.root, "Contest deleted.", Snackbar.LENGTH_LONG)
+                            .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
+                            .show()
+
+                        this@ContestFragment.findNavController().navigateUp()
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     private fun calendarEventHandler(contest: Contest) {
