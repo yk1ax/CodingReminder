@@ -1,12 +1,19 @@
 package com.yogesh.android.codingReminder.utils
 
+import android.Manifest
 import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
+import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.app.NotificationCompat
+import com.google.android.material.snackbar.Snackbar
 import com.yogesh.android.codingReminder.AlarmReceiver
 import com.yogesh.android.codingReminder.R
 import com.yogesh.android.codingReminder.repository.Contest
@@ -29,10 +36,10 @@ fun createNotificationChannel(context: Context) {
             enableVibration(true)
             description = "Time for contest"
         }
-        val manager = context.getSystemService(
+        val notificationManager = context.getSystemService(
             NotificationManager::class.java
         ) as NotificationManager
-        manager.createNotificationChannel(serviceChannel)
+        notificationManager.createNotificationChannel(serviceChannel)
     }
 }
 
@@ -68,6 +75,37 @@ fun Contest.getNotificationPendingIntent(context: Context): PendingIntent {
         notificationIntent,
         PendingIntent.FLAG_CANCEL_CURRENT + PendingIntent.FLAG_IMMUTABLE
     )
+}
+
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+fun AppCompatActivity.requestPostNotificationPermission(view: View) {
+    val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+        if (!isGranted) {
+            // Permission request was denied.
+            view.showSnackbar(
+                R.string.notification_permission_denied,
+                Snackbar.LENGTH_SHORT,
+                R.string.ok
+            )
+        }
+    }
+    if (shouldShowRequestPermissionRationale(
+            this,
+            Manifest.permission.POST_NOTIFICATIONS
+        )
+    ) {
+        view.showSnackbar(
+            R.string.notification_access_required,
+            Snackbar.LENGTH_INDEFINITE,
+            R.string.ok
+        ) {
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+    } else {
+        requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+    }
 }
 
 fun Contest.setNotification(context: Context) {

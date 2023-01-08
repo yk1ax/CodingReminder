@@ -25,4 +25,8 @@
     <string name="notification_set">You\'ll be reminded 15 minutes before the contest.</string>
     <string name="add_contest">Add Contest</string>
     <string name="set_time_range">Set the time range.</string>
+    <string name="notification_permission_denied">Notification permission was denied</string>
+    <string name="ok">OK</string>
+    <string name="notification_access_required">Notification is required for setting reminders</string>
+    <string name="notification_permission_not_available">Notification permission is not available</string>
 </resources>

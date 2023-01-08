@@ -1,5 +1,7 @@
 package com.yogesh.android.codingReminder
 
+import android.app.NotificationManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -12,6 +14,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.snackbar.Snackbar
 import com.yogesh.android.codingReminder.databinding.ActivityMainBinding
+import com.yogesh.android.codingReminder.utils.requestPostNotificationPermission
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,6 +31,13 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(binding.toolbar, navController)
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val notificationManager =
+                getSystemService(NotificationManager::class.java) as NotificationManager
+            if (!notificationManager.areNotificationsEnabled()) {
+                requestPostNotificationPermission(binding.root)
+            }
+        }
     }
 
     override fun onBackPressed() {
