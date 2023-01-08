@@ -2,8 +2,13 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/refresh_item"
-        android:title="Refresh"
-        android:icon="@drawable/ic_retry"
-        app:showAsAction="always" />
+        android:id="@+id/notification_off"
+        android:title="@string/notification_off"
+        android:icon="@drawable/ic_notifications_off"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/notification_active"
+        android:title="@string/notification_on"
+        android:icon="@drawable/ic_notifications_active"
+        app:showAsAction="ifRoom" />
 </menu>
